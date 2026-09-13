@@ -23,10 +23,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <div
       id={`product-card-${product.SKU}`}
-      className="group bg-[#1E0C10] border border-[#D82824]/20 hover:border-[#D82824]/60 rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:shadow-xl hover:shadow-[#D82824]/10 active:scale-[0.99]"
+      className="group bg-white border border-orange-200/80 hover:border-orange-400 rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:shadow-xl hover:shadow-orange-500/15 active:scale-[0.99]"
     >
       {/* Image Container with responsive mobile aspect ratio */}
-      <div className="relative aspect-4/3 sm:aspect-4/3 w-full bg-[#140608] overflow-hidden">
+      <div className="relative aspect-4/3 sm:aspect-4/3 w-full bg-orange-50/50 overflow-hidden">
         <img
           src={product.MAIN_IMAGE_URL || fallbackImage}
           alt={product.NAME}
@@ -39,18 +39,18 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         />
 
         {/* Soft Warm Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1E0C10] via-transparent to-transparent opacity-70" />
+        <div className="absolute inset-0 bg-gradient-to-t from-stone-950/40 via-transparent to-transparent opacity-40 group-hover:opacity-20 transition-opacity" />
 
         {/* Badges Top Left */}
         <div className="absolute top-2 sm:top-2.5 left-2 sm:left-2.5 flex flex-col gap-1 z-10">
           {product.FEATURED && (
-            <span className="inline-flex items-center gap-1 bg-[#F5A623] text-black text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-md tracking-wider uppercase shadow-md">
-              <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-black" />
+            <span className="inline-flex items-center gap-1 bg-gradient-to-r from-[#FFB703] to-[#FB8500] text-[#2B1408] text-[9px] sm:text-[10px] font-extrabold px-2 py-0.5 rounded-md tracking-wider uppercase shadow-sm">
+              <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-[#2B1408]" />
               Unggulan
             </span>
           )}
           {hasDiscount && (
-            <span className="inline-flex items-center bg-[#D82824] text-white text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-md tracking-wider uppercase shadow-md">
+            <span className="inline-flex items-center bg-gradient-to-r from-[#E63946] to-[#D90429] text-white text-[9px] sm:text-[10px] font-extrabold px-2 py-0.5 rounded-md tracking-wider uppercase shadow-sm">
               Hemat Rp {(product.PRICE - product.DISCOUNT_PRICE).toLocaleString('id-ID')}
             </span>
           )}
@@ -59,18 +59,18 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         {/* Stock Badge Top Right */}
         <div className="absolute top-2 sm:top-2.5 right-2 sm:right-2.5 z-10">
           {isOutOfStock ? (
-            <span className="inline-flex items-center gap-1 bg-red-950/90 border border-red-700/60 text-red-300 text-[9px] sm:text-[10px] font-semibold px-2 py-0.5 rounded-md">
+            <span className="inline-flex items-center gap-1 bg-stone-900/90 text-stone-200 text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-md shadow-xs">
               <Ban className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-red-400" />
               HABIS
             </span>
           ) : isLowStock ? (
-            <span className="inline-flex items-center gap-1 bg-amber-950/90 border border-amber-600/60 text-[#FFD369] text-[9px] sm:text-[10px] font-semibold px-2 py-0.5 rounded-md animate-pulse">
-              <AlertTriangle className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#F5A623]" />
+            <span className="inline-flex items-center gap-1 bg-amber-100/95 border border-amber-300 text-amber-900 text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-md shadow-xs animate-pulse">
+              <AlertTriangle className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-amber-600" />
               Sisa {product.STOCK}
             </span>
           ) : (
-            <span className="inline-flex items-center gap-1 bg-[#140608]/85 border border-[#00D222]/40 text-[#00D222] text-[9px] sm:text-[10px] font-medium px-2 py-0.5 rounded-md">
-              <CheckCircle2 className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#00D222]" />
+            <span className="inline-flex items-center gap-1 bg-white/95 border border-emerald-200 text-emerald-700 text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-md shadow-xs">
+              <CheckCircle2 className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-emerald-600" />
               Stok: {product.STOCK}
             </span>
           )}
@@ -79,48 +79,48 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         {/* Quick View Button on Desktop Hover */}
         <button
           onClick={() => onViewDetail(product)}
-          className="hidden md:flex absolute inset-0 items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 cursor-pointer"
+          className="hidden md:flex absolute inset-0 items-center justify-center bg-stone-900/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200 cursor-pointer"
           aria-label="Lihat Detail Produk"
         >
-          <span className="bg-[#1C070A]/95 text-white border border-[#F5A623] px-3.5 py-1.5 rounded-xl text-xs tracking-wider uppercase font-medium flex items-center gap-1.5 shadow-lg">
-            <Eye className="w-3.5 h-3.5 text-[#F5A623]" />
+          <span className="bg-white/95 text-[#2B1408] border border-orange-300 px-3.5 py-1.5 rounded-xl text-xs tracking-wider uppercase font-bold flex items-center gap-1.5 shadow-lg">
+            <Eye className="w-3.5 h-3.5 text-[#FF5500]" />
             Lihat Detail
           </span>
         </button>
       </div>
 
       {/* Content Info */}
-      <div className="p-3 sm:p-4 flex-1 flex flex-col justify-between space-y-2 sm:space-y-3">
+      <div className="p-3 sm:p-4 flex-1 flex flex-col justify-between space-y-2 sm:space-y-3 bg-white">
         <div>
-          <div className="flex items-center justify-between text-[10px] sm:text-[11px] text-[#A89886] mb-1">
-            <span className="uppercase tracking-wider text-[#F5A623] font-semibold truncate max-w-[120px]">
+          <div className="flex items-center justify-between text-[10px] sm:text-[11px] text-stone-500 mb-1">
+            <span className="uppercase tracking-wider text-[#EA580C] font-extrabold truncate max-w-[120px]">
               {product.CATEGORY_NAME}
             </span>
-            <span className="font-mono text-[#8C7B6D] text-[10px]">{product.SKU}</span>
+            <span className="font-mono text-stone-400 text-[10px] font-medium">{product.SKU}</span>
           </div>
 
           <h3
             onClick={() => onViewDetail(product)}
-            className="text-xs sm:text-sm font-semibold text-[#FFFDF9] group-hover:text-[#F5A623] transition-colors line-clamp-2 cursor-pointer leading-snug"
+            className="text-xs sm:text-sm font-bold text-[#2B1408] group-hover:text-[#FF5500] transition-colors line-clamp-2 cursor-pointer leading-snug"
             title={product.NAME}
           >
             {product.NAME}
           </h3>
 
-          <div className="text-[11px] text-[#A89886] mt-1 flex items-center gap-1">
+          <div className="text-[11px] text-stone-500 mt-1 flex items-center gap-1">
             <span>Kemasan:</span>
-            <span className="text-[#E5D8C7] font-medium">{product.WEIGHT || '100g'}</span>
+            <span className="text-stone-800 font-semibold">{product.WEIGHT || '100g'}</span>
           </div>
         </div>
 
         {/* Pricing & Icon Action Buttons */}
-        <div className="pt-2 border-t border-[#D82824]/15">
+        <div className="pt-2 border-t border-orange-100">
           <div className="flex items-baseline gap-1.5 mb-2.5">
-            <span className="text-sm sm:text-base font-bold text-[#FFFDF9] tracking-tight">
+            <span className="text-base sm:text-lg font-black text-[#EA3A1E] tracking-tight">
               Rp {effectivePrice.toLocaleString('id-ID')}
             </span>
             {hasDiscount && (
-              <span className="text-[10px] sm:text-xs text-[#8C7B6D] line-through">
+              <span className="text-[10px] sm:text-xs text-stone-400 line-through font-medium">
                 Rp {product.PRICE.toLocaleString('id-ID')}
               </span>
             )}
@@ -131,26 +131,26 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             {/* Detail Icon Button */}
             <button
               onClick={() => onViewDetail(product)}
-              className="w-full bg-[#270E12] hover:bg-[#341318] active:bg-[#40171E] text-[#E5D8C7] hover:text-white border border-[#D82824]/30 py-2 sm:py-2.5 rounded-xl text-xs tracking-wider uppercase font-medium flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+              className="w-full bg-orange-50 hover:bg-orange-100 active:bg-orange-200 text-[#4A2D1B] hover:text-[#2B1408] border border-orange-200 py-2 sm:py-2.5 rounded-xl text-xs tracking-wider uppercase font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
               aria-label={`Detail ${product.NAME}`}
             >
-              <Eye className="w-3.5 h-3.5 text-[#F5A623]" />
-              <span className="text-[11px] sm:text-xs">Detail</span>
+              <Eye className="w-3.5 h-3.5 text-[#FF7B00]" />
+              <span className="text-[11px] sm:text-xs font-bold">Detail</span>
             </button>
 
             {/* Add to Cart Icon Button */}
             <button
               onClick={() => onAddToCart(product)}
               disabled={isOutOfStock}
-              className={`w-full py-2 sm:py-2.5 rounded-xl text-xs tracking-wider uppercase font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+              className={`w-full py-2 sm:py-2.5 rounded-xl text-xs tracking-wider uppercase font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                 isOutOfStock
-                  ? 'bg-zinc-900 text-zinc-600 border border-zinc-800 cursor-not-allowed'
-                  : 'bg-gradient-to-r from-[#D82824] via-[#BE1A18] to-[#991313] hover:from-[#E53935] hover:to-[#B71C1C] active:scale-95 text-white shadow-sm hover:shadow-md hover:shadow-[#D82824]/30'
+                  ? 'bg-stone-200 text-stone-400 border border-stone-300 cursor-not-allowed'
+                  : 'bg-gradient-to-r from-[#FF5500] via-[#FF7B00] to-[#FFAA00] hover:from-[#FF4500] hover:to-[#FF9500] active:scale-95 text-white shadow-sm hover:shadow-md hover:shadow-orange-500/25'
               }`}
               aria-label={`Tambah ${product.NAME} ke Keranjang`}
             >
               <ShoppingBag className="w-3.5 h-3.5" />
-              <span className="text-[11px] sm:text-xs">{isOutOfStock ? 'Habis' : '+ Pesan'}</span>
+              <span className="text-[11px] sm:text-xs font-bold">{isOutOfStock ? 'Habis' : '+ Pesan'}</span>
             </button>
           </div>
         </div>

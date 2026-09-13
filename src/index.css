@@ -2,8 +2,8 @@
 
 @layer base {
   body {
-    background-color: #140507;
-    color: #F5EFE6;
+    background-color: #FAF6ED;
+    color: #2D1508;
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
@@ -17,22 +17,22 @@
   }
 }
 
-/* Custom sleek packaging-inspired scrollbar */
+/* Vibrant warm culinary scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #140507;
+  background: #F5EEDB;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #3B1216;
-  border-radius: 3px;
+  background: #FF9E2C;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #D82824;
+  background: #FF6A00;
 }
 

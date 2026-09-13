@@ -11,7 +11,7 @@ export const BonlesLogo: React.FC<BonlesLogoProps> = ({
   className = '',
   variant = 'horizontal',
   size = 'md',
-  lightBg = false,
+  lightBg = true,
 }) => {
   // Height / scale classes
   const sizeMap = {
@@ -153,21 +153,23 @@ export const BonlesLogo: React.FC<BonlesLogoProps> = ({
         <div className="flex items-center gap-1.5">
           <span
             className={`font-serif italic font-bold tracking-tight ${
-              lightBg ? 'text-black' : 'text-white'
+              lightBg ? 'text-[#241005]' : 'text-white'
             } ${currentSize.text} leading-none`}
             style={{ fontFamily: "'Playfair Display', Georgia, cursive" }}
           >
             Bonlés
           </span>
-          <span className="text-[10px] uppercase tracking-widest text-[#E81818] font-black">
+          <span className="text-[10px] uppercase tracking-widest text-[#E63946] font-black">
             FOOD
           </span>
         </div>
         <div className="flex items-center gap-2 mt-0.5">
-          <span className="text-[9px] uppercase tracking-[0.2em] text-[#F5A623] font-bold">
+          <span className={`text-[9px] uppercase tracking-[0.2em] font-bold ${
+            lightBg ? 'text-[#D96B00]' : 'text-[#F5A623]'
+          }`}>
             PT. Bonles Food Nusantara
           </span>
-          <span className="w-1.5 h-1.5 rounded-full bg-[#00D222]" />
+          <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
         </div>
       </div>
     </div>
