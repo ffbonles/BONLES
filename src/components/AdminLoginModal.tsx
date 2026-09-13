@@ -160,39 +160,6 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({
             </label>
           </div>
 
-          {/* Quick Credential Helpers */}
-          <div className="pt-1">
-            <span className="text-[10px] text-[#A89886] block mb-1.5 uppercase tracking-wider font-semibold">
-              Kredensial Cepat (Klik untuk Isi Otomatis):
-            </span>
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                type="button"
-                onClick={() => {
-                  setUsername('superadmin');
-                  setPassword('BonlesFood#2026');
-                  setErrorMessage(null);
-                }}
-                className="p-2 text-left bg-[#120406] hover:bg-[#20070A] border border-[#D82824]/30 hover:border-[#F5A623]/60 rounded-xs transition-colors cursor-pointer"
-              >
-                <div className="text-[10px] font-bold text-[#F5A623]">SUPER ADMIN</div>
-                <div className="text-[9px] text-[#AAAAAA] font-mono truncate">superadmin</div>
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setUsername('admin');
-                  setPassword('Bonles#2026');
-                  setErrorMessage(null);
-                }}
-                className="p-2 text-left bg-[#120406] hover:bg-[#20070A] border border-[#D82824]/30 hover:border-[#F5A623]/60 rounded-xs transition-colors cursor-pointer"
-              >
-                <div className="text-[10px] font-bold text-[#E5D8C7]">ADMIN TOKO</div>
-                <div className="text-[9px] text-[#AAAAAA] font-mono truncate">admin</div>
-              </button>
-            </div>
-          </div>
-
           {/* Submit Button */}
           <div className="pt-3">
             <button
