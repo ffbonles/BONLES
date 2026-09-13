@@ -2,7 +2,10 @@ import { store } from './store';
 
 export const SUPERADMIN_CREDENTIALS = {
   USERNAME: 'ffbonles@gmail.com',
-  PASSWORD: 'ffbonles1607',
+  PASSWORD: 'BonlesFood#2026',
+  EMAIL: 'ffbonles@gmail.com',
+  USERNAMES: ['ffbonles@gmail.com', 'superadmin', 'ffbonles'],
+  PASSWORDS: ['ffbonles1607', 'BonlesFood#2026'],
   ROLE: 'Super Administrator',
   NAME: 'Super Administrator Bonles',
 };
@@ -10,7 +13,10 @@ export const SUPERADMIN_CREDENTIALS = {
 export const ADMIN_CREDENTIALS = {
   USERNAME: 'admin@bonlesfood.com',
   ALT_USERNAME: 'admin',
-  PASSWORD: 'adminbonles',
+  PASSWORD: 'Bonles#2026',
+  EMAIL: 'admin@bonlesfood.com',
+  USERNAMES: ['admin@bonlesfood.com', 'admin', 'adminbonles'],
+  PASSWORDS: ['adminbonles', 'Bonles#2026'],
   ROLE: 'Administrator',
   NAME: 'Administrator Bonles',
 };
@@ -67,15 +73,19 @@ class AuthService {
     const cleanPassword = (password || '').trim();
 
     // Check Super Administrator
-    const isSuper = (cleanUsername === SUPERADMIN_CREDENTIALS.USERNAME.toLowerCase()) && (cleanPassword === SUPERADMIN_CREDENTIALS.PASSWORD);
+    const isSuperUsername = SUPERADMIN_CREDENTIALS.USERNAMES.some(u => u.toLowerCase() === cleanUsername);
+    const isSuperPassword = SUPERADMIN_CREDENTIALS.PASSWORDS.includes(cleanPassword);
+    const isSuper = isSuperUsername && isSuperPassword;
 
     // Check Standard Administrator
-    const isAdmin = (cleanUsername === ADMIN_CREDENTIALS.USERNAME.toLowerCase() || cleanUsername === ADMIN_CREDENTIALS.ALT_USERNAME) && (cleanPassword === ADMIN_CREDENTIALS.PASSWORD);
+    const isAdminUsername = ADMIN_CREDENTIALS.USERNAMES.some(u => u.toLowerCase() === cleanUsername);
+    const isAdminPassword = ADMIN_CREDENTIALS.PASSWORDS.includes(cleanPassword);
+    const isAdmin = isAdminUsername && isAdminPassword;
 
     if (isSuper || isAdmin) {
       const isSuperUser = isSuper;
       const session: AdminSession = {
-        email: isSuperUser ? SUPERADMIN_CREDENTIALS.USERNAME : ADMIN_CREDENTIALS.USERNAME,
+        email: isSuperUser ? SUPERADMIN_CREDENTIALS.EMAIL : ADMIN_CREDENTIALS.EMAIL,
         role: isSuperUser ? SUPERADMIN_CREDENTIALS.ROLE : ADMIN_CREDENTIALS.ROLE,
         name: isSuperUser ? SUPERADMIN_CREDENTIALS.NAME : ADMIN_CREDENTIALS.NAME,
         loggedInAt: new Date().toISOString(),
