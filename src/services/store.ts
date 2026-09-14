@@ -182,7 +182,7 @@ class StoreService {
     this.notifySubscribers();
 
     try {
-      const res = await this.pullFromCloudSpreadsheet('DEFAULT_STARTUP_SYNC');
+      const res = await this.pullPublicFromCloudSpreadsheet('DEFAULT_STARTUP_SYNC');
       if (res.success) {
         this.isGasLiveConnected = true;
         this.lastGasSyncTime = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' WIB';
@@ -732,6 +732,45 @@ class StoreService {
    * Pull and sync ALL data directly from Google Spreadsheet into the Web App
    * Updates Products, Categories, Settings/Editorial, Banners, Testimonials in memory
    */
+  async pullAdminDataFromCloudSpreadsheet(user = 'ADMIN'): Promise<{ success: boolean; message: string }> {
+    try {
+      const res = await gasSync.pullAdminData();
+      if (!res.success || !res.data) return { success: false, message: res.message || 'Gagal memuat data admin.' };
+
+      if (Array.isArray(res.data.orders)) this.orders = res.data.orders as Order[];
+      if (Array.isArray(res.data.customers)) this.customers = res.data.customers as Customer[];
+      if (Array.isArray(res.data.logs)) this.logs = res.data.logs as SystemLog[];
+      if (Array.isArray(res.data.products)) this.products = res.data.products as Product[];
+      if (Array.isArray(res.data.categories)) this.categories = res.data.categories as Category[];
+      if (Array.isArray(res.data.banners)) this.banners = res.data.banners as Banner[];
+      if (Array.isArray(res.data.testimonials)) this.testimonials = res.data.testimonials as Testimonial[];
+      if (Array.isArray(res.data.settings)) this.settings = res.data.settings as Setting[];
+
+      this.isGasLiveConnected = true;
+      this.gasSyncError = null;
+      this.lastGasSyncTime = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' WIB';
+      this.notifySubscribers();
+      return { success: true, message: 'Data privat admin berhasil dimuat.' };
+    } catch (err: any) {
+      this.gasSyncError = err?.message || 'Gagal memuat data admin.';
+      this.notifySubscribers();
+      return { success: false, message: this.gasSyncError };
+    }
+  }
+
+  async pullPublicFromCloudSpreadsheet(user = 'SYSTEM'): Promise<{
+    success: boolean;
+    message: string;
+    productCount: number;
+    categoryCount: number;
+    bannerCount: number;
+    testimonialCount: number;
+    settingsCount: number;
+    details?: any;
+  }> {
+    return this.pullFromCloudSpreadsheet(user);
+  }
+
   async pullFromCloudSpreadsheet(user = 'SYSTEM'): Promise<{
     success: boolean;
     message: string;
@@ -768,7 +807,7 @@ class StoreService {
     this.notifySubscribers();
 
     try {
-      const res = await gasSync.pullAllDataFromGoogleSheets();
+      const res = await gasSync.pullPublicData();
       if (!res.success || !res.data) {
         this.isGasSyncing = false;
         this.gasSyncError = res.message || 'Gagal mengambil data dari Google Spreadsheet.';
