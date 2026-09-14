@@ -15,13 +15,13 @@ export const BonlesLogo: React.FC<BonlesLogoProps> = ({
 }) => {
   const sizeMap = {
     sm: {
-      icon: 'w-8 h-8',
+      icon: 'w-9 h-9',
       text: 'text-[17px]',
       sub: 'text-[8px]',
       gap: 'gap-2',
     },
     md: {
-      icon: 'w-10 h-10',
+      icon: 'w-11 h-11',
       text: 'text-[21px]',
       sub: 'text-[9px]',
       gap: 'gap-2.5',
@@ -43,28 +43,44 @@ export const BonlesLogo: React.FC<BonlesLogoProps> = ({
   const currentSize = sizeMap[size];
 
   /*
+   * ============================================================
    * BONLES BRAND MARK
+   * ============================================================
    *
-   * Warna utama logo tetap dipertahankan sebagai identitas:
-   * - Red
-   * - Green
+   * Identitas utama:
+   * - Green : #16805F
+   * - Red   : #B83B32
+   * - Deep  : #09271F
+   * - Gold  : #C9A45C
    *
-   * Namun stroke dibuat lebih refined agar cocok
-   * dengan visual premium.
+   * Bentuk asli dipertahankan.
    */
+
   const LogoMark = (
     <svg
       viewBox="0 0 280 200"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={`${currentSize.icon} shrink-0 select-none transition-transform duration-500 ease-out group-hover:scale-[1.03]`}
+      className={`
+        ${currentSize.icon}
+        shrink-0
+        select-none
+        transition-transform
+        duration-500
+        ease-out
+        group-hover:scale-[1.03]
+      `}
       aria-hidden="true"
     >
-      {/* Upper Green Fish Head */}
+      {/* ======================================================
+          UPPER GREEN FISH HEAD
+      ======================================================= */}
       <path
-        d="M148 46
-           C180 32 222 36 238 48
-           C220 70 178 72 150 56Z"
+        d="
+          M148 46
+          C180 32 222 36 238 48
+          C220 70 178 72 150 56Z
+        "
         fill="#16805F"
         stroke="#09271F"
         strokeWidth="3"
@@ -79,43 +95,57 @@ export const BonlesLogo: React.FC<BonlesLogoProps> = ({
         fill="#09271F"
       />
 
-      {/* Main Red Dynamic Body */}
+      {/* ======================================================
+          MAIN RED DYNAMIC BODY
+      ======================================================= */}
       <path
-        d="M104 68
-           L110 57
-           C142 56 192 68 238 58
-           C220 86 172 96 126 94
-           C82 108 64 148 60 188
-           C54 150 72 102 104 68Z"
+        d="
+          M104 68
+          L110 57
+          C142 56 192 68 238 58
+          C220 86 172 96 126 94
+          C82 108 64 148 60 188
+          C54 150 72 102 104 68Z
+        "
         fill="#B83B32"
         stroke="#09271F"
         strokeWidth="3"
         strokeLinejoin="round"
       />
 
-      {/* Lower Green Belly */}
+      {/* ======================================================
+          LOWER GREEN BELLY
+      ======================================================= */}
       <path
-        d="M94 96
-           C144 94 186 98 206 82
-           C188 120 116 122 94 96Z"
+        d="
+          M94 96
+          C144 94 186 98 206 82
+          C188 120 116 122 94 96Z
+        "
         fill="#16805F"
         stroke="#09271F"
         strokeWidth="2.75"
         strokeLinejoin="round"
       />
 
-      {/* Tail / Fin */}
+      {/* ======================================================
+          TAIL / FIN
+      ======================================================= */}
       <path
-        d="M28 66
-           C52 82 68 96 70 108
-           C54 94 38 82 28 66Z"
+        d="
+          M28 66
+          C52 82 68 96 70 108
+          C54 94 38 82 28 66Z
+        "
         fill="#16805F"
         stroke="#09271F"
         strokeWidth="2.75"
         strokeLinejoin="round"
       />
 
-      {/* BFF Badge */}
+      {/* ======================================================
+          BFF BADGE
+      ======================================================= */}
       <circle
         cx="78"
         cy="74"
@@ -140,20 +170,43 @@ export const BonlesLogo: React.FC<BonlesLogoProps> = ({
     </svg>
   );
 
+  /* ============================================================
+     MARK ONLY
+  ============================================================ */
+
   if (variant === 'mark') {
     return (
       <div
-        className={`group inline-flex items-center justify-center ${className}`}
+        className={`
+          group
+          inline-flex
+          items-center
+          justify-center
+          ${className}
+        `}
+        aria-label="BONLES"
       >
         {LogoMark}
       </div>
     );
   }
 
+  /* ============================================================
+     BADGE
+  ============================================================ */
+
   if (variant === 'badge') {
     return (
       <div
-        className={`group inline-flex flex-col items-center justify-center ${className}`}
+        className={`
+          group
+          inline-flex
+          flex-col
+          items-center
+          justify-center
+          ${className}
+        `}
+        aria-label="BONLES — Borneo Crafted"
       >
         <div className="relative">
           {LogoMark}
@@ -176,6 +229,7 @@ export const BonlesLogo: React.FC<BonlesLogoProps> = ({
               uppercase
               tracking-[0.18em]
               text-[#123C32]
+              shadow-sm
             "
           >
             Borneo Crafted
@@ -185,10 +239,23 @@ export const BonlesLogo: React.FC<BonlesLogoProps> = ({
     );
   }
 
+  /* ============================================================
+     FULL LOGO
+  ============================================================ */
+
   if (variant === 'full') {
     return (
       <div
-        className={`group flex flex-col items-center text-center ${className} select-none`}
+        className={`
+          group
+          flex
+          flex-col
+          items-center
+          text-center
+          ${className}
+          select-none
+        `}
+        aria-label="BONLES FOOD NUSANTARA"
       >
         {LogoMark}
 
@@ -236,9 +303,10 @@ export const BonlesLogo: React.FC<BonlesLogoProps> = ({
     );
   }
 
-  /*
-   * HORIZONTAL LOCKUP
-   */
+  /* ============================================================
+     HORIZONTAL LOCKUP
+  ============================================================ */
+
   return (
     <div
       className={`
@@ -249,10 +317,11 @@ export const BonlesLogo: React.FC<BonlesLogoProps> = ({
         ${className}
         select-none
       `}
+      aria-label="BONLES FOOD NUSANTARA"
     >
       {LogoMark}
 
-      <div className="flex flex-col">
+      <div className="flex min-w-0 flex-col">
         <div className="flex items-baseline gap-2">
           <span
             className={`
@@ -308,6 +377,7 @@ export const BonlesLogo: React.FC<BonlesLogoProps> = ({
             className="
               h-1
               w-1
+              shrink-0
               rounded-full
               bg-[#C9A45C]
             "
@@ -317,3 +387,5 @@ export const BonlesLogo: React.FC<BonlesLogoProps> = ({
     </div>
   );
 };
+
+export default BonlesLogo;
