@@ -274,6 +274,34 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
     reloadData();
   };
 
+  // Handle permanent product deletion from Google Spreadsheet
+  const handlePermanentDeleteProduct = async (product: Product) => {
+    const type = String(product.DATA_TYPE || 'PRODUCTION').toUpperCase();
+    const confirmed = window.confirm(
+      `Hapus permanen produk "${product.NAME}" (${product.SKU}) dari Google Spreadsheet?\n\n` +
+      `Tipe data: ${type}\n` +
+      `Tindakan ini menghapus baris produk dari Spreadsheet dan tidak dapat dibatalkan.`
+    );
+    if (!confirmed) return;
+
+    try {
+      const result = await store.permanentlyDeleteProduct(product.ID);
+      if (!result.success) {
+        window.alert(`Gagal menghapus produk: ${result.message}`);
+        return;
+      }
+      setBulkSyncResult({
+        success: true,
+        message: result.message,
+        timestamp: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' WIB',
+      });
+      await store.pullAdminDataFromCloudSpreadsheet(authService.getSession()?.email || 'ADMIN');
+      reloadData();
+    } catch (error: any) {
+      window.alert(`Gagal menghapus produk: ${error?.message || String(error)}`);
+    }
+  };
+
   // Handle Save Category
   const handleSaveCategorySubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -875,6 +903,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                         GALLERY_3_URL: '',
                         FEATURED: false,
                         ACTIVE: true,
+                        DATA_TYPE: 'PRODUCTION',
                         CREATED_AT: new Date().toISOString(),
                         UPDATED_AT: new Date().toISOString(),
                       };
@@ -980,15 +1009,24 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                             </span>
                           </td>
                           <td className="p-3 text-right">
-                            <button
-                              onClick={() => {
-                                setEditingProduct({ ...p });
-                                setIsProductModalOpen(true);
-                              }}
-                              className="bg-[#061B16] hover:bg-[#103A2E] text-[#C9A45C] border border-[#C9A45C]/40 px-2.5 py-1 rounded-sm text-[11px] font-medium transition-colors cursor-pointer"
-                            >
-                              Edit
-                            </button>
+                            <div className="flex items-center justify-end gap-1.5">
+                              <button
+                                onClick={() => {
+                                  setEditingProduct({ ...p });
+                                  setIsProductModalOpen(true);
+                                }}
+                                className="bg-[#061B16] hover:bg-[#103A2E] text-[#C9A45C] border border-[#C9A45C]/40 px-2.5 py-1 rounded-sm text-[11px] font-medium transition-colors cursor-pointer"
+                              >
+                                Edit
+                              </button>
+                              <button
+                                onClick={() => handlePermanentDeleteProduct(p)}
+                                className="bg-red-950/50 hover:bg-red-900/70 text-red-300 border border-red-800/40 px-2.5 py-1 rounded-sm text-[11px] font-medium transition-colors cursor-pointer"
+                                title="Hapus permanen dari Google Spreadsheet"
+                              >
+                                Hapus
+                              </button>
+                            </div>
                           </td>
                         </tr>
                       ))}
