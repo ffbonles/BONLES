@@ -1,5 +1,12 @@
 import React from 'react';
-import { ShoppingBag, Eye, Star, AlertTriangle, CheckCircle2, Ban, Plus } from 'lucide-react';
+import {
+  ShoppingBag,
+  Eye,
+  Star,
+  AlertTriangle,
+  CheckCircle2,
+  Ban,
+} from 'lucide-react';
 import { Product } from '../types';
 
 interface ProductCardProps {
@@ -14,147 +21,468 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   onAddToCart,
 }) => {
   const isOutOfStock = product.STOCK <= 0;
-  const isLowStock = product.STOCK > 0 && product.STOCK <= 5;
-  const hasDiscount = product.DISCOUNT_PRICE > 0 && product.DISCOUNT_PRICE < product.PRICE;
-  const effectivePrice = hasDiscount ? product.DISCOUNT_PRICE : product.PRICE;
+  const isLowStock =
+    product.STOCK > 0 && product.STOCK <= 5;
 
-  const fallbackImage = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80';
+  const hasDiscount =
+    product.DISCOUNT_PRICE > 0 &&
+    product.DISCOUNT_PRICE < product.PRICE;
+
+  const effectivePrice = hasDiscount
+    ? product.DISCOUNT_PRICE
+    : product.PRICE;
+
+  const fallbackImage =
+    'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80';
 
   return (
-    <div
+    <article
       id={`product-card-${product.SKU}`}
-      className="group bg-white border border-orange-200/80 hover:border-orange-400 rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:shadow-xl hover:shadow-orange-500/15 active:scale-[0.99]"
+      className="
+        group
+        bonles-card
+        overflow-hidden
+        flex
+        flex-col
+        bg-[#FCFAF5]
+      "
     >
-      {/* Image Container with responsive mobile aspect ratio */}
-      <div className="relative aspect-4/3 sm:aspect-4/3 w-full bg-orange-50/50 overflow-hidden">
+      {/* =====================================================
+          IMAGE
+          ===================================================== */}
+      <div
+        className="
+          relative
+          aspect-[4/4.3]
+          w-full
+          overflow-hidden
+          bg-[#F3EDE0]
+        "
+      >
         <img
-          src={product.MAIN_IMAGE_URL || fallbackImage}
+          src={
+            product.MAIN_IMAGE_URL ||
+            fallbackImage
+          }
           alt={product.NAME}
           loading="lazy"
           referrerPolicy="no-referrer"
           onError={(e) => {
-            (e.target as HTMLImageElement).src = fallbackImage;
+            (e.target as HTMLImageElement).src =
+              fallbackImage;
           }}
-          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+          className="
+            bonles-image
+            object-center
+            transition-transform
+            duration-700
+            ease-out
+            group-hover:scale-[1.035]
+          "
         />
 
-        {/* Soft Warm Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-stone-950/40 via-transparent to-transparent opacity-40 group-hover:opacity-20 transition-opacity" />
+        {/* Soft premium image overlay */}
+        <div
+          className="
+            pointer-events-none
+            absolute
+            inset-0
+            bg-gradient-to-t
+            from-[#09271F]/25
+            via-transparent
+            to-transparent
+            opacity-50
+          "
+        />
 
-        {/* Badges Top Left */}
-        <div className="absolute top-2 sm:top-2.5 left-2 sm:left-2.5 flex flex-col gap-1 z-10">
+        {/* =================================================
+            FEATURE BADGES
+            ================================================= */}
+        <div
+          className="
+            absolute
+            left-3
+            top-3
+            z-10
+            flex
+            flex-col
+            gap-1.5
+          "
+        >
           {product.FEATURED && (
-            <span className="inline-flex items-center gap-1 bg-gradient-to-r from-[#FFB703] to-[#FB8500] text-[#2B1408] text-[9px] sm:text-[10px] font-extrabold px-2 py-0.5 rounded-md tracking-wider uppercase shadow-sm">
-              <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-[#2B1408]" />
+            <span
+              className="
+                inline-flex
+                items-center
+                gap-1.5
+                border
+                border-[#C9A45C]/50
+                bg-[#FCFAF5]/95
+                px-2.5
+                py-1
+                text-[9px]
+                font-bold
+                uppercase
+                tracking-[0.12em]
+                text-[#123C32]
+                backdrop-blur-sm
+              "
+            >
+              <Star
+                className="h-3 w-3 fill-[#C9A45C] text-[#C9A45C]"
+              />
+
               Unggulan
             </span>
           )}
+
           {hasDiscount && (
-            <span className="inline-flex items-center bg-gradient-to-r from-[#E63946] to-[#D90429] text-white text-[9px] sm:text-[10px] font-extrabold px-2 py-0.5 rounded-md tracking-wider uppercase shadow-sm">
-              Hemat Rp {(product.PRICE - product.DISCOUNT_PRICE).toLocaleString('id-ID')}
+            <span
+              className="
+                inline-flex
+                items-center
+                border
+                border-[#B83B32]/20
+                bg-[#B83B32]/95
+                px-2.5
+                py-1
+                text-[9px]
+                font-bold
+                uppercase
+                tracking-[0.1em]
+                text-white
+              "
+            >
+              Hemat Rp{' '}
+              {(
+                product.PRICE -
+                product.DISCOUNT_PRICE
+              ).toLocaleString('id-ID')}
             </span>
           )}
         </div>
 
-        {/* Stock Badge Top Right */}
-        <div className="absolute top-2 sm:top-2.5 right-2 sm:right-2.5 z-10">
+        {/* =================================================
+            STOCK STATUS
+            ================================================= */}
+        <div
+          className="
+            absolute
+            right-3
+            top-3
+            z-10
+          "
+        >
           {isOutOfStock ? (
-            <span className="inline-flex items-center gap-1 bg-stone-900/90 text-stone-200 text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-md shadow-xs">
-              <Ban className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-red-400" />
-              HABIS
+            <span
+              className="
+                inline-flex
+                items-center
+                gap-1.5
+                border
+                border-white/20
+                bg-[#09271F]/90
+                px-2.5
+                py-1
+                text-[9px]
+                font-bold
+                uppercase
+                tracking-[0.12em]
+                text-white
+                backdrop-blur-sm
+              "
+            >
+              <Ban className="h-3 w-3" />
+              Habis
             </span>
           ) : isLowStock ? (
-            <span className="inline-flex items-center gap-1 bg-amber-100/95 border border-amber-300 text-amber-900 text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-md shadow-xs animate-pulse">
-              <AlertTriangle className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-amber-600" />
+            <span
+              className="
+                inline-flex
+                items-center
+                gap-1.5
+                border
+                border-[#C9A45C]/50
+                bg-[#FCFAF5]/95
+                px-2.5
+                py-1
+                text-[9px]
+                font-bold
+                uppercase
+                tracking-[0.12em]
+                text-[#9E793A]
+              "
+            >
+              <AlertTriangle className="h-3 w-3" />
+
               Sisa {product.STOCK}
             </span>
           ) : (
-            <span className="inline-flex items-center gap-1 bg-white/95 border border-emerald-200 text-emerald-700 text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-md shadow-xs">
-              <CheckCircle2 className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-emerald-600" />
-              Stok: {product.STOCK}
+            <span
+              className="
+                inline-flex
+                items-center
+                gap-1.5
+                border
+                border-[#3E7657]/20
+                bg-[#FCFAF5]/95
+                px-2.5
+                py-1
+                text-[9px]
+                font-bold
+                uppercase
+                tracking-[0.12em]
+                text-[#3E7657]
+              "
+            >
+              <CheckCircle2 className="h-3 w-3" />
+
+              Tersedia
             </span>
           )}
         </div>
 
-        {/* Quick View Button on Desktop Hover */}
+        {/* =================================================
+            DESKTOP QUICK VIEW
+            ================================================= */}
         <button
           onClick={() => onViewDetail(product)}
-          className="hidden md:flex absolute inset-0 items-center justify-center bg-stone-900/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200 cursor-pointer"
-          aria-label="Lihat Detail Produk"
+          className="
+            absolute
+            inset-0
+            hidden
+            cursor-pointer
+            items-center
+            justify-center
+            bg-[#09271F]/25
+            opacity-0
+            transition-opacity
+            duration-300
+            group-hover:opacity-100
+            md:flex
+          "
+          aria-label={`Lihat detail ${product.NAME}`}
         >
-          <span className="bg-white/95 text-[#2B1408] border border-orange-300 px-3.5 py-1.5 rounded-xl text-xs tracking-wider uppercase font-bold flex items-center gap-1.5 shadow-lg">
-            <Eye className="w-3.5 h-3.5 text-[#FF5500]" />
+          <span
+            className="
+              inline-flex
+              items-center
+              gap-2
+              border
+              border-[#FCFAF5]/60
+              bg-[#FCFAF5]/95
+              px-4
+              py-2.5
+              text-[10px]
+              font-bold
+              uppercase
+              tracking-[0.14em]
+              text-[#09271F]
+              shadow-lg
+              transition-transform
+              duration-300
+              group-hover:translate-y-0
+              translate-y-2
+            "
+          >
+            <Eye className="h-3.5 w-3.5 text-[#B18B4B]" />
+
             Lihat Detail
           </span>
         </button>
       </div>
 
-      {/* Content Info */}
-      <div className="p-3 sm:p-4 flex-1 flex flex-col justify-between space-y-2 sm:space-y-3 bg-white">
+      {/* =====================================================
+          CONTENT
+          ===================================================== */}
+      <div
+        className="
+          flex
+          flex-1
+          flex-col
+          justify-between
+          gap-5
+          p-4
+          sm:p-5
+        "
+      >
         <div>
-          <div className="flex items-center justify-between text-[10px] sm:text-[11px] text-stone-500 mb-1">
-            <span className="uppercase tracking-wider text-[#EA580C] font-extrabold truncate max-w-[120px]">
+          {/* Category */}
+          <div
+            className="
+              mb-2
+              flex
+              items-center
+              justify-between
+              gap-3
+            "
+          >
+            <span
+              className="
+                truncate
+                text-[9px]
+                font-bold
+                uppercase
+                tracking-[0.16em]
+                text-[#B18B4B]
+              "
+            >
               {product.CATEGORY_NAME}
             </span>
-            <span className="font-mono text-stone-400 text-[10px] font-medium">{product.SKU}</span>
+
+            <span
+              className="
+                shrink-0
+                font-mono
+                text-[9px]
+                tracking-wide
+                text-[#9BA29D]
+              "
+            >
+              {product.SKU}
+            </span>
           </div>
 
+          {/* Product name */}
           <h3
             onClick={() => onViewDetail(product)}
-            className="text-xs sm:text-sm font-bold text-[#2B1408] group-hover:text-[#FF5500] transition-colors line-clamp-2 cursor-pointer leading-snug"
             title={product.NAME}
+            className="
+              cursor-pointer
+              font-display
+              text-[19px]
+              font-medium
+              leading-[1.15]
+              tracking-[-0.02em]
+              text-[#09271F]
+              transition-colors
+              duration-300
+              group-hover:text-[#185043]
+              line-clamp-2
+            "
           >
             {product.NAME}
           </h3>
 
-          <div className="text-[11px] text-stone-500 mt-1 flex items-center gap-1">
-            <span>Kemasan:</span>
-            <span className="text-stone-800 font-semibold">{product.WEIGHT || '100g'}</span>
+          {/* Weight */}
+          <div
+            className="
+              mt-2.5
+              flex
+              items-center
+              gap-2
+              text-[11px]
+              text-[#7C8580]
+            "
+          >
+            <span>Net weight</span>
+
+            <span
+              className="
+                h-1
+                w-1
+                rounded-full
+                bg-[#C9A45C]
+              "
+            />
+
+            <span className="font-semibold text-[#4B554F]">
+              {product.WEIGHT || '100g'}
+            </span>
           </div>
         </div>
 
-        {/* Pricing & Icon Action Buttons */}
-        <div className="pt-2 border-t border-orange-100">
-          <div className="flex items-baseline gap-1.5 mb-2.5">
-            <span className="text-base sm:text-lg font-black text-[#EA3A1E] tracking-tight">
-              Rp {effectivePrice.toLocaleString('id-ID')}
-            </span>
-            {hasDiscount && (
-              <span className="text-[10px] sm:text-xs text-stone-400 line-through font-medium">
-                Rp {product.PRICE.toLocaleString('id-ID')}
+        {/* =================================================
+            PRICE + ACTION
+            ================================================= */}
+        <div>
+          <div
+            className="
+              mb-4
+              border-t
+              border-[#123C32]/10
+              pt-4
+            "
+          >
+            <div className="flex items-baseline gap-2">
+              <span
+                className="
+                  font-sans
+                  text-[18px]
+                  font-bold
+                  tracking-[-0.02em]
+                  text-[#123C32]
+                "
+              >
+                Rp{' '}
+                {effectivePrice.toLocaleString(
+                  'id-ID'
+                )}
               </span>
-            )}
+
+              {hasDiscount && (
+                <span
+                  className="
+                    text-[10px]
+                    font-medium
+                    text-[#9BA29D]
+                    line-through
+                  "
+                >
+                  Rp{' '}
+                  {product.PRICE.toLocaleString(
+                    'id-ID'
+                  )}
+                </span>
+              )}
+            </div>
           </div>
 
-          {/* Touch-Friendly Icon Buttons */}
+          {/* Actions */}
           <div className="grid grid-cols-2 gap-2">
-            {/* Detail Icon Button */}
             <button
               onClick={() => onViewDetail(product)}
-              className="w-full bg-orange-50 hover:bg-orange-100 active:bg-orange-200 text-[#4A2D1B] hover:text-[#2B1408] border border-orange-200 py-2 sm:py-2.5 rounded-xl text-xs tracking-wider uppercase font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+              className="
+                bonles-btn
+                bonles-btn-outline
+                min-h-[44px]
+                w-full
+                px-3
+                text-[10px]
+              "
               aria-label={`Detail ${product.NAME}`}
             >
-              <Eye className="w-3.5 h-3.5 text-[#FF7B00]" />
-              <span className="text-[11px] sm:text-xs font-bold">Detail</span>
+              <Eye className="h-3.5 w-3.5" />
+
+              Detail
             </button>
 
-            {/* Add to Cart Icon Button */}
             <button
               onClick={() => onAddToCart(product)}
               disabled={isOutOfStock}
-              className={`w-full py-2 sm:py-2.5 rounded-xl text-xs tracking-wider uppercase font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
-                isOutOfStock
-                  ? 'bg-stone-200 text-stone-400 border border-stone-300 cursor-not-allowed'
-                  : 'bg-gradient-to-r from-[#FF5500] via-[#FF7B00] to-[#FFAA00] hover:from-[#FF4500] hover:to-[#FF9500] active:scale-95 text-white shadow-sm hover:shadow-md hover:shadow-orange-500/25'
-              }`}
+              className={`
+                bonles-btn
+                min-h-[44px]
+                w-full
+                px-3
+                text-[10px]
+                ${
+                  isOutOfStock
+                    ? 'cursor-not-allowed border border-[#D8D8D2] bg-[#E9E6DE] text-[#9BA29D]'
+                    : 'bonles-btn-primary'
+                }
+              `}
               aria-label={`Tambah ${product.NAME} ke Keranjang`}
             >
-              <ShoppingBag className="w-3.5 h-3.5" />
-              <span className="text-[11px] sm:text-xs font-bold">{isOutOfStock ? 'Habis' : '+ Pesan'}</span>
+              <ShoppingBag className="h-3.5 w-3.5" />
+
+              {isOutOfStock
+                ? 'Habis'
+                : 'Tambah'}
             </button>
           </div>
         </div>
       </div>
-    </div>
+    </article>
   );
 };
