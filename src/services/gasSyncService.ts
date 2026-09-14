@@ -20,8 +20,17 @@ export interface SyncStatus {
 
 class GasSyncService {
   private defaultDeploymentId = 'AKfycbwKxzeSFQPgt2K8alCb7e0GiPdsp3_F2v2MrJD8zhnloXy7hiWhlr9Wt6zOZkFOne5z';
-  private inMemoryUrl: string = 'https://script.google.com/macros/s/AKfycbwKxzeSFQPgt2K8alCb7e0GiPdsp3_F2v2MrJD8zhnloXy7hiWhlr9Wt6zOZkFOne5z/exec';
+  private inMemoryUrl: string = '';
+  private authToken: string | null = null;
   
+  public setAuthToken(token: string | null): void {
+    this.authToken = token?.trim() || null;
+  }
+
+  public getAuthToken(): string | null {
+    return this.authToken;
+  }
+
   public getWebAppUrl(): string {
     if (this.inMemoryUrl && !this.inMemoryUrl.includes('AKfycbz1Trz8B-_7yWWEOBTQOGeP6QOGP03RER4RMdxkfSDqr8V2XCO0wxYZ2PhOfyVQFISkvw')) {
       return this.inMemoryUrl;
@@ -43,7 +52,7 @@ class GasSyncService {
    * Helper to send POST request to Google Apps Script
    * Uses text/plain payload to bypass CORS preflight issues across all browsers (Desktop, Tablet, Mobile/HP)
    */
-  private async postToGas<T>(payload: any): Promise<GasApiResponse<T>> {
+  private async postToGas<T>(payload: any, requiresAuth = false): Promise<GasApiResponse<T>> {
     const url = this.getWebAppUrl();
     if (!url) {
       return {
@@ -53,6 +62,13 @@ class GasSyncService {
     }
 
     try {
+      const requestPayload = requiresAuth
+        ? { ...payload, token: payload.token || this.authToken }
+        : payload;
+      if (requiresAuth && !requestPayload.token) {
+        return { success: false, message: 'Sesi admin tidak tersedia. Silakan login kembali.', error: 'AUTH_REQUIRED' };
+      }
+
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 18000);
 
@@ -62,7 +78,7 @@ class GasSyncService {
         headers: {
           'Content-Type': 'text/plain;charset=utf-8',
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(requestPayload),
         signal: controller.signal,
       });
 
@@ -108,7 +124,7 @@ class GasSyncService {
    * Helper to send GET request to Google Apps Script
    * Includes fallback and safe HTML error diagnosis for desktop, tablet, and mobile browsers
    */
-  private async getFromGas<T>(action: string, params: Record<string, string> = {}): Promise<GasApiResponse<T>> {
+  private async getFromGas<T>(action: string, params: Record<string, string> = {}, requiresAuth = false): Promise<GasApiResponse<T>> {
     const baseUrl = this.getWebAppUrl();
     if (!baseUrl) {
       return {
@@ -117,7 +133,10 @@ class GasSyncService {
       };
     }
 
-    const queryParams = new URLSearchParams({ action, ...params }).toString();
+    if (requiresAuth && !this.authToken) {
+      return { success: false, message: 'Sesi admin tidak tersedia. Silakan login kembali.', error: 'AUTH_REQUIRED' };
+    }
+    const queryParams = new URLSearchParams({ action, ...params, ...(requiresAuth && this.authToken ? { token: this.authToken } : {}) }).toString();
     const fullUrl = `${baseUrl}${baseUrl.includes('?') ? '&' : '?'}${queryParams}`;
 
     try {
@@ -171,43 +190,14 @@ class GasSyncService {
    */
   async testConnection(): Promise<{ success: boolean; message: string; details?: any }> {
     const url = this.getWebAppUrl();
-    if (!url) {
-      return {
-        success: false,
-        message: 'URL Web App kosong. Masukkan Deployment ID atau URL Web App terlebih dahulu.',
-      };
-    }
-
+    if (!url) return { success: false, message: 'URL Web App belum dikonfigurasi.' };
     try {
-      const res = await this.getFromGas('getDashboardSummary');
-      if (res && (res.success || res.data)) {
-        return {
-          success: true,
-          message: 'Koneksi ke Google Apps Script & Spreadsheet BERHASIL aktif dan terhubung!',
-          details: res.data || res,
-        };
-      } else {
-        // Try fallback post ping
-        const postRes = await this.postToGas({ action: 'ping' });
-        if (postRes.success) {
-          return {
-            success: true,
-            message: 'Koneksi ke Google Apps Script Web App BERHASIL (via POST)!',
-            details: postRes,
-          };
-        }
-        return {
-          success: false,
-          message: res.message || 'Google Apps Script merespons tetapi mengembalikan status gagal.',
-          details: res,
-        };
-      }
+      const res = await this.postToGas({ action: 'ping' });
+      return res.success
+        ? { success: true, message: 'Google Apps Script Web App aktif.', details: res.data || res }
+        : { success: false, message: res.message || 'Web App merespons dengan status gagal.', details: res };
     } catch (err: any) {
-      return {
-        success: false,
-        message: `Gagal menghubungi Google Apps Script: ${err.message}. Pastikan deployment diset 'Who has access: Anyone'.`,
-        details: err.toString(),
-      };
+      return { success: false, message: err?.message || 'Gagal menghubungi Google Apps Script.', details: err };
     }
   }
 
@@ -215,7 +205,7 @@ class GasSyncService {
    * Initialize Spreadsheet & Google Drive Folders
    */
   async initializeSpreadsheet(): Promise<GasApiResponse> {
-    return this.postToGas({ action: 'init' });
+    return this.postToGas({ action: 'init' }, true);
   }
 
   /**
@@ -234,9 +224,19 @@ class GasSyncService {
     return this.postToGas({
       action: 'syncAllData',
       payload: data,
-    });
+    }, true);
   }
 
+
+  async pullPublicData(): Promise<GasApiResponse<any>> {
+    try {
+      const getRes = await this.getFromGas<any>('publicData');
+      if (getRes && (getRes.success || getRes.data)) return getRes;
+    } catch {
+      // Fall through to POST for networks that interfere with GET redirects.
+    }
+    return this.postToGas<any>({ action: 'publicData' });
+  }
   /**
    * Pull ALL data from Google Sheets into local memory with resilient GET and POST fallback
    */
@@ -251,7 +251,7 @@ class GasSyncService {
   }>> {
     // 1. Try GET request first
     try {
-      const getRes = await this.getFromGas<any>('syncAll');
+      const getRes = await this.getFromGas<any>('syncAll', {}, true);
       if (getRes && (getRes.success || getRes.data)) {
         return getRes;
       }
@@ -261,7 +261,7 @@ class GasSyncService {
 
     // 2. Fallback to POST request
     try {
-      const postRes = await this.postToGas<any>({ action: 'syncAll' });
+      const postRes = await this.postToGas<any>({ action: 'syncAll' }, true);
       if (postRes && (postRes.success || postRes.data)) {
         return postRes;
       }
@@ -283,7 +283,7 @@ class GasSyncService {
       action: 'saveProduct',
       product: product,
       imageBase64: base64Image,
-    });
+    }, true);
   }
 
   /**
@@ -292,8 +292,8 @@ class GasSyncService {
   async syncCategory(category: Category): Promise<GasApiResponse> {
     return this.postToGas({
       action: 'saveCategory',
-      category: category,
-    });
+      category,
+    }, true);
   }
 
   /**
@@ -302,8 +302,8 @@ class GasSyncService {
   async syncBanner(banner: Banner): Promise<GasApiResponse> {
     return this.postToGas({
       action: 'saveBanner',
-      banner: banner,
-    });
+      banner,
+    }, true);
   }
 
   /**
@@ -312,8 +312,8 @@ class GasSyncService {
   async syncTestimonial(testimonial: Testimonial): Promise<GasApiResponse> {
     return this.postToGas({
       action: 'saveTestimonial',
-      testimonial: testimonial,
-    });
+      testimonial,
+    }, true);
   }
 
   /**
@@ -322,8 +322,8 @@ class GasSyncService {
   async syncSettings(settings: Setting[]): Promise<GasApiResponse> {
     return this.postToGas({
       action: 'saveSettings',
-      settings: settings,
-    });
+      settings,
+    }, true);
   }
 
   /**
@@ -339,17 +339,31 @@ class GasSyncService {
     return this.postToGas({
       action: 'uploadImage',
       ...params,
-    });
+    }, true);
   }
 
   /**
    * Record new Order to Google Sheets
    */
   async syncOrder(orderPayload: any): Promise<GasApiResponse> {
+    const action = orderPayload?.action || 'createOrder';
+    const requiresAuth = action !== 'createOrder';
     return this.postToGas({
-      action: 'createOrder',
       ...orderPayload,
-    });
+      action,
+    }, requiresAuth);
+  }
+
+  async loginAdmin(username: string, password: string): Promise<GasApiResponse<{ token: string; email: string; role: string; name: string }>> {
+    return this.postToGas({ action: 'adminLogin', username, password });
+  }
+
+  async logoutAdmin(token?: string): Promise<GasApiResponse> {
+    return this.postToGas({ action: 'adminLogout', token: token || this.authToken });
+  }
+
+  async pullAdminData(): Promise<GasApiResponse<any>> {
+    return this.getFromGas<any>('adminData', {}, true);
   }
 }
 
