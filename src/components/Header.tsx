@@ -115,48 +115,57 @@ export const Header: React.FC<HeaderProps> = ({
     <header
       className="
         sticky top-0 z-40
-        bg-white/95
+        border-b border-[#EED6C8]
+        bg-[#FFFDFC]/95
         backdrop-blur-xl
-        border-b border-[#F1D5C8]/80
+        shadow-[0_4px_24px_rgba(127,23,18,0.04)]
       "
     >
+
       {/* =====================================================
           TOP MICRO BAR
-          ===================================================== */}
+      ====================================================== */}
+
       <div
         className="
-          bg-gradient-to-r from-[#7A0F18] via-[#E64A19] to-[#FFC107]
-          border-b border-white/20
-          px-3 sm:px-6
-          py-2
-          text-[10px] sm:text-[11px]
-          tracking-wide
+          border-b border-white/15
+          bg-gradient-to-r
+          from-[#74140F]
+          via-[#D92D20]
+          to-[#F97316]
+          px-3 py-2
           text-white
+          sm:px-6
         "
       >
         <div
           className="
-            max-w-7xl mx-auto
-            flex items-center
-            justify-between
+            mx-auto
+            flex max-w-7xl
+            items-center justify-between
             gap-3
           "
         >
+
           {/* Brand Message */}
-          <div className="flex items-center gap-2 min-w-0">
+          <div className="flex min-w-0 items-center gap-2">
+
             <Sparkles
               className="
-                w-3.5 h-3.5
-                text-[#FFD54F]
+                h-3.5 w-3.5
                 shrink-0
+                text-[#FFD166]
               "
             />
 
             <span
               className="
-                font-medium
                 truncate
+                text-[10px]
+                font-semibold
+                tracking-wide
                 text-white
+                sm:text-[11px]
               "
             >
               {tagline}
@@ -164,8 +173,9 @@ export const Header: React.FC<HeaderProps> = ({
 
             <span
               className="
-                hidden md:inline
+                hidden
                 text-white/40
+                md:inline
               "
             >
               •
@@ -173,9 +183,12 @@ export const Header: React.FC<HeaderProps> = ({
 
             <span
               className="
-                hidden md:inline
+                hidden
                 truncate
+                text-[10px]
                 text-white/75
+                md:inline
+                sm:text-[11px]
               "
             >
               {promoText}
@@ -183,25 +196,28 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
 
           {/* GAS Status */}
-          <div className="flex items-center gap-1.5 shrink-0">
+          <div className="flex shrink-0 items-center gap-1.5">
+
             {gasStatus.isSyncing ? (
+
               <span
                 className="
-                  inline-flex items-center gap-1.5
-                  px-2.5 py-1
+                  inline-flex
+                  items-center gap-1.5
                   rounded-full
                   border border-white/25
                   bg-white/10
-                  text-white/85
+                  px-2.5 py-1
                   font-mono
                   text-[9px]
+                  text-white/90
                 "
               >
                 <RefreshCw
                   className="
-                    w-2.5 h-2.5
+                    h-2.5 w-2.5
                     animate-spin
-                    text-[#FFD54F]
+                    text-[#FFD166]
                   "
                 />
 
@@ -209,26 +225,29 @@ export const Header: React.FC<HeaderProps> = ({
                   Memuat Spreadsheet...
                 </span>
               </span>
+
             ) : gasStatus.connected ? (
+
               <span
                 className="
-                  inline-flex items-center gap-1.5
-                  px-2.5 py-1
+                  inline-flex
+                  items-center gap-1.5
                   rounded-full
-                  border border-white/30
-                  bg-black/15
-                  text-white/85
+                  border border-white/25
+                  bg-black/10
+                  px-2.5 py-1
                   font-mono
                   text-[9px]
+                  text-white/90
                 "
                 title={`Database tersinkronisasi via Google Apps Script (${gasStatus.lastSyncTime || 'Aktif'})`}
               >
                 <span
                   className="
-                    w-1.5 h-1.5
-                    rounded-full
-                    bg-[#8FBF9D]
+                    h-1.5 w-1.5
                     animate-pulse
+                    rounded-full
+                    bg-[#86EFAC]
                   "
                 />
 
@@ -236,30 +255,33 @@ export const Header: React.FC<HeaderProps> = ({
                   Spreadsheet Live
                 </span>
               </span>
+
             ) : (
+
               <button
                 onClick={() =>
                   store.pullFromCloudSpreadsheet('HEADER_RETRY')
                 }
                 className="
-                  inline-flex items-center gap-1.5
-                  px-2.5 py-1
+                  inline-flex
+                  items-center gap-1.5
                   rounded-full
                   border border-white/25
                   bg-white/10
-                  hover:bg-white/15
-                  text-white/85
-                  transition-colors
-                  cursor-pointer
+                  px-2.5 py-1
                   font-mono
                   text-[9px]
+                  text-white/90
+                  transition-all
+                  hover:bg-white/20
+                  cursor-pointer
                 "
                 title="Muat ulang data dari Spreadsheet"
               >
                 <Database
                   className="
-                    w-2.5 h-2.5
-                    text-[#FFD54F]
+                    h-2.5 w-2.5
+                    text-[#FFD166]
                   "
                 />
 
@@ -268,54 +290,66 @@ export const Header: React.FC<HeaderProps> = ({
                 </span>
               </button>
             )}
+
           </div>
         </div>
       </div>
 
       {/* =====================================================
           MAIN NAVBAR
-          ===================================================== */}
+      ====================================================== */}
+
       <div
         className="
-          max-w-7xl mx-auto
-          px-3 sm:px-6 lg:px-8
-          h-[68px] sm:h-[82px]
-          flex items-center
+          mx-auto
+          flex
+          h-[68px]
+          max-w-7xl
+          items-center
           justify-between
-          gap-3 sm:gap-5
+          gap-3
+          px-3
+          sm:h-[80px]
+          sm:gap-5
+          sm:px-6
+          lg:px-8
         "
       >
-        {/* =================================================
-            LEFT
-            ================================================= */}
+
+        {/* LEFT */}
         <div className="flex items-center gap-2.5 sm:gap-4">
-          {/* Menu Button */}
+
+          {/* Menu */}
           <button
             onClick={onToggleMenu}
             id="btn-header-menu"
             className={`
-              w-10 h-10
-              sm:w-11 sm:h-11
-              rounded-full
-              flex items-center justify-center
+              flex
+              h-10 w-10
+              items-center justify-center
+              rounded-xl
               border
               transition-all duration-300
               cursor-pointer
+              active:scale-95
+              sm:h-11 sm:w-11
               ${
                 isMenuOpen
                   ? `
-                    bg-[#7A0F18]
+                    border-[#74140F]
+                    bg-gradient-to-br
+                    from-[#74140F]
+                    to-[#D92D20]
                     text-white
-                    border-[#7A0F18]
                     shadow-lg
-                    shadow-[#E64A19]/15
+                    shadow-[#D92D20]/20
                   `
                   : `
-                    bg-[#FFF4E8]
-                    text-[#8A1C25]
-                    border-[#F0CFC2]
-                    hover:bg-[#FFE4D1]
-                    hover:border-[#F59E0B]
+                    border-[#F0D2C2]
+                    bg-[#FFF5EF]
+                    text-[#9F2118]
+                    hover:border-[#F97316]
+                    hover:bg-[#FFE9DD]
                   `
               }
             `}
@@ -327,9 +361,9 @@ export const Header: React.FC<HeaderProps> = ({
             title="Menu Navigasi"
           >
             {isMenuOpen ? (
-              <X className="w-5 h-5" />
+              <X className="h-5 w-5" />
             ) : (
-              <Menu className="w-5 h-5" />
+              <Menu className="h-5 w-5" />
             )}
           </button>
 
@@ -337,10 +371,11 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             onClick={onNavigateHome}
             className="
-              flex items-center
+              flex
+              items-center
               text-left
-              focus:outline-none
               cursor-pointer
+              focus:outline-none
             "
             aria-label="Kembali ke Beranda BONLES"
           >
@@ -360,19 +395,23 @@ export const Header: React.FC<HeaderProps> = ({
               />
             </div>
           </button>
+
         </div>
 
         {/* =================================================
             DESKTOP NAVIGATION
-            ================================================= */}
+        ================================================== */}
+
         <nav
           className="
-            hidden xl:flex
+            hidden
             items-center
             gap-5
+            xl:flex
             2xl:gap-7
           "
         >
+
           <button
             onClick={() =>
               scrollToSection('catalog')
@@ -382,27 +421,25 @@ export const Header: React.FC<HeaderProps> = ({
               flex items-center gap-2
               py-2
               text-[11px]
+              font-bold
               uppercase
               tracking-[0.14em]
-              font-semibold
-              text-[#303030]
-              hover:text-[#C2410C]
+              text-[#463C38]
               transition-colors
+              hover:text-[#C2410C]
               cursor-pointer
             "
           >
             <LayoutGrid
               className="
-                w-3.5 h-3.5
-                text-[#E05A2A]
-                group-hover:text-[#C2410C]
+                h-3.5 w-3.5
+                text-[#E85D04]
                 transition-colors
+                group-hover:text-[#C2410C]
               "
             />
 
-            <span>
-              Katalog
-            </span>
+            <span>Katalog</span>
           </button>
 
           <button
@@ -414,27 +451,25 @@ export const Header: React.FC<HeaderProps> = ({
               flex items-center gap-2
               py-2
               text-[11px]
+              font-bold
               uppercase
               tracking-[0.14em]
-              font-semibold
-              text-[#303030]
-              hover:text-[#C2410C]
+              text-[#463C38]
               transition-colors
+              hover:text-[#C2410C]
               cursor-pointer
             "
           >
             <BookOpen
               className="
-                w-3.5 h-3.5
-                text-[#E05A2A]
-                group-hover:text-[#C2410C]
+                h-3.5 w-3.5
+                text-[#E85D04]
                 transition-colors
+                group-hover:text-[#C2410C]
               "
             />
 
-            <span>
-              Our Story
-            </span>
+            <span>Our Story</span>
           </button>
 
           <button
@@ -446,50 +481,51 @@ export const Header: React.FC<HeaderProps> = ({
               flex items-center gap-2
               py-2
               text-[11px]
+              font-bold
               uppercase
               tracking-[0.14em]
-              font-semibold
-              text-[#303030]
-              hover:text-[#C2410C]
+              text-[#463C38]
               transition-colors
+              hover:text-[#C2410C]
               cursor-pointer
             "
           >
             <ShieldCheck
               className="
-                w-3.5 h-3.5
-                text-[#E05A2A]
-                group-hover:text-[#C2410C]
+                h-3.5 w-3.5
+                text-[#E85D04]
                 transition-colors
+                group-hover:text-[#C2410C]
               "
             />
 
-            <span>
-              Tentang Kami
-            </span>
+            <span>Tentang Kami</span>
           </button>
+
         </nav>
 
         {/* =================================================
-            SEARCH DESKTOP
-            ================================================= */}
+            DESKTOP SEARCH
+        ================================================== */}
+
         <div
           className="
-            hidden lg:flex
-            items-center
-            flex-1
-            max-w-[250px]
-            xl:max-w-xs
             relative
+            hidden
+            max-w-[250px]
+            flex-1
+            items-center
+            lg:flex
+            xl:max-w-xs
           "
         >
           <Search
             className="
-              w-4 h-4
-              text-[#7A7773]
+              pointer-events-none
               absolute
               left-3.5
-              pointer-events-none
+              h-4 w-4
+              text-[#91847D]
             "
           />
 
@@ -502,21 +538,21 @@ export const Header: React.FC<HeaderProps> = ({
             }
             className="
               w-full
-              bg-[#FFF9F4]
-              border border-[#F0CFC2]
               rounded-full
+              border border-[#EED6C8]
+              bg-[#FFF9F4]
+              py-2.5
               pl-10
               pr-8
-              py-2.5
               text-xs
-              text-[#2B2522]
-              placeholder-[#7C8580]
-              focus:outline-none
-              focus:border-[#E64A19]
-              focus:ring-2
-              focus:ring-[#F59E0B]/20
-              transition-all
               font-medium
+              text-[#302824]
+              placeholder-[#91847D]
+              transition-all
+              focus:border-[#F04438]
+              focus:outline-none
+              focus:ring-2
+              focus:ring-[#F97316]/15
             "
           />
 
@@ -527,26 +563,24 @@ export const Header: React.FC<HeaderProps> = ({
               }
               className="
                 absolute right-3
-                text-[#7A7773]
-                hover:text-[#7A0F18]
                 cursor-pointer
+                text-[#91847D]
+                transition-colors
+                hover:text-[#A82018]
               "
               aria-label="Hapus Pencarian"
             >
-              <X className="w-3.5 h-3.5" />
+              <X className="h-3.5 w-3.5" />
             </button>
           )}
         </div>
 
         {/* =================================================
             RIGHT ACTIONS
-            ================================================= */}
-        <div
-          className="
-            flex items-center
-            gap-1.5 sm:gap-2.5
-          "
-        >
+        ================================================== */}
+
+        <div className="flex items-center gap-1.5 sm:gap-2.5">
+
           {/* Mobile Search */}
           <button
             onClick={() =>
@@ -555,31 +589,34 @@ export const Header: React.FC<HeaderProps> = ({
               )
             }
             className={`
-              lg:hidden
-              w-10 h-10
-              rounded-full
-              flex items-center justify-center
+              flex
+              h-10 w-10
+              items-center justify-center
+              rounded-xl
               border
               transition-all
               cursor-pointer
+              active:scale-95
+              lg:hidden
               ${
                 isMobileSearchActive
                   ? `
-                    bg-[#7A0F18]
+                    border-[#74140F]
+                    bg-[#74140F]
                     text-white
-                    border-[#09271F]
                   `
                   : `
-                    bg-[#FFF4E8]
-                    text-[#8A1C25]
-                    border-[#F0CFC2]
-                    hover:border-[#F59E0B]
+                    border-[#F0D2C2]
+                    bg-[#FFF5EF]
+                    text-[#9F2118]
+                    hover:border-[#F97316]
+                    hover:bg-[#FFE9DD]
                   `
               }
             `}
             aria-label="Cari Produk"
           >
-            <Search className="w-4 h-4" />
+            <Search className="h-4 w-4" />
           </button>
 
           {/* WhatsApp */}
@@ -588,26 +625,26 @@ export const Header: React.FC<HeaderProps> = ({
             target="_blank"
             rel="noopener noreferrer"
             className="
-              hidden md:flex
-              items-center
-              gap-1.5
-              bg-[#F0FDF4]
-              hover:bg-[#DCFCE7]
-              border border-[#BBE7C5]
-              text-[#8A1C25]
-              px-3
-              py-2
+              hidden
+              items-center gap-1.5
               rounded-full
+              border border-[#B7DEC8]
+              bg-[#F0FDF4]
+              px-3 py-2
               text-[10px]
               font-bold
               tracking-wide
+              text-[#3F5147]
               transition-all
+              hover:border-[#86C8A1]
+              hover:bg-[#DCFCE7]
+              md:flex
             "
             title="Chat Langsung via WhatsApp"
           >
             <MessageCircle
               className="
-                w-4 h-4
+                h-4 w-4
                 text-[#16A34A]
               "
             />
@@ -624,28 +661,32 @@ export const Header: React.FC<HeaderProps> = ({
               id="btn-admin-toggle"
               className={`
                 flex items-center gap-1.5
-                px-3
-                py-2
                 rounded-full
                 border
+                px-3 py-2
                 text-[10px]
-                tracking-[0.12em]
-                uppercase
                 font-bold
+                uppercase
+                tracking-[0.12em]
                 transition-all
                 cursor-pointer
+                active:scale-95
                 ${
                   isAdmin
                     ? `
-                      bg-[#7A0F18]
+                      border-[#74140F]
+                      bg-gradient-to-r
+                      from-[#74140F]
+                      to-[#D92D20]
                       text-white
-                      border-[#09271F]
+                      shadow-sm
                     `
                     : `
-                      bg-[#FFF4E8]
-                      text-[#8A1C25]
-                      border-[#F0CFC2]
-                      hover:border-[#9E793A]
+                      border-[#F0D2C2]
+                      bg-[#FFF5EF]
+                      text-[#9F2118]
+                      hover:border-[#F97316]
+                      hover:bg-[#FFE9DD]
                     `
                 }
               `}
@@ -655,7 +696,7 @@ export const Header: React.FC<HeaderProps> = ({
                   : 'Buka Dashboard Admin'
               }
             >
-              <UserCheck className="w-4 h-4" />
+              <UserCheck className="h-4 w-4" />
 
               <span className="hidden sm:inline">
                 {isAdmin
@@ -671,31 +712,32 @@ export const Header: React.FC<HeaderProps> = ({
             id="btn-open-cart"
             className="
               relative
-              flex items-center
-              gap-2
-              bg-gradient-to-r from-[#7A0F18] via-[#E64A19] to-[#F59E0B]
-              hover:from-[#641018] hover:via-[#C2410C] hover:to-[#D97706]
-              text-white
-              px-3
-              sm:px-4
-              py-2.5
+              flex items-center gap-2
               rounded-full
+              bg-gradient-to-r
+              from-[#74140F]
+              via-[#D92D20]
+              to-[#F97316]
+              px-3 py-2.5
               text-[10px]
-              sm:text-[11px]
-              tracking-[0.12em]
-              uppercase
               font-bold
-              transition-all
+              uppercase
+              tracking-[0.12em]
+              text-white
               shadow-md
-              shadow-[#E64A19]/10
+              shadow-[#D92D20]/15
+              transition-all
+              hover:-translate-y-0.5
               hover:shadow-lg
-              hover:shadow-[#E64A19]/15
-              cursor-pointer
+              hover:shadow-[#D92D20]/20
               active:scale-95
+              cursor-pointer
+              sm:px-4
+              sm:text-[11px]
             "
             aria-label="Buka Keranjang Belanja"
           >
-            <ShoppingBag className="w-4 h-4" />
+            <ShoppingBag className="h-4 w-4" />
 
             <span className="hidden sm:inline">
               Keranjang
@@ -704,50 +746,55 @@ export const Header: React.FC<HeaderProps> = ({
             {cartCount > 0 && (
               <span
                 className="
+                  flex
+                  h-5 min-w-[20px]
+                  items-center justify-center
+                  rounded-full
                   bg-[#FFC107]
-                  text-[#7A0F18]
+                  px-1.5
                   text-[10px]
                   font-black
-                  px-1.5
-                  min-w-[20px]
-                  h-5
-                  rounded-full
-                  flex items-center
-                  justify-center
+                  text-[#74140F]
                 "
               >
-                {cartCount}
+                {cartCount > 99
+                  ? '99+'
+                  : cartCount}
               </span>
             )}
           </button>
+
         </div>
       </div>
 
       {/* =====================================================
           MOBILE SEARCH DRAWER
-          ===================================================== */}
+      ====================================================== */}
+
       {isMobileSearchActive && (
         <div
           className="
-            lg:hidden
-            bg-[#FFF4E8]
-            border-b border-[#F0CFC2]
-            px-3 sm:px-6
-            py-3
-            flex items-center
+            flex
+            items-center
             gap-2
+            border-b border-[#EED6C8]
+            bg-[#FFF5EF]
+            px-3 py-3
+            lg:hidden
+            sm:px-6
           "
         >
           <div className="relative flex-1">
+
             <Search
               className="
-                w-4 h-4
-                text-[#7A7773]
+                pointer-events-none
                 absolute
                 left-3
                 top-1/2
+                h-4 w-4
                 -translate-y-1/2
-                pointer-events-none
+                text-[#91847D]
               "
             />
 
@@ -761,19 +808,19 @@ export const Header: React.FC<HeaderProps> = ({
               autoFocus
               className="
                 w-full
-                bg-[#FFFDFC]
-                border border-[#F0CFC2]
                 rounded-full
+                border border-[#EED6C8]
+                bg-[#FFFDFC]
+                py-2.5
                 pl-9
                 pr-8
-                py-2.5
                 text-xs
-                text-[#2B2522]
-                placeholder-[#7C8580]
+                text-[#302824]
+                placeholder-[#91847D]
+                focus:border-[#F04438]
                 focus:outline-none
-                focus:border-[#E64A19]
                 focus:ring-2
-                focus:ring-[#F59E0B]/20
+                focus:ring-[#F97316]/15
               "
             />
 
@@ -783,19 +830,21 @@ export const Header: React.FC<HeaderProps> = ({
                   onSearchChange('')
                 }
                 className="
-                  absolute right-2.5
+                  absolute
+                  right-2.5
                   top-1/2
                   -translate-y-1/2
-                  text-[#7A7773]
-                  hover:text-[#7A0F18]
                   p-1
+                  text-[#91847D]
+                  hover:text-[#A82018]
                   cursor-pointer
                 "
                 aria-label="Hapus Pencarian"
               >
-                <X className="w-3.5 h-3.5" />
+                <X className="h-3.5 w-3.5" />
               </button>
             )}
+
           </div>
 
           <button
@@ -804,16 +853,17 @@ export const Header: React.FC<HeaderProps> = ({
               scrollToSection('catalog');
             }}
             className="
-              bg-[#7A0F18]
-              hover:bg-[#14532D]
-              text-white
-              text-xs
-              px-4
-              py-2.5
-              rounded-full
-              font-bold
               shrink-0
-              transition-colors
+              rounded-full
+              bg-[#D92D20]
+              px-4 py-2.5
+              text-xs
+              font-bold
+              text-white
+              transition-all
+              hover:bg-[#74140F]
+              active:scale-95
+              cursor-pointer
             "
           >
             Cari
@@ -823,53 +873,57 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* =====================================================
           PUSH DROP-DOWN MENU
-          ===================================================== */}
+      ====================================================== */}
+
       {isMenuOpen && (
         <div
           id="push-dropdown-menu"
           className="
-            border-b
-            border-[#F0CFC2]
-            bg-[#FFFDFC]/98
-            backdrop-blur-2xl
-            shadow-2xl
-            shadow-[#7A0F18]/10
-            overflow-hidden
             animate-slide-down
+            overflow-hidden
+            border-b border-[#EED6C8]
+            bg-[#FFFDFC]/98
+            shadow-2xl
+            shadow-[#74140F]/10
+            backdrop-blur-2xl
           "
         >
           <div
             className="
-              max-w-7xl mx-auto
-              px-4 sm:px-6 lg:px-8
-              py-6
+              mx-auto
+              max-w-7xl
               space-y-6
+              px-4 py-6
+              sm:px-6
+              lg:px-8
             "
           >
+
             {/* Dropdown Header */}
             <div
               className="
                 flex items-center
                 justify-between
+                border-b border-[#F1DDD3]
                 pb-4
-                border-b border-[#F3DDD3]
               "
             >
               <div className="flex items-center gap-3">
+
                 <div
                   className="
-                    w-9 h-9
-                    rounded-full
-                    bg-[#FFF4E8]
-                    border border-[#F0CFC2]
-                    flex items-center
-                    justify-center
+                    flex
+                    h-9 w-9
+                    items-center justify-center
+                    rounded-xl
+                    border border-[#F1D2C2]
+                    bg-[#FFF1E8]
                   "
                 >
                   <LayoutGrid
                     className="
-                      w-4 h-4
-                      text-[#E05A2A]
+                      h-4 w-4
+                      text-[#D92D20]
                     "
                   />
                 </div>
@@ -880,7 +934,7 @@ export const Header: React.FC<HeaderProps> = ({
                       font-display
                       text-sm
                       font-semibold
-                      text-[#7A0F18]
+                      text-[#74140F]
                     "
                   >
                     Menu Cepat BONLES
@@ -888,48 +942,44 @@ export const Header: React.FC<HeaderProps> = ({
 
                   <p
                     className="
-                      text-[10px]
-                      text-[#6B625D]
                       mt-0.5
+                      text-[10px]
+                      text-[#766B65]
                     "
                   >
                     Navigasi & kategori camilan khas Borneo
                   </p>
                 </div>
+
               </div>
 
               <button
                 onClick={onToggleMenu}
                 className="
-                  text-[10px]
-                  text-[#6B625D]
-                  hover:text-[#7A0F18]
-                  flex items-center
-                  gap-1.5
-                  bg-[#FFF4E8]
-                  border border-[#F0CFC2]
-                  px-3
-                  py-1.5
+                  flex items-center gap-1.5
                   rounded-full
+                  border border-[#EED6C8]
+                  bg-[#FFF5EF]
+                  px-3 py-1.5
+                  text-[10px]
                   font-semibold
-                  transition-colors
+                  text-[#766B65]
+                  transition-all
+                  hover:border-[#F04438]
+                  hover:text-[#A82018]
                   cursor-pointer
                 "
               >
-                <X className="w-3.5 h-3.5" />
+                <X className="h-3.5 w-3.5" />
                 <span>Tutup</span>
               </button>
+
             </div>
 
             {/* Navigation */}
             <div>
-              <span
-                className="
-                  bonles-eyebrow
-                  block
-                  mb-3
-                "
-              >
+
+              <span className="bonles-eyebrow mb-3 block">
                 Navigasi Halaman
               </span>
 
@@ -937,10 +987,11 @@ export const Header: React.FC<HeaderProps> = ({
                 className="
                   grid
                   grid-cols-2
-                  sm:grid-cols-4
                   gap-3
+                  sm:grid-cols-4
                 "
               >
+
                 {/* Home */}
                 <button
                   onClick={() => {
@@ -949,43 +1000,42 @@ export const Header: React.FC<HeaderProps> = ({
                   }}
                   className="
                     group
-                    flex items-center
-                    gap-3
-                    p-3.5
+                    flex items-center gap-3
                     rounded-2xl
+                    border border-[#F1DDD3]
                     bg-[#FFF9F4]
-                    hover:bg-[#FFF4E8]
-                    border border-[#F3DDD3]
-                    hover:border-[#F59E0B]
-                    transition-all
+                    p-3.5
                     text-left
+                    transition-all
+                    hover:border-[#F97316]
+                    hover:bg-[#FFF1E8]
                     cursor-pointer
                   "
                 >
                   <div
                     className="
-                      w-9 h-9
-                      rounded-full
-                      bg-[#FFE8D8]
-                      group-hover:bg-[#7A0F18]
-                      text-[#8A1C25]
-                      group-hover:text-white
-                      flex items-center
-                      justify-center
+                      flex
+                      h-9 w-9
                       shrink-0
-                      transition-colors
+                      items-center justify-center
+                      rounded-xl
+                      bg-[#FFE5D6]
+                      text-[#A82018]
+                      transition-all
+                      group-hover:bg-[#D92D20]
+                      group-hover:text-white
                     "
                   >
-                    <Home className="w-4 h-4" />
+                    <Home className="h-4 w-4" />
                   </div>
 
                   <div>
                     <span
                       className="
+                        block
                         text-xs
                         font-bold
-                        text-[#2B2522]
-                        block
+                        text-[#302824]
                       "
                     >
                       Beranda
@@ -994,7 +1044,7 @@ export const Header: React.FC<HeaderProps> = ({
                     <span
                       className="
                         text-[10px]
-                        text-[#7A7773]
+                        text-[#7A706A]
                       "
                     >
                       Halaman Utama
@@ -1009,43 +1059,42 @@ export const Header: React.FC<HeaderProps> = ({
                   }
                   className="
                     group
-                    flex items-center
-                    gap-3
-                    p-3.5
+                    flex items-center gap-3
                     rounded-2xl
+                    border border-[#F1DDD3]
                     bg-[#FFF9F4]
-                    hover:bg-[#FFF4E8]
-                    border border-[#F3DDD3]
-                    hover:border-[#F59E0B]
-                    transition-all
+                    p-3.5
                     text-left
+                    transition-all
+                    hover:border-[#F97316]
+                    hover:bg-[#FFF1E8]
                     cursor-pointer
                   "
                 >
                   <div
                     className="
-                      w-9 h-9
-                      rounded-full
-                      bg-[#FFE8D8]
-                      group-hover:bg-[#7A0F18]
-                      text-[#8A1C25]
-                      group-hover:text-white
-                      flex items-center
-                      justify-center
+                      flex
+                      h-9 w-9
                       shrink-0
-                      transition-colors
+                      items-center justify-center
+                      rounded-xl
+                      bg-[#FFE5D6]
+                      text-[#E85D04]
+                      transition-all
+                      group-hover:bg-[#D92D20]
+                      group-hover:text-white
                     "
                   >
-                    <ShoppingBag className="w-4 h-4" />
+                    <ShoppingBag className="h-4 w-4" />
                   </div>
 
                   <div>
                     <span
                       className="
+                        block
                         text-xs
                         font-bold
-                        text-[#2B2522]
-                        block
+                        text-[#302824]
                       "
                     >
                       Katalog Snack
@@ -1054,7 +1103,7 @@ export const Header: React.FC<HeaderProps> = ({
                     <span
                       className="
                         text-[10px]
-                        text-[#7A7773]
+                        text-[#7A706A]
                       "
                     >
                       Semua Produk
@@ -1069,43 +1118,42 @@ export const Header: React.FC<HeaderProps> = ({
                   }
                   className="
                     group
-                    flex items-center
-                    gap-3
-                    p-3.5
+                    flex items-center gap-3
                     rounded-2xl
+                    border border-[#F1DDD3]
                     bg-[#FFF9F4]
-                    hover:bg-[#FFF4E8]
-                    border border-[#F3DDD3]
-                    hover:border-[#F59E0B]
-                    transition-all
+                    p-3.5
                     text-left
+                    transition-all
+                    hover:border-[#F97316]
+                    hover:bg-[#FFF1E8]
                     cursor-pointer
                   "
                 >
                   <div
                     className="
-                      w-9 h-9
-                      rounded-full
-                      bg-[#FFE8D8]
-                      group-hover:bg-[#7A0F18]
-                      text-[#8A1C25]
-                      group-hover:text-white
-                      flex items-center
-                      justify-center
+                      flex
+                      h-9 w-9
                       shrink-0
-                      transition-colors
+                      items-center justify-center
+                      rounded-xl
+                      bg-[#FFE5D6]
+                      text-[#E85D04]
+                      transition-all
+                      group-hover:bg-[#D92D20]
+                      group-hover:text-white
                     "
                   >
-                    <BookOpen className="w-4 h-4" />
+                    <BookOpen className="h-4 w-4" />
                   </div>
 
                   <div>
                     <span
                       className="
+                        block
                         text-xs
                         font-bold
-                        text-[#2B2522]
-                        block
+                        text-[#302824]
                       "
                     >
                       Our Story
@@ -1114,7 +1162,7 @@ export const Header: React.FC<HeaderProps> = ({
                     <span
                       className="
                         text-[10px]
-                        text-[#7A7773]
+                        text-[#7A706A]
                       "
                     >
                       Kisah Dari Borneo
@@ -1129,43 +1177,42 @@ export const Header: React.FC<HeaderProps> = ({
                   }
                   className="
                     group
-                    flex items-center
-                    gap-3
-                    p-3.5
+                    flex items-center gap-3
                     rounded-2xl
+                    border border-[#F1DDD3]
                     bg-[#FFF9F4]
-                    hover:bg-[#FFF4E8]
-                    border border-[#F3DDD3]
-                    hover:border-[#F59E0B]
-                    transition-all
+                    p-3.5
                     text-left
+                    transition-all
+                    hover:border-[#F97316]
+                    hover:bg-[#FFF1E8]
                     cursor-pointer
                   "
                 >
                   <div
                     className="
-                      w-9 h-9
-                      rounded-full
-                      bg-[#FFE8D8]
-                      group-hover:bg-[#7A0F18]
-                      text-[#8A1C25]
-                      group-hover:text-white
-                      flex items-center
-                      justify-center
+                      flex
+                      h-9 w-9
                       shrink-0
-                      transition-colors
+                      items-center justify-center
+                      rounded-xl
+                      bg-[#FFE5D6]
+                      text-[#E85D04]
+                      transition-all
+                      group-hover:bg-[#D92D20]
+                      group-hover:text-white
                     "
                   >
-                    <ShieldCheck className="w-4 h-4" />
+                    <ShieldCheck className="h-4 w-4" />
                   </div>
 
                   <div>
                     <span
                       className="
+                        block
                         text-xs
                         font-bold
-                        text-[#2B2522]
-                        block
+                        text-[#302824]
                       "
                     >
                       Tentang Kami
@@ -1174,30 +1221,30 @@ export const Header: React.FC<HeaderProps> = ({
                     <span
                       className="
                         text-[10px]
-                        text-[#7A7773]
+                        text-[#7A706A]
                       "
                     >
                       Standar Mutu Pangan
                     </span>
                   </div>
                 </button>
+
               </div>
             </div>
 
-            {/* Categories */}
+            {/* =================================================
+                CATEGORIES
+            ================================================== */}
+
             {categories.length > 0 && (
               <div>
-                <span
-                  className="
-                    bonles-eyebrow
-                    block
-                    mb-3
-                  "
-                >
+
+                <span className="bonles-eyebrow mb-3 block">
                   Kategori Pilihan
                 </span>
 
                 <div className="flex flex-wrap gap-2">
+
                   {/* All */}
                   <button
                     onClick={() => {
@@ -1208,23 +1255,29 @@ export const Header: React.FC<HeaderProps> = ({
                       scrollToSection('catalog');
                     }}
                     className="
-                      flex items-center
-                      gap-1.5
-                      px-3.5
-                      py-2
+                      flex items-center gap-1.5
                       rounded-full
+                      border border-[#74140F]
+                      bg-[#74140F]
+                      px-3.5 py-2
                       text-[10px]
                       font-bold
-                      bg-[#7A0F18]
                       text-white
-                      border border-[#09271F]
-                      hover:bg-[#14532D]
                       transition-all
+                      hover:bg-[#D92D20]
                       cursor-pointer
                     "
                   >
-                    <Sparkles className="w-3 h-3 text-[#FFD54F]" />
-                    <span>Semua Kategori</span>
+                    <Sparkles
+                      className="
+                        h-3 w-3
+                        text-[#FFD166]
+                      "
+                    />
+
+                    <span>
+                      Semua Kategori
+                    </span>
                   </button>
 
                   {categories.map((cat) => (
@@ -1238,27 +1291,25 @@ export const Header: React.FC<HeaderProps> = ({
                         scrollToSection('catalog');
                       }}
                       className="
-                        flex items-center
-                        gap-1.5
-                        px-3.5
-                        py-2
+                        flex items-center gap-1.5
                         rounded-full
+                        border border-[#EED6C8]
+                        bg-[#FFF9F4]
+                        px-3.5 py-2
                         text-[10px]
                         font-semibold
-                        bg-[#FFF9F4]
-                        hover:bg-[#FFF4E8]
-                        border border-[#F0CFC2]
-                        text-[#303030]
-                        hover:text-[#C2410C]
-                        hover:border-[#F59E0B]
+                        text-[#463C38]
                         transition-all
+                        hover:border-[#F97316]
+                        hover:bg-[#FFF1E8]
+                        hover:text-[#C2410C]
                         cursor-pointer
                       "
                     >
                       <Flame
                         className="
-                          w-3 h-3
-                          text-[#E05A2A]
+                          h-3 w-3
+                          text-[#F97316]
                         "
                       />
 
@@ -1267,37 +1318,45 @@ export const Header: React.FC<HeaderProps> = ({
                       </span>
                     </button>
                   ))}
+
                 </div>
               </div>
             )}
 
-            {/* Contact Card */}
+            {/* =================================================
+                CONTACT CARD
+            ================================================== */}
+
             <div
               className="
-                p-4
-                rounded-2xl
-                bg-[#FFF4E8]
-                border border-[#F0CFC2]
                 flex flex-col
+                gap-4
+                rounded-2xl
+                border border-[#F0CBB7]
+                bg-gradient-to-r
+                from-[#FFF1E8]
+                via-[#FFF8F3]
+                to-[#FFF4D8]
+                p-4
                 sm:flex-row
                 sm:items-center
-                justify-between
-                gap-4
+                sm:justify-between
               "
             >
+
               <div className="space-y-1.5">
+
                 <div
                   className="
-                    flex items-center
-                    gap-2
-                    text-[#8A1C25]
-                    font-bold
+                    flex items-center gap-2
                     text-xs
+                    font-bold
+                    text-[#74140F]
                   "
                 >
                   <MessageCircle
                     className="
-                      w-4 h-4
+                      h-4 w-4
                       text-[#16A34A]
                     "
                   />
@@ -1310,8 +1369,8 @@ export const Header: React.FC<HeaderProps> = ({
                 <p
                   className="
                     text-[10px]
-                    text-[#4B403B]
                     font-medium
+                    text-[#514640]
                   "
                 >
                   +{waNumber} • {email}
@@ -1319,17 +1378,16 @@ export const Header: React.FC<HeaderProps> = ({
 
                 <p
                   className="
+                    flex items-center gap-1.5
                     text-[10px]
-                    text-[#6B625D]
-                    flex items-center
-                    gap-1.5
+                    text-[#766B65]
                   "
                 >
                   <MapPin
                     className="
-                      w-3 h-3
-                      text-[#E05A2A]
+                      h-3 w-3
                       shrink-0
+                      text-[#E85D04]
                     "
                   />
 
@@ -1337,6 +1395,7 @@ export const Header: React.FC<HeaderProps> = ({
                     {address}
                   </span>
                 </p>
+
               </div>
 
               <a
@@ -1346,32 +1405,39 @@ export const Header: React.FC<HeaderProps> = ({
                 onClick={onToggleMenu}
                 className="
                   inline-flex
+                  shrink-0
                   items-center
                   justify-center
                   gap-2
-                  bg-[#C2410C]
-                  hover:bg-[#7A0F18]
-                  text-white
-                  font-bold
-                  px-5
-                  py-2.5
                   rounded-full
+                  bg-gradient-to-r
+                  from-[#168A4A]
+                  to-[#20A85A]
+                  px-5 py-2.5
                   text-[10px]
+                  font-bold
                   tracking-wide
+                  text-white
+                  shadow-sm
                   transition-all
-                  shrink-0
+                  hover:-translate-y-0.5
+                  hover:shadow-md
                 "
               >
                 <span>
                   Buka Chat WhatsApp
                 </span>
 
-                <ArrowRight className="w-3.5 h-3.5" />
+                <ArrowRight className="h-3.5 w-3.5" />
               </a>
+
             </div>
+
           </div>
         </div>
       )}
     </header>
   );
 };
+
+export default Header;
