@@ -25,6 +25,8 @@ export interface Product {
   ACTIVE: boolean;
   CREATED_AT: string;
   UPDATED_AT: string;
+  /** SAMPLE = data contoh/demo; PRODUCTION = data produk sebenarnya. */
+  DATA_TYPE?: 'SAMPLE' | 'PRODUCTION';
 }
 
 export interface Category {
