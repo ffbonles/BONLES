@@ -664,6 +664,14 @@ class GasSyncService {
     );
   }
 
+  /** Hapus satu produk secara permanen dari Spreadsheet berdasarkan ID atau SKU. */
+  async deleteProduct(productIdOrSku: string): Promise<GasApiResponse<{ deleted: boolean; product?: any }>> {
+    return this.postToGas<any>(
+      { action: 'deleteProduct', productId: productIdOrSku },
+      true
+    );
+  }
+
   /** Hapus seluruh produk SAMPLE dari Spreadsheet. Produk PRODUCTION tidak disentuh. */
   async clearSampleProducts(): Promise<GasApiResponse<{ deletedCount: number }>> {
     return this.postToGas<any>(
