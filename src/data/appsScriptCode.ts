@@ -149,7 +149,7 @@ const SCHEMAS = {
     "WEIGHT", "STOCK", "DESCRIPTION", "COMPOSITION", "NUTRITION", 
     "MAIN_IMAGE_FILE_ID", "MAIN_IMAGE_URL", "GALLERY_1_FILE_ID", "GALLERY_1_URL", 
     "GALLERY_2_FILE_ID", "GALLERY_2_URL", "GALLERY_3_FILE_ID", "GALLERY_3_URL", 
-    "FEATURED", "ACTIVE", "CREATED_AT", "UPDATED_AT"
+    "FEATURED", "ACTIVE", "CREATED_AT", "UPDATED_AT", "DATA_TYPE"
   ],
   [CONFIG.SHEETS.CATEGORIES]: [
     "ID", "NAME", "DESCRIPTION", "IMAGE_FILE_ID", "IMAGE_URL", "ACTIVE", "SORT_ORDER", "CREATED_AT", "UPDATED_AT"
@@ -193,7 +193,7 @@ function setupDatabase() {
         .setFontColor("#C5A059");
       sheet.setFrozenRows(1);
     } else {
-      // Pastikan header lengkap
+      // Migrasi header tanpa menghapus data yang sudah ada.
       const lastRow = sheet.getLastRow();
       if (lastRow === 0) {
         sheet.appendRow(SCHEMAS[sheetName]);
@@ -201,6 +201,18 @@ function setupDatabase() {
           .setFontWeight("bold")
           .setBackground("#161618")
           .setFontColor("#C5A059");
+        sheet.setFrozenRows(1);
+      } else {
+        const currentHeaders = sheet.getRange(1, 1, 1, Math.max(sheet.getLastColumn(), 1)).getValues()[0].map(String);
+        const requiredHeaders = SCHEMAS[sheetName];
+        requiredHeaders.forEach(function(header) {
+          if (currentHeaders.indexOf(header) === -1) {
+            const newCol = sheet.getLastColumn() + 1;
+            sheet.getRange(1, newCol).setValue(header);
+            sheet.getRange(1, newCol).setFontWeight("bold").setBackground("#161618").setFontColor("#C5A059");
+            currentHeaders.push(header);
+          }
+        });
         sheet.setFrozenRows(1);
       }
     }
@@ -334,7 +346,8 @@ function syncAllDataFromApp(payload) {
       p.FEATURED === true || p.FEATURED === "TRUE" ? "TRUE" : "FALSE",
       p.ACTIVE === true || p.ACTIVE === "TRUE" ? "TRUE" : "FALSE",
       p.CREATED_AT || new Date().toISOString(),
-      p.UPDATED_AT || new Date().toISOString()
+      p.UPDATED_AT || new Date().toISOString(),
+      String(p.DATA_TYPE || "PRODUCTION").toUpperCase() === "SAMPLE" ? "SAMPLE" : "PRODUCTION"
     ]);
     if (prodRows.length > 0) {
       prodSheet.getRange(2, 1, prodRows.length, SCHEMAS[CONFIG.SHEETS.PRODUCTS].length).setValues(prodRows);
@@ -532,7 +545,11 @@ function getProducts(onlyActive = true) {
       item[headers[j]] = row[j];
     }
     
-    if (!onlyActive || item.ACTIVE === true || item.ACTIVE === "TRUE") {
+    const dataType = String(item.DATA_TYPE || "PRODUCTION").trim().toUpperCase();
+    // Katalog publik hanya menampilkan data PRODUCTION. Blank/legacy rows are
+    // treated as PRODUCTION for backwards compatibility.
+    const isProduction = dataType === "PRODUCTION" || dataType === "";
+    if (isProduction && (!onlyActive || item.ACTIVE === true || item.ACTIVE === "TRUE")) {
       products.push(item);
     }
   }
@@ -610,7 +627,8 @@ function saveProductToSheet(prod, imageBase64) {
     prod.FEATURED === true || prod.FEATURED === "TRUE" ? "TRUE" : "FALSE",
     prod.ACTIVE === true || prod.ACTIVE === "TRUE" ? "TRUE" : "FALSE",
     prod.CREATED_AT || now,
-    now
+    now,
+    String(prod.DATA_TYPE || "PRODUCTION").toUpperCase() === "SAMPLE" ? "SAMPLE" : "PRODUCTION"
   ];
   
   let foundRow = -1;
@@ -629,7 +647,29 @@ function saveProductToSheet(prod, imageBase64) {
     logSystemEvent("AUDIT", "CREATE_PRODUCT", "ADMIN", prod.SKU, "Produk baru " + prod.NAME + " berhasil dibuat", "SUCCESS");
   }
   
-  return { ...prod, ID: id, MAIN_IMAGE_URL: mainImgUrl, MAIN_IMAGE_FILE_ID: mainImgId, UPDATED_AT: now };
+  return { ...prod, ID: id, MAIN_IMAGE_URL: mainImgUrl, MAIN_IMAGE_FILE_ID: mainImgId, UPDATED_AT: now, DATA_TYPE: String(prod.DATA_TYPE || "PRODUCTION").toUpperCase() === "SAMPLE" ? "SAMPLE" : "PRODUCTION" };
+}
+
+function deleteSampleProductsFromSheet() {
+  setupDatabase();
+  const sheet = getSheet(CONFIG.SHEETS.PRODUCTS);
+  if (!sheet || sheet.getLastRow() <= 1) return { deletedCount: 0 };
+
+  const data = sheet.getDataRange().getValues();
+  const headers = data[0].map(String);
+  const typeCol = headers.indexOf("DATA_TYPE");
+  if (typeCol < 0) throw new Error("Kolom DATA_TYPE belum tersedia pada sheet Products.");
+
+  const rowsToDelete = [];
+  for (let i = 1; i < data.length; i++) {
+    const type = String(data[i][typeCol] || "PRODUCTION").trim().toUpperCase();
+    if (type === "SAMPLE") rowsToDelete.push(i + 1);
+  }
+
+  // Delete from bottom to top so row numbers remain stable.
+  rowsToDelete.reverse().forEach(function(rowNumber) { sheet.deleteRow(rowNumber); });
+  logSystemEvent("AUDIT", "DELETE_SAMPLE_PRODUCTS", "ADMIN", "PRODUCTS", rowsToDelete.length + " produk SAMPLE dihapus dari Spreadsheet", "SUCCESS");
+  return { deletedCount: rowsToDelete.length };
 }
 `
   },
@@ -1202,6 +1242,9 @@ function doPost(e) {
       case 'saveProduct':
         requireAdmin(postData.token);
         return jsonResponse(saveProductToSheet(postData.product, postData.imageBase64), true, 'Produk berhasil disimpan');
+      case 'deleteSampleProducts':
+        requireAdmin(postData.token);
+        return jsonResponse(deleteSampleProductsFromSheet(), true, 'Data SAMPLE berhasil dihapus dari Spreadsheet');
       case 'saveCategory':
         requireAdmin(postData.token);
         setupDatabase();
