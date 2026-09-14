@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, ArrowRight, ShieldCheck, Flame, Award, PackageCheck, ShoppingBag, MessageCircle } from 'lucide-react';
+import {
+  ArrowRight,
+  Award,
+  Check,
+  Flame,
+  MessageCircle,
+  PackageCheck,
+  ShoppingBag,
+  Sparkles,
+} from 'lucide-react';
+
 import { Banner } from '../types';
 import { store } from '../services/store';
 
@@ -9,145 +19,1035 @@ interface HeroProps {
   onFeaturedClick: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ banner, onExploreCatalog, onFeaturedClick }) => {
-  const [settings, setSettings] = useState<Record<string, string>>(() => store.getSettingsMap());
+export const Hero: React.FC<HeroProps> = ({
+  banner,
+  onExploreCatalog,
+  onFeaturedClick,
+}) => {
+  const [settings, setSettings] = useState<Record<string, string>>(
+    () => store.getSettingsMap()
+  );
 
   useEffect(() => {
     const unsubscribe = store.subscribe(() => {
       setSettings(store.getSettingsMap());
     });
+
     return unsubscribe;
   }, []);
 
-  const heroBadge = settings['HERO_BADGE'] || 'PT. BONLES FOOD NUSANTARA • OFFICIAL STORE';
-  const heroTitle = banner?.TITLE || settings['HERO_TITLE'] || 'Inovasi Snack Kemasan Pouch Tinggi Protein';
-  const heroSubtitle = banner?.DESCRIPTION || settings['HERO_SUBTITLE'] ||
-    'Cita rasa asli oleh-oleh Nusantara dengan bahan baku segar pilihan dalam kemasan standing pouch zipper higienis. Camilan renyah, gurih, dan bernutrisi tinggi untuk keluarga tercinta.';
+  /* ==========================================================
+     DATA DARI GOOGLE SHEETS / SETTINGS
+     ========================================================== */
+
+  const heroBadge =
+    settings['HERO_BADGE'] ||
+    'BORNEO CRAFTED • HIGH PROTEIN FISH SNACK';
+
+  const heroTitle =
+    settings['HERO_TITLE'] ||
+    'Cita Rasa Borneo, Dalam Bentuk Modern.';
+
+  const heroSubtitle =
+    settings['HERO_SUBTITLE'] ||
+    'Berawal dari kekayaan hasil perairan Kalimantan Timur, BONLES mengolah Ikan Bawis menjadi keripik ikan tanpa tulang tengah yang renyah, praktis, dan kaya protein.';
+
+  const productName =
+    settings['HERO_PRODUCT_NAME'] ||
+    'Keripik Ikan Bawis';
+
+  const productTagline =
+    settings['HERO_PRODUCT_TAGLINE'] ||
+    'High Protein Fish Crunch';
+
+  const imageUrl =
+    banner?.IMAGE_URL ||
+    settings['HERO_IMAGE_URL'] ||
+    'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1200&q=85';
+
+  /* ==========================================================
+     WHATSAPP
+     ========================================================== */
+
+  const waNumber =
+    settings['WHATSAPP_NUMBER'] ||
+    '6285174333902';
+
+  const cleanWa = waNumber.replace(/[^0-9]/g, '');
+
+  const waUrl =
+    `https://wa.me/${cleanWa}?text=${encodeURIComponent(
+      'Halo BONLES Food Nusantara, saya ingin mengetahui produk Keripik Ikan Bawis.'
+    )}`;
 
   return (
-    <section className="relative overflow-hidden border-b border-orange-200/80 bg-gradient-to-b from-[#FFF5E6] via-[#FFF9F0] to-[#FAF6ED]">
-      {/* Warm ambient glows tailored for appetite-stimulating visual energy */}
-      <div className="absolute top-0 right-1/4 w-[380px] sm:w-[500px] h-[380px] sm:h-[500px] bg-gradient-to-br from-amber-300/35 to-orange-400/25 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-10 w-[300px] sm:w-[420px] h-[300px] sm:h-[420px] bg-yellow-300/30 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/4 left-0 w-60 sm:w-80 h-60 sm:h-80 bg-orange-300/20 rounded-full blur-3xl pointer-events-none" />
+    <section
+      id="hero"
+      className="
+        relative
+        overflow-hidden
+        bg-[#FCFAF5]
+        border-b
+        border-[#D8C9B3]/60
+      "
+    >
+      {/* ======================================================
+          BACKGROUND DECORATION
+          ====================================================== */}
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16 lg:py-20 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          {/* Left Column Text */}
-          <div className="lg:col-span-7 space-y-4 sm:space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-orange-200 rounded-xl shadow-xs">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-              <span className="text-[10px] sm:text-[11px] tracking-wider text-[#D95A00] font-extrabold uppercase truncate">
+      <div
+        className="
+          absolute
+          -top-32
+          -right-32
+          w-[420px]
+          h-[420px]
+          rounded-full
+          bg-[#E9DFCF]/50
+          blur-3xl
+          pointer-events-none
+        "
+      />
+
+      <div
+        className="
+          absolute
+          -bottom-40
+          -left-40
+          w-[420px]
+          h-[420px]
+          rounded-full
+          bg-[#E9DFCF]/40
+          blur-3xl
+          pointer-events-none
+        "
+      />
+
+      {/* Subtle vertical editorial line */}
+      <div
+        className="
+          hidden
+          lg:block
+          absolute
+          left-[8%]
+          top-0
+          bottom-0
+          w-px
+          bg-[#D8C9B3]/35
+          pointer-events-none
+        "
+      />
+
+      {/* ======================================================
+          MAIN CONTAINER
+          ====================================================== */}
+
+      <div
+        className="
+          bonles-container
+          relative
+          z-10
+          py-12
+          sm:py-16
+          lg:py-20
+          xl:py-24
+        "
+      >
+        <div
+          className="
+            grid
+            grid-cols-1
+            lg:grid-cols-12
+            gap-10
+            lg:gap-14
+            xl:gap-20
+            items-center
+          "
+        >
+          {/* ==================================================
+              LEFT — BRAND STORY
+              ================================================== */}
+
+          <div
+            className="
+              lg:col-span-6
+              xl:col-span-7
+              order-2
+              lg:order-1
+            "
+          >
+            {/* Eyebrow */}
+            <div
+              className="
+                flex
+                items-center
+                gap-3
+                mb-5
+                sm:mb-6
+              "
+            >
+              <span
+                className="
+                  w-8
+                  sm:w-10
+                  h-px
+                  bg-[#B18B4B]
+                "
+              />
+
+              <span
+                className="
+                  text-[9px]
+                  sm:text-[10px]
+                  font-bold
+                  uppercase
+                  tracking-[0.22em]
+                  text-[#9E793A]
+                "
+              >
                 {heroBadge}
               </span>
             </div>
 
-            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-serif text-[#2B1408] tracking-tight leading-[1.2] font-bold">
-              {heroTitle.includes('Tinggi Protein') ? (
-                <>
-                  {heroTitle.split('Tinggi Protein')[0]}
-                  <span className="bg-gradient-to-r from-[#FF5500] to-[#FFAA00] bg-clip-text text-transparent underline decoration-orange-300/50">
-                    Tinggi Protein
-                  </span>
-                  {heroTitle.split('Tinggi Protein')[1]}
-                </>
-              ) : (
-                heroTitle
-              )}
+            {/* Main Heading */}
+            <h1
+              className="
+                font-display
+                text-[#09271F]
+                text-4xl
+                sm:text-5xl
+                lg:text-6xl
+                xl:text-[68px]
+                font-semibold
+                tracking-[-0.035em]
+                leading-[1.02]
+                max-w-3xl
+              "
+            >
+              {heroTitle}
             </h1>
 
-            <p className="text-xs sm:text-sm md:text-base text-[#5C402E] max-w-xl leading-relaxed font-normal">
+            {/* Gold divider */}
+            <div
+              className="
+                mt-6
+                sm:mt-7
+                flex
+                items-center
+                gap-3
+              "
+            >
+              <span
+                className="
+                  w-14
+                  sm:w-20
+                  h-[2px]
+                  bg-[#B18B4B]
+                "
+              />
+
+              <span
+                className="
+                  w-1.5
+                  h-1.5
+                  rounded-full
+                  bg-[#C9A45C]
+                "
+              />
+            </div>
+
+            {/* Description */}
+            <p
+              className="
+                mt-6
+                sm:mt-7
+                text-sm
+                sm:text-base
+                lg:text-[17px]
+                leading-[1.8]
+                text-[#4B554F]
+                max-w-2xl
+              "
+            >
               {heroSubtitle}
             </p>
 
-            {/* Feature Badges with Crispy Appetite-Enticing Cards */}
-            <div className="grid grid-cols-3 gap-2 sm:gap-3 pt-1 sm:pt-2 max-w-lg">
-              <div className="bg-white border border-orange-200/90 p-2.5 sm:p-3 rounded-xl hover:border-orange-400 transition-all shadow-xs hover:shadow-md text-center sm:text-left group">
-                <Flame className="w-4 h-4 text-[#FF5500] mx-auto sm:mx-0 mb-1 group-hover:scale-110 transition-transform" />
-                <p className="text-[11px] sm:text-xs font-bold text-[#2B1408]">Tinggi Protein</p>
-                <p className="text-[9px] sm:text-[10px] text-[#7A604E] hidden sm:block">Nutrisi padat alami</p>
+            {/* =================================================
+                VALUE POINTS
+                ================================================= */}
+
+            <div
+              className="
+                mt-7
+                sm:mt-8
+                grid
+                grid-cols-1
+                sm:grid-cols-3
+                gap-3
+                max-w-2xl
+              "
+            >
+              {/* Value 1 */}
+              <div
+                className="
+                  group
+                  flex
+                  sm:block
+                  items-center
+                  gap-3
+                  p-3
+                  sm:p-4
+                  bg-[#F8F4EA]
+                  border
+                  border-[#E9DFCF]
+                  hover:border-[#C9A45C]
+                  transition-colors
+                "
+              >
+                <div
+                  className="
+                    w-8
+                    h-8
+                    rounded-full
+                    bg-[#E9DFCF]
+                    flex
+                    items-center
+                    justify-center
+                    shrink-0
+                    mb-0
+                    sm:mb-3
+                    group-hover:bg-[#09271F]
+                    transition-colors
+                  "
+                >
+                  <Flame
+                    className="
+                      w-3.5
+                      h-3.5
+                      text-[#9E793A]
+                      group-hover:text-[#D8B878]
+                    "
+                  />
+                </div>
+
+                <div>
+                  <p
+                    className="
+                      text-[11px]
+                      sm:text-xs
+                      font-bold
+                      text-[#18201D]
+                    "
+                  >
+                    Tinggi Protein
+                  </p>
+
+                  <p
+                    className="
+                      mt-0.5
+                      text-[9px]
+                      sm:text-[10px]
+                      text-[#7C8580]
+                    "
+                  >
+                    Fish-based snack
+                  </p>
+                </div>
               </div>
-              <div className="bg-white border border-orange-200/90 p-2.5 sm:p-3 rounded-xl hover:border-emerald-400 transition-all shadow-xs hover:shadow-md text-center sm:text-left group">
-                <PackageCheck className="w-4 h-4 text-emerald-600 mx-auto sm:mx-0 mb-1 group-hover:scale-110 transition-transform" />
-                <p className="text-[11px] sm:text-xs font-bold text-[#2B1408]">Kemasan Pouch</p>
-                <p className="text-[9px] sm:text-[10px] text-[#7A604E] hidden sm:block">Aluminium zipper foil</p>
+
+              {/* Value 2 */}
+              <div
+                className="
+                  group
+                  flex
+                  sm:block
+                  items-center
+                  gap-3
+                  p-3
+                  sm:p-4
+                  bg-[#F8F4EA]
+                  border
+                  border-[#E9DFCF]
+                  hover:border-[#C9A45C]
+                  transition-colors
+                "
+              >
+                <div
+                  className="
+                    w-8
+                    h-8
+                    rounded-full
+                    bg-[#E9DFCF]
+                    flex
+                    items-center
+                    justify-center
+                    shrink-0
+                    mb-0
+                    sm:mb-3
+                    group-hover:bg-[#09271F]
+                    transition-colors
+                  "
+                >
+                  <PackageCheck
+                    className="
+                      w-3.5
+                      h-3.5
+                      text-[#9E793A]
+                      group-hover:text-[#D8B878]
+                    "
+                  />
+                </div>
+
+                <div>
+                  <p
+                    className="
+                      text-[11px]
+                      sm:text-xs
+                      font-bold
+                      text-[#18201D]
+                    "
+                  >
+                    Praktis
+                  </p>
+
+                  <p
+                    className="
+                      mt-0.5
+                      text-[9px]
+                      sm:text-[10px]
+                      text-[#7C8580]
+                    "
+                  >
+                    Ready to enjoy
+                  </p>
+                </div>
               </div>
-              <div className="bg-white border border-orange-200/90 p-2.5 sm:p-3 rounded-xl hover:border-amber-400 transition-all shadow-xs hover:shadow-md text-center sm:text-left group">
-                <Award className="w-4 h-4 text-[#FFAA00] mx-auto sm:mx-0 mb-1 group-hover:scale-110 transition-transform" />
-                <p className="text-[11px] sm:text-xs font-bold text-[#2B1408]">Rasa Autentik</p>
-                <p className="text-[9px] sm:text-[10px] text-[#7A604E] hidden sm:block">Rempah asli nusantara</p>
+
+              {/* Value 3 */}
+              <div
+                className="
+                  group
+                  flex
+                  sm:block
+                  items-center
+                  gap-3
+                  p-3
+                  sm:p-4
+                  bg-[#F8F4EA]
+                  border
+                  border-[#E9DFCF]
+                  hover:border-[#C9A45C]
+                  transition-colors
+                "
+              >
+                <div
+                  className="
+                    w-8
+                    h-8
+                    rounded-full
+                    bg-[#E9DFCF]
+                    flex
+                    items-center
+                    justify-center
+                    shrink-0
+                    mb-0
+                    sm:mb-3
+                    group-hover:bg-[#09271F]
+                    transition-colors
+                  "
+                >
+                  <Award
+                    className="
+                      w-3.5
+                      h-3.5
+                      text-[#9E793A]
+                      group-hover:text-[#D8B878]
+                    "
+                  />
+                </div>
+
+                <div>
+                  <p
+                    className="
+                      text-[11px]
+                      sm:text-xs
+                      font-bold
+                      text-[#18201D]
+                    "
+                  >
+                    Khas Borneo
+                  </p>
+
+                  <p
+                    className="
+                      mt-0.5
+                      text-[9px]
+                      sm:text-[10px]
+                      text-[#7C8580]
+                    "
+                  >
+                    Authentic local story
+                  </p>
+                </div>
               </div>
             </div>
 
-            {/* CTAs with High Energy Appetizing Colors */}
-            <div className="flex flex-wrap items-center gap-3 pt-2 sm:pt-4">
+            {/* =================================================
+                CTA
+                ================================================= */}
+
+            <div
+              className="
+                mt-7
+                sm:mt-9
+                flex
+                flex-col
+                sm:flex-row
+                items-stretch
+                sm:items-center
+                gap-3
+              "
+            >
               <button
                 onClick={onExploreCatalog}
                 id="hero-btn-catalog"
-                className="flex-1 sm:flex-initial bg-gradient-to-r from-[#FF5500] via-[#FF7B00] to-[#FFAA00] hover:from-[#FF4500] hover:to-[#FF9500] text-white font-extrabold px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl text-xs tracking-wider uppercase flex items-center justify-center gap-2 shadow-lg shadow-orange-500/30 hover:shadow-xl hover:shadow-orange-500/40 active:scale-95 transition-all cursor-pointer min-h-[44px]"
+                className="
+                  bonles-btn
+                  bonles-btn-primary
+                  min-h-[48px]
+                  sm:min-h-[52px]
+                  px-6
+                  sm:px-7
+                  text-[10px]
+                  sm:text-[11px]
+                  tracking-[0.14em]
+                "
               >
                 <ShoppingBag className="w-4 h-4" />
-                <span>Buka Katalog Snack</span>
+
+                <span>
+                  Jelajahi Katalog
+                </span>
+
                 <ArrowRight className="w-4 h-4" />
               </button>
 
               <button
                 onClick={onFeaturedClick}
                 id="hero-btn-featured"
-                className="flex-1 sm:flex-initial bg-white hover:bg-orange-50 text-[#D95A00] border border-orange-300 hover:border-orange-500 font-bold px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl text-xs tracking-wider uppercase flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-xs active:scale-95 min-h-[44px]"
+                className="
+                  bonles-btn
+                  bonles-btn-outline
+                  min-h-[48px]
+                  sm:min-h-[52px]
+                  px-6
+                  sm:px-7
+                  text-[10px]
+                  sm:text-[11px]
+                  tracking-[0.14em]
+                "
               >
-                <Sparkles className="w-3.5 h-3.5 text-[#FFAA00]" />
-                <span>Koleksi Pilihan</span>
+                <Sparkles className="w-3.5 h-3.5" />
+
+                <span>
+                  Koleksi Pilihan
+                </span>
               </button>
+            </div>
+
+            {/* WhatsApp micro CTA */}
+            <div
+              className="
+                mt-5
+                flex
+                items-center
+                gap-2
+                text-[10px]
+                text-[#65706A]
+              "
+            >
+              <MessageCircle
+                className="
+                  w-3.5
+                  h-3.5
+                  text-[#2C765B]
+                "
+              />
+
+              <span>
+                Ingin pesan langsung?
+              </span>
+
+              <a
+                href={waUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="
+                  font-bold
+                  text-[#185043]
+                  hover:text-[#9E793A]
+                  transition-colors
+                "
+              >
+                Hubungi WhatsApp
+              </a>
             </div>
           </div>
 
-          {/* Right Column Featured Visual / Card */}
-          <div className="lg:col-span-5 relative">
-            <div className="relative mx-auto max-w-md bg-white border border-orange-200/90 rounded-2xl p-3 sm:p-4 shadow-xl shadow-orange-500/10">
-              {/* Packaging Signature Gradient Accent */}
-              <div className="absolute top-0 left-4 right-4 h-[3px] bg-gradient-to-r from-[#FF5500] via-[#FFAA00] to-[#10B981] rounded-full" />
+          {/* ==================================================
+              RIGHT — HERO PRODUCT VISUAL
+              ================================================== */}
 
-              <div className="relative h-56 sm:h-72 lg:h-80 w-full overflow-hidden rounded-xl bg-orange-50">
+          <div
+            className="
+              lg:col-span-6
+              xl:col-span-5
+              order-1
+              lg:order-2
+            "
+          >
+            <div
+              className="
+                relative
+                mx-auto
+                max-w-[560px]
+              "
+            >
+              {/* Decorative gold frame */}
+              <div
+                className="
+                  absolute
+                  -top-3
+                  -right-3
+                  sm:-top-4
+                  sm:-right-4
+                  w-20
+                  h-20
+                  sm:w-28
+                  sm:h-28
+                  border-t
+                  border-r
+                  border-[#B18B4B]/60
+                  pointer-events-none
+                "
+              />
+
+              <div
+                className="
+                  absolute
+                  -bottom-3
+                  -left-3
+                  sm:-bottom-4
+                  sm:-left-4
+                  w-20
+                  h-20
+                  sm:w-28
+                  sm:h-28
+                  border-b
+                  border-l
+                  border-[#B18B4B]/60
+                  pointer-events-none
+                "
+              />
+
+              {/* Image */}
+              <div
+                className="
+                  relative
+                  overflow-hidden
+                  bg-[#E9DFCF]
+                  aspect-[4/5]
+                  sm:aspect-[5/6]
+                "
+              >
                 <img
-                  src={banner?.IMAGE_URL || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80'}
-                  alt="PT Bonles Food Nusantara Snack Kemasan"
+                  src={imageUrl}
+                  alt={`${productName} — ${productTagline}`}
                   referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-700"
+                  className="
+                    absolute
+                    inset-0
+                    w-full
+                    h-full
+                    object-cover
+                    object-center
+                    transition-transform
+                    duration-1000
+                    hover:scale-[1.035]
+                  "
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#2B1408]/85 via-[#2B1408]/20 to-transparent" />
 
-                {/* Floating Brand Badge */}
-                <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-sm border border-orange-200 px-2.5 py-1 rounded-lg flex items-center gap-1.5 shadow-sm">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF5500]" />
-                  <span className="text-[10px] text-[#2B1408] font-extrabold tracking-widest uppercase">
-                    ORIGINAL PACKAGING
+                {/* Image overlay */}
+                <div
+                  className="
+                    absolute
+                    inset-0
+                    bg-gradient-to-t
+                    from-[#09271F]/90
+                    via-[#09271F]/10
+                    to-transparent
+                  "
+                />
+
+                {/* Top label */}
+                <div
+                  className="
+                    absolute
+                    top-4
+                    left-4
+                    right-4
+                    sm:top-5
+                    sm:left-5
+                    sm:right-5
+                    flex
+                    items-center
+                    justify-between
+                  "
+                >
+                  <span
+                    className="
+                      inline-flex
+                      items-center
+                      gap-2
+                      bg-[#FCFAF5]/95
+                      backdrop-blur-sm
+                      px-3
+                      py-1.5
+                      text-[8px]
+                      sm:text-[9px]
+                      tracking-[0.16em]
+                      font-bold
+                      text-[#185043]
+                    "
+                  >
+                    <span
+                      className="
+                        w-1.5
+                        h-1.5
+                        rounded-full
+                        bg-[#C9A45C]
+                      "
+                    />
+
+                    BORNEO CRAFTED
+                  </span>
+
+                  <span
+                    className="
+                      hidden
+                      sm:inline-flex
+                      items-center
+                      gap-1.5
+                      bg-[#09271F]/80
+                      backdrop-blur-sm
+                      border
+                      border-white/15
+                      px-3
+                      py-1.5
+                      text-[8px]
+                      tracking-[0.14em]
+                      font-bold
+                      text-[#F8F4EA]
+                    "
+                  >
+                    <Sparkles className="w-3 h-3 text-[#D8B878]" />
+
+                    SIGNATURE
                   </span>
                 </div>
 
-                <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-4">
-                  <span className="text-[9px] sm:text-[10px] tracking-wider font-extrabold text-[#2B1408] uppercase bg-[#FFAA00] px-2 py-0.5 rounded-md inline-block mb-1 shadow-xs">
-                    Oleh-Oleh Khas Nusantara
-                  </span>
-                  <h3 className="text-base sm:text-lg font-serif text-white font-bold leading-snug">
-                    Amplang Ikan Tenggiri & Aneka Keripik
-                  </h3>
-                  <p className="text-[11px] sm:text-xs text-orange-100 font-medium">Kemasan Pouch Zipper • Renyah & Bernutrisi</p>
+                {/* Bottom product information */}
+                <div
+                  className="
+                    absolute
+                    left-5
+                    right-5
+                    bottom-5
+                    sm:left-7
+                    sm:right-7
+                    sm:bottom-7
+                  "
+                >
+                  <div
+                    className="
+                      flex
+                      items-center
+                      gap-2
+                      mb-2.5
+                    "
+                  >
+                    <span
+                      className="
+                        h-px
+                        w-8
+                        bg-[#D8B878]
+                      "
+                    />
+
+                    <span
+                      className="
+                        text-[8px]
+                        sm:text-[9px]
+                        tracking-[0.18em]
+                        uppercase
+                        font-bold
+                        text-[#D8B878]
+                      "
+                    >
+                      High Protein Fish Crunch
+                    </span>
+                  </div>
+
+                  <h2
+                    className="
+                      font-display
+                      text-2xl
+                      sm:text-3xl
+                      lg:text-4xl
+                      font-semibold
+                      text-white
+                      leading-tight
+                    "
+                  >
+                    {productName}
+                  </h2>
+
+                  <p
+                    className="
+                      mt-1
+                      text-[10px]
+                      sm:text-xs
+                      text-[#E9DFCF]
+                      tracking-wide
+                    "
+                  >
+                    {productTagline}
+                  </p>
                 </div>
               </div>
 
-              {/* Bottom Quick Info Strip */}
-              <div className="mt-3 sm:mt-4 pt-2.5 border-t border-orange-100 flex items-center justify-between text-[11px] sm:text-xs text-[#5C402E]">
-                <div className="flex items-center gap-1.5">
-                  <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="text-[#2B1408] font-bold">Stok Siap Kirim</span>
+              {/* =================================================
+                  PRODUCT INFO STRIP
+                  ================================================= */}
+
+              <div
+                className="
+                  mt-3
+                  sm:mt-4
+                  grid
+                  grid-cols-3
+                  divide-x
+                  divide-[#D8C9B3]
+                  border
+                  border-[#D8C9B3]
+                  bg-[#F8F4EA]
+                "
+              >
+                <div
+                  className="
+                    px-3
+                    py-3
+                    sm:px-4
+                    sm:py-4
+                    text-center
+                  "
+                >
+                  <Check
+                    className="
+                      w-3.5
+                      h-3.5
+                      text-[#2C765B]
+                      mx-auto
+                      mb-1.5
+                    "
+                  />
+
+                  <p
+                    className="
+                      text-[9px]
+                      sm:text-[10px]
+                      font-bold
+                      text-[#303934]
+                    "
+                  >
+                    Tanpa Tulang Tengah
+                  </p>
                 </div>
-                <span className="text-[#FF5500] font-extrabold tracking-wide text-[11px]">ORDER VIA WHATSAPP</span>
+
+                <div
+                  className="
+                    px-3
+                    py-3
+                    sm:px-4
+                    sm:py-4
+                    text-center
+                  "
+                >
+                  <Flame
+                    className="
+                      w-3.5
+                      h-3.5
+                      text-[#9E793A]
+                      mx-auto
+                      mb-1.5
+                    "
+                  />
+
+                  <p
+                    className="
+                      text-[9px]
+                      sm:text-[10px]
+                      font-bold
+                      text-[#303934]
+                    "
+                  >
+                    Kaya Protein
+                  </p>
+                </div>
+
+                <div
+                  className="
+                    px-3
+                    py-3
+                    sm:px-4
+                    sm:py-4
+                    text-center
+                  "
+                >
+                  <PackageCheck
+                    className="
+                      w-3.5
+                      h-3.5
+                      text-[#2C765B]
+                      mx-auto
+                      mb-1.5
+                    "
+                  />
+
+                  <p
+                    className="
+                      text-[9px]
+                      sm:text-[10px]
+                      font-bold
+                      text-[#303934]
+                    "
+                  >
+                    Praktis
+                  </p>
+                </div>
+              </div>
+
+              {/* Small editorial caption */}
+              <div
+                className="
+                  mt-4
+                  flex
+                  items-center
+                  justify-between
+                  gap-3
+                "
+              >
+                <span
+                  className="
+                    text-[8px]
+                    sm:text-[9px]
+                    uppercase
+                    tracking-[0.16em]
+                    text-[#7C8580]
+                  "
+                >
+                  A local ingredient.
+                </span>
+
+                <span
+                  className="
+                    flex-1
+                    h-px
+                    bg-[#D8C9B3]
+                  "
+                />
+
+                <span
+                  className="
+                    text-[8px]
+                    sm:text-[9px]
+                    uppercase
+                    tracking-[0.16em]
+                    text-[#7C8580]
+                  "
+                >
+                  A modern experience.
+                </span>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* ======================================================
+          BOTTOM BRAND STATEMENT
+          ====================================================== */}
+
+      <div
+        className="
+          relative
+          z-10
+          border-t
+          border-[#D8C9B3]/60
+          bg-[#F3EDE0]/45
+        "
+      >
+        <div
+          className="
+            bonles-container
+            py-4
+            sm:py-5
+            flex
+            flex-col
+            sm:flex-row
+            items-center
+            justify-center
+            gap-2
+            sm:gap-4
+            text-center
+          "
+        >
+          <span
+            className="
+              font-brand
+              text-[10px]
+              sm:text-xs
+              tracking-[0.16em]
+              text-[#185043]
+            "
+          >
+            BONLES FOOD NUSANTARA
+          </span>
+
+          <span
+            className="
+              hidden
+              sm:block
+              w-1
+              h-1
+              rounded-full
+              bg-[#B18B4B]
+            "
+          />
+
+          <span
+            className="
+              text-[9px]
+              sm:text-[10px]
+              tracking-wide
+              text-[#65706A]
+            "
+          >
+            Dari Borneo, untuk Indonesia dan dunia.
+          </span>
+        </div>
+      </div>
     </section>
   );
 };
+
