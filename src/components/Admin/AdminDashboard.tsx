@@ -337,20 +337,20 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
   };
 
   return (
-    <div className="min-h-screen bg-[#0A0A0B] text-[#E2E2E2] flex flex-col selection:bg-[#C5A059] selection:text-black">
+    <div className="min-h-screen bg-[#061B16] text-[#E3EAE6] flex flex-col selection:bg-[#C9A45C] selection:text-black">
       {/* TOP STATUS BAR: CONFIRMATION OF SAVED STATE */}
-      <div className="bg-[#111113] border-b border-white/10 px-4 sm:px-8 py-2 flex flex-wrap items-center justify-between gap-2 text-xs">
+      <div className="bg-[#09271F] border-b border-[#245442]/45 px-4 sm:px-8 py-2 flex flex-wrap items-center justify-between gap-2 text-xs">
         <div className="flex items-center gap-2">
           <span className="flex h-2 w-2 relative">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00D222] opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00D222]"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4FCB91] opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#4FCB91]"></span>
           </span>
-          <span className="text-[#00D222] font-semibold flex items-center gap-1.5">
+          <span className="text-[#4FCB91] font-semibold flex items-center gap-1.5">
             <CheckCheck className="w-3.5 h-3.5" />
             <span>Database Aktif & Tersimpan</span>
           </span>
-          <span className="text-[#666666]">|</span>
-          <span className="text-[#AAAAAA] text-[11px]">
+          <span className="text-[#718079]">|</span>
+          <span className="text-[#B4C0BA] text-[11px]">
             Terakhir tersimpan: <strong className="text-white font-mono">{lastSavedTime}</strong>
           </span>
         </div>
@@ -359,7 +359,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
           <button
             onClick={handlePullFromSpreadsheet}
             disabled={isBulkSyncing || isSaving}
-            className="bg-[#1A1A1E] hover:bg-[#25252A] text-[#00D222] border border-[#00D222]/40 hover:border-[#00D222] font-semibold px-3 py-1.5 rounded-sm text-xs flex items-center gap-1.5 transition-all cursor-pointer disabled:opacity-50"
+            className="bg-[#0D3429] hover:bg-[#164638] text-[#4FCB91] border border-[#4FCB91]/40 hover:border-[#4FCB91] font-semibold px-3 py-1.5 rounded-sm text-xs flex items-center gap-1.5 transition-all cursor-pointer disabled:opacity-50"
             title="Tarik dan muat data langsung dari Google Spreadsheet ke web"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${isBulkSyncing ? 'animate-spin' : ''}`} />
@@ -369,7 +369,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
           <button
             onClick={handleMasterSaveAndPublish}
             disabled={isSaving}
-            className="bg-gradient-to-r from-[#C5A059] to-[#E5C378] hover:from-[#D4B06A] hover:to-[#F0D08A] text-black font-bold px-3.5 py-1.5 rounded-sm text-xs flex items-center gap-1.5 shadow-md shadow-[#C5A059]/10 transition-all cursor-pointer disabled:opacity-50"
+            className="bg-gradient-to-r from-[#C9A45C] to-[#E3C98B] hover:from-[#D7B66F] hover:to-[#F1D99F] text-black font-bold px-3.5 py-1.5 rounded-sm text-xs flex items-center gap-1.5 shadow-md shadow-[#C9A45C]/10 transition-all cursor-pointer disabled:opacity-50"
             title="Pastikan semua perubahan tersimpan dan langsung tampil di website"
           >
             {isSaving ? (
@@ -383,24 +383,24 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
       </div>
 
       {/* TOP ADMIN HEADER */}
-      <header className="bg-[#161618] border-b border-white/10 px-4 sm:px-8 py-3 flex items-center justify-between sticky top-0 z-30">
+      <header className="bg-[#09271F] border-b border-[#245442]/45 px-4 sm:px-8 py-3 flex items-center justify-between sticky top-0 z-30">
         <div className="flex items-center gap-3">
           <BonlesLogo size="sm" variant="horizontal" />
-          <span className="hidden md:inline text-xs text-[#666666]">|</span>
-          <span className="hidden md:inline text-[10px] tracking-[0.2em] text-[#C5A059] font-bold uppercase bg-[#C5A059]/10 border border-[#C5A059]/20 px-2 py-0.5 rounded-xs">
+          <span className="hidden md:inline text-xs text-[#718079]">|</span>
+          <span className="hidden md:inline text-[10px] tracking-[0.2em] text-[#C9A45C] font-bold uppercase bg-[#C9A45C]/10 border border-[#C9A45C]/20 px-2 py-0.5 rounded-xs">
             Admin & Database Management
           </span>
-          <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 bg-[#1A1A1E] border border-white/10 rounded-xs text-[11px] text-[#C5A059]">
-            <ShieldCheck className="w-3.5 h-3.5 text-[#00D222]" />
+          <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 bg-[#0D3429] border border-[#245442]/45 rounded-xs text-[11px] text-[#C9A45C]">
+            <ShieldCheck className="w-3.5 h-3.5 text-[#4FCB91]" />
             <span className="font-mono text-white/90">{authService.getSession()?.email || 'ADMIN'}</span>
-            <span className="text-[9px] bg-[#C5A059]/20 px-1 rounded-2xs font-bold text-[#C5A059]">ADMIN</span>
+            <span className="text-[9px] bg-[#C9A45C]/20 px-1 rounded-2xs font-bold text-[#C9A45C]">ADMIN</span>
           </div>
         </div>
 
         <div className="flex items-center gap-2.5 sm:gap-3">
           <button
             onClick={reloadData}
-            className="bg-[#0A0A0B] hover:bg-[#1F1F23] text-[#AAAAAA] hover:text-white border border-white/10 p-2 rounded-sm text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+            className="bg-[#061B16] hover:bg-[#103A2E] text-[#B4C0BA] hover:text-white border border-[#245442]/45 p-2 rounded-sm text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
             title="Muat Ulang Data Terbaru"
           >
             <RefreshCw className="w-3.5 h-3.5" />
@@ -409,10 +409,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
 
           <button
             onClick={onCloseAdmin}
-            className="bg-[#1A1A1E] hover:bg-[#25252A] text-white border border-white/15 px-3.5 py-2 rounded-sm text-xs tracking-wider uppercase transition-colors cursor-pointer flex items-center gap-1.5"
+            className="bg-[#0D3429] hover:bg-[#164638] text-white border border-[#2A5A4A]/50 px-3.5 py-2 rounded-sm text-xs tracking-wider uppercase transition-colors cursor-pointer flex items-center gap-1.5"
             title="Buka Website Pengunjung"
           >
-            <Globe className="w-3.5 h-3.5 text-[#C5A059]" />
+            <Globe className="w-3.5 h-3.5 text-[#C9A45C]" />
             <span>Mode Web</span>
           </button>
 
@@ -430,9 +430,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
       {/* ADMIN MAIN CONTAINER: SIDEBAR + CONTENT */}
       <div className="flex-1 flex flex-col md:flex-row">
         {/* SIDEBAR NAVIGATION */}
-        <aside className="w-full md:w-64 bg-[#111113] border-r border-white/10 p-4 shrink-0 space-y-6">
+        <aside className="w-full md:w-64 bg-[#09271F] border-r border-[#245442]/45 p-4 shrink-0 space-y-6">
           <div className="space-y-1">
-            <span className="text-[10px] tracking-[0.2em] font-bold text-[#777777] uppercase px-3 block">
+            <span className="text-[10px] tracking-[0.2em] font-bold text-[#81918A] uppercase px-3 block">
               Menu Kontrol
             </span>
 
@@ -441,8 +441,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                 onClick={() => setActiveTab('summary')}
                 className={`w-full flex items-center justify-between px-3 py-2.5 rounded-sm font-medium transition-colors ${
                   activeTab === 'summary'
-                    ? 'bg-[#C5A059] text-black font-bold'
-                    : 'text-[#AAAAAA] hover:bg-white/5 hover:text-white'
+                    ? 'bg-[#C9A45C] text-black font-bold'
+                    : 'text-[#B4C0BA] hover:bg-[#103A2E] hover:text-white'
                 }`}
               >
                 <div className="flex items-center gap-2.5">
@@ -455,8 +455,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                 onClick={() => setActiveTab('products')}
                 className={`w-full flex items-center justify-between px-3 py-2.5 rounded-sm font-medium transition-colors ${
                   activeTab === 'products'
-                    ? 'bg-[#C5A059] text-black font-bold'
-                    : 'text-[#AAAAAA] hover:bg-white/5 hover:text-white'
+                    ? 'bg-[#C9A45C] text-black font-bold'
+                    : 'text-[#B4C0BA] hover:bg-[#103A2E] hover:text-white'
                 }`}
               >
                 <div className="flex items-center gap-2.5">
@@ -472,8 +472,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                 onClick={() => setActiveTab('categories')}
                 className={`w-full flex items-center justify-between px-3 py-2.5 rounded-sm font-medium transition-colors ${
                   activeTab === 'categories'
-                    ? 'bg-[#C5A059] text-black font-bold'
-                    : 'text-[#AAAAAA] hover:bg-white/5 hover:text-white'
+                    ? 'bg-[#C9A45C] text-black font-bold'
+                    : 'text-[#B4C0BA] hover:bg-[#103A2E] hover:text-white'
                 }`}
               >
                 <div className="flex items-center gap-2.5">
@@ -489,8 +489,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                 onClick={() => setActiveTab('banners')}
                 className={`w-full flex items-center justify-between px-3 py-2.5 rounded-sm font-medium transition-colors ${
                   activeTab === 'banners'
-                    ? 'bg-[#C5A059] text-black font-bold'
-                    : 'text-[#AAAAAA] hover:bg-white/5 hover:text-white'
+                    ? 'bg-[#C9A45C] text-black font-bold'
+                    : 'text-[#B4C0BA] hover:bg-[#103A2E] hover:text-white'
                 }`}
               >
                 <div className="flex items-center gap-2.5">
@@ -506,8 +506,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                 onClick={() => setActiveTab('testimonials')}
                 className={`w-full flex items-center justify-between px-3 py-2.5 rounded-sm font-medium transition-colors ${
                   activeTab === 'testimonials'
-                    ? 'bg-[#C5A059] text-black font-bold'
-                    : 'text-[#AAAAAA] hover:bg-white/5 hover:text-white'
+                    ? 'bg-[#C9A45C] text-black font-bold'
+                    : 'text-[#B4C0BA] hover:bg-[#103A2E] hover:text-white'
                 }`}
               >
                 <div className="flex items-center gap-2.5">
@@ -523,8 +523,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                 onClick={() => setActiveTab('media')}
                 className={`w-full flex items-center justify-between px-3 py-2.5 rounded-sm font-medium transition-colors ${
                   activeTab === 'media'
-                    ? 'bg-[#C5A059] text-black font-bold'
-                    : 'text-[#AAAAAA] hover:bg-white/5 hover:text-white'
+                    ? 'bg-[#C9A45C] text-black font-bold'
+                    : 'text-[#B4C0BA] hover:bg-[#103A2E] hover:text-white'
                 }`}
               >
                 <div className="flex items-center gap-2.5">
@@ -537,8 +537,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                 onClick={() => setActiveTab('orders')}
                 className={`w-full flex items-center justify-between px-3 py-2.5 rounded-sm font-medium transition-colors ${
                   activeTab === 'orders'
-                    ? 'bg-[#C5A059] text-black font-bold'
-                    : 'text-[#AAAAAA] hover:bg-white/5 hover:text-white'
+                    ? 'bg-[#C9A45C] text-black font-bold'
+                    : 'text-[#B4C0BA] hover:bg-[#103A2E] hover:text-white'
                 }`}
               >
                 <div className="flex items-center gap-2.5">
@@ -546,7 +546,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                   <span>Pesanan Masuk</span>
                 </div>
                 {pendingOrders > 0 && (
-                  <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-xs bg-[#E81818] text-white">
+                  <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-xs bg-[#D96B61] text-white">
                     {pendingOrders} Baru
                   </span>
                 )}
@@ -556,8 +556,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                 onClick={() => setActiveTab('customers')}
                 className={`w-full flex items-center justify-between px-3 py-2.5 rounded-sm font-medium transition-colors ${
                   activeTab === 'customers'
-                    ? 'bg-[#C5A059] text-black font-bold'
-                    : 'text-[#AAAAAA] hover:bg-white/5 hover:text-white'
+                    ? 'bg-[#C9A45C] text-black font-bold'
+                    : 'text-[#B4C0BA] hover:bg-[#103A2E] hover:text-white'
                 }`}
               >
                 <div className="flex items-center gap-2.5">
@@ -573,8 +573,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                 onClick={() => setActiveTab('settings')}
                 className={`w-full flex items-center justify-between px-3 py-2.5 rounded-sm font-medium transition-colors ${
                   activeTab === 'settings'
-                    ? 'bg-[#C5A059] text-black font-bold'
-                    : 'text-[#AAAAAA] hover:bg-white/5 hover:text-white'
+                    ? 'bg-[#C9A45C] text-black font-bold'
+                    : 'text-[#B4C0BA] hover:bg-[#103A2E] hover:text-white'
                 }`}
               >
                 <div className="flex items-center gap-2.5">
@@ -587,8 +587,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                 onClick={() => setActiveTab('logs')}
                 className={`w-full flex items-center justify-between px-3 py-2.5 rounded-sm font-medium transition-colors ${
                   activeTab === 'logs'
-                    ? 'bg-[#C5A059] text-black font-bold'
-                    : 'text-[#AAAAAA] hover:bg-white/5 hover:text-white'
+                    ? 'bg-[#C9A45C] text-black font-bold'
+                    : 'text-[#B4C0BA] hover:bg-[#103A2E] hover:text-white'
                 }`}
               >
                 <div className="flex items-center gap-2.5">
@@ -601,8 +601,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                 onClick={() => setActiveTab('codeHub')}
                 className={`w-full flex items-center justify-between px-3 py-2.5 rounded-sm font-medium transition-colors ${
                   activeTab === 'codeHub'
-                    ? 'bg-[#C5A059] text-black font-bold'
-                    : 'text-[#AAAAAA] hover:bg-white/5 hover:text-white'
+                    ? 'bg-[#C9A45C] text-black font-bold'
+                    : 'text-[#B4C0BA] hover:bg-[#103A2E] hover:text-white'
                 }`}
               >
                 <div className="flex items-center gap-2.5">
@@ -617,17 +617,17 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
           </div>
 
           {/* Quick Save Card in Sidebar */}
-          <div className="p-3 bg-[#161618] border border-white/10 rounded-sm space-y-2">
+          <div className="p-3 bg-[#09271F] border border-[#245442]/45 rounded-sm space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] text-[#888888] uppercase font-bold tracking-wider">Status Sinkronisasi</span>
-              <span className="w-2 h-2 rounded-full bg-[#00D222]" />
+              <span className="text-[10px] text-[#91A19A] uppercase font-bold tracking-wider">Status Sinkronisasi</span>
+              <span className="w-2 h-2 rounded-full bg-[#4FCB91]" />
             </div>
-            <p className="text-[11px] text-[#CCCCCC] leading-snug">
+            <p className="text-[11px] text-[#CBD5D0] leading-snug">
               Semua perubahan data langsung tersimpan dan aktif pada website.
             </p>
             <button
               onClick={handleMasterSaveAndPublish}
-              className="w-full bg-[#1F1F23] hover:bg-[#2A2A30] text-[#C5A059] border border-[#C5A059]/30 hover:border-[#C5A059] py-1.5 rounded-xs text-[11px] font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+              className="w-full bg-[#103A2E] hover:bg-[#1A5B47] text-[#C9A45C] border border-[#C9A45C]/30 hover:border-[#C9A45C] py-1.5 rounded-xs text-[11px] font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
             >
               <Save className="w-3 h-3" />
               <span>Simpan & Terapkan</span>
@@ -642,7 +642,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
             <div className="space-y-8">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <span className="text-xs tracking-[0.2em] text-[#C5A059] font-bold uppercase block">
+                  <span className="text-xs tracking-[0.2em] text-[#C9A45C] font-bold uppercase block">
                     Ikhtisar Operasional
                   </span>
                   <h2 className="text-2xl sm:text-3xl font-serif-luxury text-white font-medium">
@@ -653,7 +653,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                 <div className="flex items-center gap-2">
                   <button
                     onClick={handleMasterSaveAndPublish}
-                    className="bg-[#C5A059] hover:bg-[#D4B06A] text-black font-bold px-4 py-2 rounded-sm text-xs flex items-center gap-2 transition-colors cursor-pointer"
+                    className="bg-[#C9A45C] hover:bg-[#D7B66F] text-black font-bold px-4 py-2 rounded-sm text-xs flex items-center gap-2 transition-colors cursor-pointer"
                   >
                     <Save className="w-4 h-4" />
                     <span>Simpan & Terapkan Perubahan</span>
@@ -663,60 +663,60 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
 
               {/* KPI Cards */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="bg-[#161618] border border-white/10 p-5 rounded-sm space-y-2">
-                  <div className="flex items-center justify-between text-[#888888]">
+                <div className="bg-[#09271F] border border-[#245442]/45 p-5 rounded-sm space-y-2">
+                  <div className="flex items-center justify-between text-[#91A19A]">
                     <span className="text-xs font-semibold uppercase">Total Penjualan</span>
-                    <ShoppingCart className="w-4 h-4 text-[#C5A059]" />
+                    <ShoppingCart className="w-4 h-4 text-[#C9A45C]" />
                   </div>
                   <div className="text-2xl font-bold font-mono text-white">
                     Rp {totalSales.toLocaleString('id-ID')}
                   </div>
-                  <p className="text-[11px] text-[#777777]">{orders.length} total transaksi</p>
+                  <p className="text-[11px] text-[#81918A]">{orders.length} total transaksi</p>
                 </div>
 
-                <div className="bg-[#161618] border border-white/10 p-5 rounded-sm space-y-2">
-                  <div className="flex items-center justify-between text-[#888888]">
+                <div className="bg-[#09271F] border border-[#245442]/45 p-5 rounded-sm space-y-2">
+                  <div className="flex items-center justify-between text-[#91A19A]">
                     <span className="text-xs font-semibold uppercase">Total Produk</span>
-                    <Package className="w-4 h-4 text-[#00D222]" />
+                    <Package className="w-4 h-4 text-[#4FCB91]" />
                   </div>
                   <div className="text-2xl font-bold font-mono text-white">
                     {totalProducts} SKU
                   </div>
-                  <p className="text-[11px] text-[#00D222]">{activeProducts} produk aktif live di website</p>
+                  <p className="text-[11px] text-[#4FCB91]">{activeProducts} produk aktif live di website</p>
                 </div>
 
-                <div className="bg-[#161618] border border-white/10 p-5 rounded-sm space-y-2">
-                  <div className="flex items-center justify-between text-[#888888]">
+                <div className="bg-[#09271F] border border-[#245442]/45 p-5 rounded-sm space-y-2">
+                  <div className="flex items-center justify-between text-[#91A19A]">
                     <span className="text-xs font-semibold uppercase">Pesanan Menunggu</span>
-                    <AlertTriangle className="w-4 h-4 text-[#E81818]" />
+                    <AlertTriangle className="w-4 h-4 text-[#D96B61]" />
                   </div>
                   <div className="text-2xl font-bold font-mono text-amber-400">
                     {pendingOrders} Order
                   </div>
-                  <p className="text-[11px] text-[#777777]">{processingOrders} sedang diproses</p>
+                  <p className="text-[11px] text-[#81918A]">{processingOrders} sedang diproses</p>
                 </div>
 
-                <div className="bg-[#161618] border border-white/10 p-5 rounded-sm space-y-2">
-                  <div className="flex items-center justify-between text-[#888888]">
+                <div className="bg-[#09271F] border border-[#245442]/45 p-5 rounded-sm space-y-2">
+                  <div className="flex items-center justify-between text-[#91A19A]">
                     <span className="text-xs font-semibold uppercase">Database Pelanggan</span>
-                    <Users className="w-4 h-4 text-[#C5A059]" />
+                    <Users className="w-4 h-4 text-[#C9A45C]" />
                   </div>
                   <div className="text-2xl font-bold font-mono text-white">
                     {customers.length} Kontak
                   </div>
-                  <p className="text-[11px] text-[#777777]">Tersimpan di Sheet Pelanggan</p>
+                  <p className="text-[11px] text-[#81918A]">Tersimpan di Sheet Pelanggan</p>
                 </div>
               </div>
 
               {/* Data Verification Banner */}
-              <div className="bg-[#121214] border border-[#00D222]/30 p-5 rounded-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="bg-[#09271F] border border-[#4FCB91]/30 p-5 rounded-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div className="flex items-start gap-3">
-                  <div className="p-2 bg-[#00D222]/10 text-[#00D222] rounded-xs shrink-0">
+                  <div className="p-2 bg-[#4FCB91]/10 text-[#4FCB91] rounded-xs shrink-0">
                     <CheckCircle2 className="w-5 h-5" />
                   </div>
                   <div>
                     <h4 className="text-sm font-bold text-white">Verifikasi Penyimpanan & Tampilan Website</h4>
-                    <p className="text-xs text-[#AAAAAA] mt-0.5">
+                    <p className="text-xs text-[#B4C0BA] mt-0.5">
                       Semua data produk, foto (upload/link), kategori, banner, dan pengaturan tersimpan secara permanen di memori lokal dan tersinkronisasi langsung dengan tampilan website.
                     </p>
                   </div>
@@ -724,7 +724,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
 
                 <button
                   onClick={onCloseAdmin}
-                  className="bg-[#00D222] hover:bg-[#00B51D] text-black font-bold px-4 py-2 rounded-sm text-xs flex items-center gap-1.5 shrink-0 transition-colors cursor-pointer"
+                  className="bg-[#4FCB91] hover:bg-[#3FAF7C] text-black font-bold px-4 py-2 rounded-sm text-xs flex items-center gap-1.5 shrink-0 transition-colors cursor-pointer"
                 >
                   <Globe className="w-3.5 h-3.5" />
                   <span>Lihat Tampilan Web</span>
@@ -739,17 +739,17 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                   </h3>
                   <button
                     onClick={() => setActiveTab('orders')}
-                    className="text-xs text-[#C5A059] hover:underline flex items-center gap-1"
+                    className="text-xs text-[#C9A45C] hover:underline flex items-center gap-1"
                   >
                     <span>Lihat Semua Pesanan</span>
                     <ArrowRight className="w-3 h-3" />
                   </button>
                 </div>
 
-                <div className="bg-[#161618] border border-white/10 rounded-sm overflow-x-auto">
+                <div className="bg-[#09271F] border border-[#245442]/45 rounded-sm overflow-x-auto">
                   <table className="w-full text-left text-xs">
                     <thead>
-                      <tr className="border-b border-white/10 bg-[#0A0A0B] text-[#888888]">
+                      <tr className="border-b border-[#245442]/45 bg-[#061B16] text-[#91A19A]">
                         <th className="p-3">Order ID</th>
                         <th className="p-3">Pelanggan</th>
                         <th className="p-3">Total</th>
@@ -757,13 +757,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                         <th className="p-3 text-right">Aksi</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-white/5">
+                    <tbody className="divide-y divide-[#1D4639]/45">
                       {orders.slice(0, 5).map(o => (
-                        <tr key={o.ORDER_ID} className="hover:bg-white/5 transition-colors">
-                          <td className="p-3 font-mono font-bold text-[#C5A059]">{o.ORDER_ID}</td>
+                        <tr key={o.ORDER_ID} className="hover:bg-[#103A2E] transition-colors">
+                          <td className="p-3 font-mono font-bold text-[#C9A45C]">{o.ORDER_ID}</td>
                           <td className="p-3">
                             <p className="text-white font-medium">{o.CUSTOMER_NAME}</p>
-                            <p className="text-[10px] text-[#777777]">{o.PHONE}</p>
+                            <p className="text-[10px] text-[#81918A]">{o.PHONE}</p>
                           </td>
                           <td className="p-3 font-mono font-bold text-white">
                             Rp {o.TOTAL.toLocaleString('id-ID')}
@@ -781,7 +781,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                           <td className="p-3 text-right">
                             <button
                               onClick={() => setViewingOrder(o)}
-                              className="text-xs text-[#C5A059] hover:underline"
+                              className="text-xs text-[#C9A45C] hover:underline"
                             >
                               Detail
                             </button>
@@ -800,7 +800,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
             <div className="space-y-6">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <span className="text-xs tracking-[0.2em] text-[#C5A059] font-bold uppercase block">
+                  <span className="text-xs tracking-[0.2em] text-[#C9A45C] font-bold uppercase block">
                     Katalog & Manajemen Stok
                   </span>
                   <h2 className="text-2xl font-serif-luxury text-white font-medium">
@@ -842,7 +842,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                       setEditingProduct(newProd);
                       setIsProductModalOpen(true);
                     }}
-                    className="bg-[#C5A059] hover:bg-[#D4B06A] text-black font-bold px-4 py-2.5 rounded-sm text-xs tracking-wider uppercase flex items-center gap-2 transition-colors cursor-pointer"
+                    className="bg-[#C9A45C] hover:bg-[#D7B66F] text-black font-bold px-4 py-2.5 rounded-sm text-xs tracking-wider uppercase flex items-center gap-2 transition-colors cursor-pointer"
                   >
                     <Plus className="w-4 h-4" />
                     <span>Tambah Produk Baru</span>
@@ -852,21 +852,21 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
 
               {/* Search Bar */}
               <div className="relative">
-                <Search className="w-4 h-4 text-[#888888] absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <Search className="w-4 h-4 text-[#91A19A] absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
                   placeholder="Cari produk berdasarkan Nama, SKU, atau Kategori..."
                   value={searchProd}
                   onChange={(e) => setSearchProd(e.target.value)}
-                  className="w-full bg-[#161618] border border-white/10 rounded-sm pl-10 pr-4 py-2.5 text-xs text-white placeholder-[#666666] focus:outline-none focus:border-[#C5A059]"
+                  className="w-full bg-[#09271F] border border-[#245442]/45 rounded-sm pl-10 pr-4 py-2.5 text-xs text-white placeholder-[#718079] focus:outline-none focus:border-[#C9A45C]"
                 />
               </div>
 
               {/* Product Table */}
-              <div className="bg-[#161618] border border-white/10 rounded-sm overflow-x-auto">
+              <div className="bg-[#09271F] border border-[#245442]/45 rounded-sm overflow-x-auto">
                 <table className="w-full text-left text-xs">
                   <thead>
-                    <tr className="border-b border-white/10 bg-[#0A0A0B] text-[#888888]">
+                    <tr className="border-b border-[#245442]/45 bg-[#061B16] text-[#91A19A]">
                       <th className="p-3">Foto</th>
                       <th className="p-3">SKU</th>
                       <th className="p-3">Nama Produk</th>
@@ -878,7 +878,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                       <th className="p-3 text-right">Aksi</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/5">
+                  <tbody className="divide-y divide-[#1D4639]/45">
                     {products
                       .filter(p => 
                         p.NAME.toLowerCase().includes(searchProd.toLowerCase()) ||
@@ -886,43 +886,43 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                         p.CATEGORY_NAME.toLowerCase().includes(searchProd.toLowerCase())
                       )
                       .map(p => (
-                        <tr key={p.ID} className="hover:bg-white/5 transition-colors">
+                        <tr key={p.ID} className="hover:bg-[#103A2E] transition-colors">
                           <td className="p-3">
                             <img
                               src={p.MAIN_IMAGE_URL || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=100&q=80'}
                               alt={p.NAME}
-                              className="w-10 h-10 object-cover rounded-xs border border-white/10 bg-black"
+                              className="w-10 h-10 object-cover rounded-xs border border-[#245442]/45 bg-black"
                             />
                           </td>
-                          <td className="p-3 font-mono font-semibold text-[#C5A059]">{p.SKU}</td>
+                          <td className="p-3 font-mono font-semibold text-[#C9A45C]">{p.SKU}</td>
                           <td className="p-3">
                             <p className="text-white font-medium">{p.NAME}</p>
-                            <p className="text-[10px] text-[#777777]">{p.WEIGHT}</p>
+                            <p className="text-[10px] text-[#81918A]">{p.WEIGHT}</p>
                           </td>
-                          <td className="p-3 text-[#AAAAAA]">{p.CATEGORY_NAME}</td>
+                          <td className="p-3 text-[#B4C0BA]">{p.CATEGORY_NAME}</td>
                           <td className="p-3 font-mono">
                             <span className="text-white font-bold">
                               Rp {(p.DISCOUNT_PRICE > 0 ? p.DISCOUNT_PRICE : p.PRICE).toLocaleString('id-ID')}
                             </span>
                             {p.DISCOUNT_PRICE > 0 && (
-                              <span className="text-[10px] text-[#777777] line-through block">
+                              <span className="text-[10px] text-[#81918A] line-through block">
                                 Rp {p.PRICE.toLocaleString('id-ID')}
                               </span>
                             )}
                           </td>
                           <td className="p-3 font-mono">
-                            <span className={p.STOCK <= 0 ? 'text-red-400 font-bold' : p.STOCK <= 5 ? 'text-amber-400 font-bold' : 'text-[#00D222]'}>
+                            <span className={p.STOCK <= 0 ? 'text-red-400 font-bold' : p.STOCK <= 5 ? 'text-amber-400 font-bold' : 'text-[#4FCB91]'}>
                               {p.STOCK} unit
                             </span>
                           </td>
                           <td className="p-3">
                             {p.FEATURED ? (
-                              <span className="text-[10px] text-[#C5A059] font-bold flex items-center gap-1">
+                              <span className="text-[10px] text-[#C9A45C] font-bold flex items-center gap-1">
                                 <Sparkles className="w-3 h-3" />
                                 <span>Featured</span>
                               </span>
                             ) : (
-                              <span className="text-[10px] text-[#666666]">-</span>
+                              <span className="text-[10px] text-[#718079]">-</span>
                             )}
                           </td>
                           <td className="p-3">
@@ -938,7 +938,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                                 setEditingProduct({ ...p });
                                 setIsProductModalOpen(true);
                               }}
-                              className="bg-[#0A0A0B] hover:bg-[#1F1F23] text-[#C5A059] border border-[#C5A059]/40 px-2.5 py-1 rounded-sm text-[11px] font-medium transition-colors cursor-pointer"
+                              className="bg-[#061B16] hover:bg-[#103A2E] text-[#C9A45C] border border-[#C9A45C]/40 px-2.5 py-1 rounded-sm text-[11px] font-medium transition-colors cursor-pointer"
                             >
                               Edit
                             </button>
@@ -956,7 +956,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <span className="text-xs tracking-[0.2em] text-[#C5A059] font-bold uppercase block">
+                  <span className="text-xs tracking-[0.2em] text-[#C9A45C] font-bold uppercase block">
                     Struktur Kategori & Navigasi
                   </span>
                   <h2 className="text-2xl font-serif-luxury text-white font-medium">
@@ -980,7 +980,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                     setEditingCategory(newCat);
                     setIsCategoryModalOpen(true);
                   }}
-                  className="bg-[#C5A059] hover:bg-[#D4B06A] text-black font-bold px-4 py-2.5 rounded-sm text-xs tracking-wider uppercase flex items-center gap-2 cursor-pointer"
+                  className="bg-[#C9A45C] hover:bg-[#D7B66F] text-black font-bold px-4 py-2.5 rounded-sm text-xs tracking-wider uppercase flex items-center gap-2 cursor-pointer"
                 >
                   <Plus className="w-4 h-4" />
                   <span>Tambah Kategori</span>
@@ -991,7 +991,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                 {categories.map(cat => (
                   <div
                     key={cat.ID}
-                    className="bg-[#161618] border border-white/10 p-5 rounded-sm flex flex-col justify-between space-y-4"
+                    className="bg-[#09271F] border border-[#245442]/45 p-5 rounded-sm flex flex-col justify-between space-y-4"
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex items-start gap-3">
@@ -999,17 +999,17 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                           <img
                             src={cat.IMAGE_URL}
                             alt={cat.NAME}
-                            className="w-12 h-12 object-cover rounded-xs border border-white/10 shrink-0"
+                            className="w-12 h-12 object-cover rounded-xs border border-[#245442]/45 shrink-0"
                           />
                         )}
                         <div>
-                          <span className="text-[10px] font-mono text-[#C5A059] uppercase tracking-wider">
+                          <span className="text-[10px] font-mono text-[#C9A45C] uppercase tracking-wider">
                             {cat.ID} • Urutan: {cat.SORT_ORDER}
                           </span>
                           <h3 className="text-lg font-serif-luxury text-white font-medium mt-0.5">
                             {cat.NAME}
                           </h3>
-                          <p className="text-xs text-[#888888] mt-1">{cat.DESCRIPTION}</p>
+                          <p className="text-xs text-[#91A19A] mt-1">{cat.DESCRIPTION}</p>
                         </div>
                       </div>
 
@@ -1020,13 +1020,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                       </span>
                     </div>
 
-                    <div className="flex justify-end pt-2 border-t border-white/5">
+                    <div className="flex justify-end pt-2 border-t border-[#1D4639]/45">
                       <button
                         onClick={() => {
                           setEditingCategory({ ...cat });
                           setIsCategoryModalOpen(true);
                         }}
-                        className="bg-[#0A0A0B] hover:bg-[#1F1F23] text-[#C5A059] border border-[#C5A059]/40 px-3 py-1 rounded-sm text-xs cursor-pointer"
+                        className="bg-[#061B16] hover:bg-[#103A2E] text-[#C9A45C] border border-[#C9A45C]/40 px-3 py-1 rounded-sm text-xs cursor-pointer"
                       >
                         Edit Kategori
                       </button>
@@ -1042,7 +1042,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <span className="text-xs tracking-[0.2em] text-[#C5A059] font-bold uppercase block">
+                  <span className="text-xs tracking-[0.2em] text-[#C9A45C] font-bold uppercase block">
                     Visual & Hero Branding
                   </span>
                   <h2 className="text-2xl font-serif-luxury text-white font-medium">
@@ -1069,7 +1069,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                     setEditingBanner(newBanner);
                     setIsBannerModalOpen(true);
                   }}
-                  className="bg-[#C5A059] hover:bg-[#D4B06A] text-black font-bold px-4 py-2.5 rounded-sm text-xs tracking-wider uppercase flex items-center gap-2 cursor-pointer"
+                  className="bg-[#C9A45C] hover:bg-[#D7B66F] text-black font-bold px-4 py-2.5 rounded-sm text-xs tracking-wider uppercase flex items-center gap-2 cursor-pointer"
                 >
                   <Plus className="w-4 h-4" />
                   <span>Tambah Banner</span>
@@ -1078,7 +1078,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {banners.map(b => (
-                  <div key={b.ID} className="bg-[#161618] border border-white/10 rounded-sm overflow-hidden flex flex-col justify-between">
+                  <div key={b.ID} className="bg-[#09271F] border border-[#245442]/45 rounded-sm overflow-hidden flex flex-col justify-between">
                     <div className="relative h-44 bg-black">
                       <img
                         src={b.IMAGE_URL}
@@ -1086,22 +1086,22 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                         className="w-full h-full object-cover opacity-80"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent p-4 flex flex-col justify-end">
-                        <span className="text-[10px] text-[#C5A059] font-bold uppercase">{b.SUBTITLE}</span>
+                        <span className="text-[10px] text-[#C9A45C] font-bold uppercase">{b.SUBTITLE}</span>
                         <h4 className="text-base font-serif-luxury text-white font-medium">{b.TITLE}</h4>
                       </div>
                     </div>
 
                     <div className="p-4 space-y-3">
-                      <p className="text-xs text-[#888888]">{b.DESCRIPTION}</p>
-                      <div className="flex items-center justify-between text-xs pt-2 border-t border-white/10">
-                        <span className="text-[10px] font-mono text-[#AAAAAA]">Tombol: {b.BUTTON_TEXT}</span>
+                      <p className="text-xs text-[#91A19A]">{b.DESCRIPTION}</p>
+                      <div className="flex items-center justify-between text-xs pt-2 border-t border-[#245442]/45">
+                        <span className="text-[10px] font-mono text-[#B4C0BA]">Tombol: {b.BUTTON_TEXT}</span>
                         <div className="flex items-center gap-2">
                           <button
                             onClick={() => {
                               setEditingBanner({ ...b });
                               setIsBannerModalOpen(true);
                             }}
-                            className="text-xs text-[#C5A059] hover:underline"
+                            className="text-xs text-[#C9A45C] hover:underline"
                           >
                             Edit
                           </button>
@@ -1119,7 +1119,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <span className="text-xs tracking-[0.2em] text-[#C5A059] font-bold uppercase block">
+                  <span className="text-xs tracking-[0.2em] text-[#C9A45C] font-bold uppercase block">
                     Ulasan & Bukti Kepuasan
                   </span>
                   <h2 className="text-2xl font-serif-luxury text-white font-medium">
@@ -1144,7 +1144,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                     setEditingTestimonial(newTesti);
                     setIsTestimonialModalOpen(true);
                   }}
-                  className="bg-[#C5A059] hover:bg-[#D4B06A] text-black font-bold px-4 py-2.5 rounded-sm text-xs tracking-wider uppercase flex items-center gap-2 cursor-pointer"
+                  className="bg-[#C9A45C] hover:bg-[#D7B66F] text-black font-bold px-4 py-2.5 rounded-sm text-xs tracking-wider uppercase flex items-center gap-2 cursor-pointer"
                 >
                   <Plus className="w-4 h-4" />
                   <span>Tambah Testimoni</span>
@@ -1153,13 +1153,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {testimonials.map(t => (
-                  <div key={t.ID} className="bg-[#161618] border border-white/10 p-5 rounded-sm space-y-3 flex flex-col justify-between">
+                  <div key={t.ID} className="bg-[#09271F] border border-[#245442]/45 p-5 rounded-sm space-y-3 flex flex-col justify-between">
                     <div className="space-y-3">
                       <div className="flex items-center gap-3">
                         <img
                           src={t.PHOTO_URL || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'}
                           alt={t.CUSTOMER_NAME}
-                          className="w-10 h-10 rounded-full object-cover border border-white/10"
+                          className="w-10 h-10 rounded-full object-cover border border-[#245442]/45"
                         />
                         <div>
                           <h4 className="text-sm font-bold text-white">{t.CUSTOMER_NAME}</h4>
@@ -1171,10 +1171,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                         </div>
                       </div>
 
-                      <p className="text-xs text-[#CCCCCC] italic">"{t.MESSAGE}"</p>
+                      <p className="text-xs text-[#CBD5D0] italic">"{t.MESSAGE}"</p>
                     </div>
 
-                    <div className="flex items-center justify-between pt-3 border-t border-white/5 text-xs">
+                    <div className="flex items-center justify-between pt-3 border-t border-[#1D4639]/45 text-xs">
                       <span className={`text-[10px] px-2 py-0.5 rounded-xs font-semibold ${
                         t.ACTIVE ? 'bg-green-950 text-green-300' : 'bg-zinc-800 text-zinc-500'
                       }`}>
@@ -1185,7 +1185,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                           setEditingTestimonial({ ...t });
                           setIsTestimonialModalOpen(true);
                         }}
-                        className="text-[#C5A059] hover:underline"
+                        className="text-[#C9A45C] hover:underline"
                       >
                         Edit
                       </button>
@@ -1200,41 +1200,41 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
           {activeTab === 'media' && (
             <div className="space-y-6">
               <div>
-                <span className="text-xs tracking-[0.2em] text-[#C5A059] font-bold uppercase block">
+                <span className="text-xs tracking-[0.2em] text-[#C9A45C] font-bold uppercase block">
                   File Storage Architecture
                 </span>
                 <h2 className="text-2xl font-serif-luxury text-white font-medium">
                   Google Drive Folder & Media Manager
                 </h2>
-                <p className="text-xs text-[#888888] mt-1">
+                <p className="text-xs text-[#91A19A] mt-1">
                   Struktur folder Google Drive terorganisir per SKU untuk kestabilan referensi foto produk.
                 </p>
               </div>
 
               {/* Tree View Box */}
-              <div className="bg-[#161618] border border-white/10 rounded-sm p-6 space-y-4">
-                <div className="flex items-center gap-2 pb-3 border-b border-white/10 text-xs font-bold text-[#C5A059] uppercase tracking-wider">
+              <div className="bg-[#09271F] border border-[#245442]/45 rounded-sm p-6 space-y-4">
+                <div className="flex items-center gap-2 pb-3 border-b border-[#245442]/45 text-xs font-bold text-[#C9A45C] uppercase tracking-wider">
                   <FolderTree className="w-4 h-4" />
                   <span>Struktur Folder Drive Aktif: BONLES FOOD NUSANTARA/</span>
                 </div>
 
-                <div className="space-y-3 font-mono text-xs text-[#CCCCCC]">
+                <div className="space-y-3 font-mono text-xs text-[#CBD5D0]">
                   {categories.map(cat => {
                     const catProds = products.filter(p => p.CATEGORY_ID === cat.ID || p.CATEGORY_NAME === cat.NAME);
                     return (
-                      <div key={cat.ID} className="pl-4 border-l border-white/10 space-y-2">
+                      <div key={cat.ID} className="pl-4 border-l border-[#245442]/45 space-y-2">
                         <div className="text-white font-semibold flex items-center gap-2">
-                          <span className="text-[#C5A059]">📁 Products / {cat.NAME} /</span>
-                          <span className="text-[10px] text-[#777777]">({catProds.length} produk)</span>
+                          <span className="text-[#C9A45C]">📁 Products / {cat.NAME} /</span>
+                          <span className="text-[10px] text-[#81918A]">({catProds.length} produk)</span>
                         </div>
 
-                        <div className="pl-6 space-y-2 border-l border-white/5">
+                        <div className="pl-6 space-y-2 border-l border-[#1D4639]/45">
                           {catProds.map(p => (
-                            <div key={p.SKU} className="bg-[#0A0A0B] p-2.5 rounded-sm border border-white/5 flex items-center justify-between">
+                            <div key={p.SKU} className="bg-[#061B16] p-2.5 rounded-sm border border-[#1D4639]/45 flex items-center justify-between">
                               <div>
-                                <span className="text-[#00D222] font-bold">📂 {p.SKU}/</span>
+                                <span className="text-[#4FCB91] font-bold">📂 {p.SKU}/</span>
                                 <span className="text-xs text-white ml-2">{p.NAME}</span>
-                                <div className="text-[10px] text-[#777777] mt-0.5">
+                                <div className="text-[10px] text-[#81918A] mt-0.5">
                                   File: main.jpg {p.GALLERY_1_URL && '• gallery-1.jpg'} {p.GALLERY_2_URL && '• gallery-2.jpg'}
                                 </div>
                               </div>
@@ -1242,7 +1242,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                               <img
                                 src={p.MAIN_IMAGE_URL || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=100&q=80'}
                                 alt={p.SKU}
-                                className="w-8 h-8 object-cover rounded-xs border border-white/10"
+                                className="w-8 h-8 object-cover rounded-xs border border-[#245442]/45"
                               />
                             </div>
                           ))}
@@ -1260,7 +1260,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
             <div className="space-y-6">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <span className="text-xs tracking-[0.2em] text-[#C5A059] font-bold uppercase block">
+                  <span className="text-xs tracking-[0.2em] text-[#C9A45C] font-bold uppercase block">
                     Transaksi Masuk
                   </span>
                   <h2 className="text-2xl font-serif-luxury text-white font-medium">
@@ -1276,8 +1276,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                       onClick={() => setSelectedOrderFilter(st)}
                       className={`px-3 py-1.5 rounded-xs text-[11px] font-semibold transition-colors cursor-pointer ${
                         selectedOrderFilter === st
-                          ? 'bg-[#C5A059] text-black font-bold'
-                          : 'bg-[#161618] text-[#888888] hover:text-white border border-white/5'
+                          ? 'bg-[#C9A45C] text-black font-bold'
+                          : 'bg-[#09271F] text-[#91A19A] hover:text-white border border-[#1D4639]/45'
                       }`}
                     >
                       {st}
@@ -1287,10 +1287,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
               </div>
 
               {/* Orders Table */}
-              <div className="bg-[#161618] border border-white/10 rounded-sm overflow-x-auto">
+              <div className="bg-[#09271F] border border-[#245442]/45 rounded-sm overflow-x-auto">
                 <table className="w-full text-left text-xs">
                   <thead>
-                    <tr className="border-b border-white/10 bg-[#0A0A0B] text-[#888888]">
+                    <tr className="border-b border-[#245442]/45 bg-[#061B16] text-[#91A19A]">
                       <th className="p-3">Order ID</th>
                       <th className="p-3">Tanggal</th>
                       <th className="p-3">Pelanggan</th>
@@ -1300,18 +1300,18 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                       <th className="p-3 text-right">Aksi</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/5">
+                  <tbody className="divide-y divide-[#1D4639]/45">
                     {orders
                       .filter(o => selectedOrderFilter === 'ALL' || o.STATUS === selectedOrderFilter)
                       .map(o => (
-                        <tr key={o.ORDER_ID} className="hover:bg-white/5 transition-colors">
-                          <td className="p-3 font-mono font-bold text-[#C5A059]">{o.ORDER_ID}</td>
-                          <td className="p-3 text-[#AAAAAA]">{o.ORDER_DATE.slice(0, 10)}</td>
+                        <tr key={o.ORDER_ID} className="hover:bg-[#103A2E] transition-colors">
+                          <td className="p-3 font-mono font-bold text-[#C9A45C]">{o.ORDER_ID}</td>
+                          <td className="p-3 text-[#B4C0BA]">{o.ORDER_DATE.slice(0, 10)}</td>
                           <td className="p-3">
                             <p className="text-white font-medium">{o.CUSTOMER_NAME}</p>
-                            <p className="text-[11px] text-[#888888]">{o.PHONE}</p>
+                            <p className="text-[11px] text-[#91A19A]">{o.PHONE}</p>
                           </td>
-                          <td className="p-3 text-[#AAAAAA]">{o.CITY}</td>
+                          <td className="p-3 text-[#B4C0BA]">{o.CITY}</td>
                           <td className="p-3 font-mono font-bold text-white">
                             Rp {o.TOTAL.toLocaleString('id-ID')}
                           </td>
@@ -1319,7 +1319,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                             <select
                               value={o.STATUS}
                               onChange={(e) => handleUpdateOrderStatus(o.ORDER_ID, e.target.value as Order['STATUS'])}
-                              className="bg-[#0A0A0B] border border-white/10 text-xs text-white rounded-xs px-2 py-1 focus:border-[#C5A059]"
+                              className="bg-[#061B16] border border-[#245442]/45 text-xs text-white rounded-xs px-2 py-1 focus:border-[#C9A45C]"
                             >
                               <option value="PENDING">PENDING</option>
                               <option value="CONFIRMED">CONFIRMED</option>
@@ -1332,7 +1332,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                           <td className="p-3 text-right">
                             <button
                               onClick={() => setViewingOrder(o)}
-                              className="bg-[#0A0A0B] hover:bg-[#1F1F23] text-[#C5A059] border border-[#C5A059]/40 px-2.5 py-1 rounded-sm text-[11px] cursor-pointer"
+                              className="bg-[#061B16] hover:bg-[#103A2E] text-[#C9A45C] border border-[#C9A45C]/40 px-2.5 py-1 rounded-sm text-[11px] cursor-pointer"
                             >
                               Detail
                             </button>
@@ -1349,7 +1349,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
           {activeTab === 'customers' && (
             <div className="space-y-6">
               <div>
-                <span className="text-xs tracking-[0.2em] text-[#C5A059] font-bold uppercase block">
+                <span className="text-xs tracking-[0.2em] text-[#C9A45C] font-bold uppercase block">
                   Database Kontak
                 </span>
                 <h2 className="text-2xl font-serif-luxury text-white font-medium">
@@ -1357,10 +1357,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                 </h2>
               </div>
 
-              <div className="bg-[#161618] border border-white/10 rounded-sm overflow-x-auto">
+              <div className="bg-[#09271F] border border-[#245442]/45 rounded-sm overflow-x-auto">
                 <table className="w-full text-left text-xs">
                   <thead>
-                    <tr className="border-b border-white/10 bg-[#0A0A0B] text-[#888888]">
+                    <tr className="border-b border-[#245442]/45 bg-[#061B16] text-[#91A19A]">
                       <th className="p-3">ID Pelanggan</th>
                       <th className="p-3">Nama</th>
                       <th className="p-3">WhatsApp</th>
@@ -1370,16 +1370,16 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                       <th className="p-3">Total Belanja</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/5">
+                  <tbody className="divide-y divide-[#1D4639]/45">
                     {customers.map(c => (
-                      <tr key={c.CUSTOMER_ID} className="hover:bg-white/5 transition-colors">
-                        <td className="p-3 font-mono text-[#C5A059]">{c.CUSTOMER_ID}</td>
+                      <tr key={c.CUSTOMER_ID} className="hover:bg-[#103A2E] transition-colors">
+                        <td className="p-3 font-mono text-[#C9A45C]">{c.CUSTOMER_ID}</td>
                         <td className="p-3 text-white font-medium">{c.NAME}</td>
                         <td className="p-3 font-mono">{c.PHONE}</td>
-                        <td className="p-3 text-[#888888]">{c.EMAIL || '-'}</td>
-                        <td className="p-3 text-[#AAAAAA]">{c.CITY}</td>
+                        <td className="p-3 text-[#91A19A]">{c.EMAIL || '-'}</td>
+                        <td className="p-3 text-[#B4C0BA]">{c.CITY}</td>
                         <td className="p-3 font-mono">{c.ORDER_COUNT || 1} pesanan</td>
-                        <td className="p-3 font-mono font-bold text-[#00D222]">
+                        <td className="p-3 font-mono font-bold text-[#4FCB91]">
                           Rp {(c.TOTAL_SPENT || 0).toLocaleString('id-ID')}
                         </td>
                       </tr>
@@ -1395,13 +1395,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <span className="text-xs tracking-[0.2em] text-[#C5A059] font-bold uppercase block">
+                  <span className="text-xs tracking-[0.2em] text-[#C9A45C] font-bold uppercase block">
                     Konfigurasi Bisnis
                   </span>
                   <h2 className="text-2xl font-serif-luxury text-white font-medium">
                     Pengaturan Toko & Kontak
                   </h2>
-                  <p className="text-xs text-[#888888] mt-1">
+                  <p className="text-xs text-[#91A19A] mt-1">
                     Semua pengaturan tersimpan dinamis dan tersinkronisasi ke website & Google Sheets.
                   </p>
                 </div>
@@ -1414,7 +1414,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                       setLocalSettings(store.getSettings());
                     }}
                     disabled={isBulkSyncing}
-                    className="bg-[#1A1A1E] hover:bg-[#25252A] text-[#00D222] border border-[#00D222]/40 hover:border-[#00D222] font-semibold px-3.5 py-2 rounded-sm text-xs flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                    className="bg-[#0D3429] hover:bg-[#164638] text-[#4FCB91] border border-[#4FCB91]/40 hover:border-[#4FCB91] font-semibold px-3.5 py-2 rounded-sm text-xs flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
                   >
                     <RefreshCw className={`w-4 h-4 ${isBulkSyncing ? 'animate-spin' : ''}`} />
                     <span>{isBulkSyncing ? 'Menarik...' : 'Tarik dari Spreadsheet'}</span>
@@ -1422,7 +1422,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
 
                   <button
                     onClick={handleSaveSettingsSubmit}
-                    className="bg-[#C5A059] hover:bg-[#D4B06A] text-black font-bold px-4 py-2 rounded-sm text-xs flex items-center gap-2 cursor-pointer shadow-md shadow-[#C5A059]/10"
+                    className="bg-[#C9A45C] hover:bg-[#D7B66F] text-black font-bold px-4 py-2 rounded-sm text-xs flex items-center gap-2 cursor-pointer shadow-md shadow-[#C9A45C]/10"
                   >
                     <Save className="w-4 h-4" />
                     <span>Simpan Semua Pengaturan</span>
@@ -1430,13 +1430,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                 </div>
               </div>
 
-              <form onSubmit={handleSaveSettingsSubmit} className="bg-[#161618] border border-white/10 rounded-sm p-6 space-y-4">
+              <form onSubmit={handleSaveSettingsSubmit} className="bg-[#09271F] border border-[#245442]/45 rounded-sm p-6 space-y-4">
                 {localSettings.map((s, idx) => (
-                  <div key={s.SETTING} className="space-y-1.5 pb-4 border-b border-white/5">
-                    <label className="text-xs font-bold text-white uppercase tracking-wider block font-mono text-[#C5A059]">
+                  <div key={s.SETTING} className="space-y-1.5 pb-4 border-b border-[#1D4639]/45">
+                    <label className="text-xs font-bold text-white uppercase tracking-wider block font-mono text-[#C9A45C]">
                       {s.SETTING}
                     </label>
-                    <p className="text-[11px] text-[#777777]">{s.DESCRIPTION}</p>
+                    <p className="text-[11px] text-[#81918A]">{s.DESCRIPTION}</p>
                     
                     {s.SETTING.includes('URL') || s.SETTING.includes('IMAGE') || s.SETTING.includes('LOGO') ? (
                       <ImageUploadOrUrl
@@ -1457,14 +1457,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                           updated[idx] = { ...updated[idx], VALUE: e.target.value };
                           setLocalSettings(updated);
                         }}
-                        className="w-full bg-[#0A0A0B] border border-white/10 rounded-sm px-3.5 py-2.5 text-xs text-white focus:border-[#C5A059] focus:outline-none"
+                        className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm px-3.5 py-2.5 text-xs text-white focus:border-[#C9A45C] focus:outline-none"
                       />
                     )}
                   </div>
                 ))}
 
                 <div className="pt-4 flex items-center justify-between">
-                  <span className="text-xs text-[#888888]">Reset Data Toko ke Contoh Awal</span>
+                  <span className="text-xs text-[#91A19A]">Reset Data Toko ke Contoh Awal</span>
                   <button
                     type="button"
                     onClick={handleResetData}
@@ -1481,7 +1481,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
           {activeTab === 'logs' && (
             <div className="space-y-6">
               <div>
-                <span className="text-xs tracking-[0.2em] text-[#C5A059] font-bold uppercase block">
+                <span className="text-xs tracking-[0.2em] text-[#C9A45C] font-bold uppercase block">
                   Audit Trail & Monitoring
                 </span>
                 <h2 className="text-2xl font-serif-luxury text-white font-medium">
@@ -1489,10 +1489,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                 </h2>
               </div>
 
-              <div className="bg-[#161618] border border-white/10 rounded-sm overflow-x-auto">
+              <div className="bg-[#09271F] border border-[#245442]/45 rounded-sm overflow-x-auto">
                 <table className="w-full text-left text-xs">
                   <thead>
-                    <tr className="border-b border-white/10 bg-[#0A0A0B] text-[#888888]">
+                    <tr className="border-b border-[#245442]/45 bg-[#061B16] text-[#91A19A]">
                       <th className="p-3">Waktu</th>
                       <th className="p-3">Tipe</th>
                       <th className="p-3">Aksi</th>
@@ -1502,10 +1502,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                       <th className="p-3">Status</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/5 font-mono text-[11px]">
+                  <tbody className="divide-y divide-[#1D4639]/45 font-mono text-[11px]">
                     {logs.map(log => (
-                      <tr key={log.LOG_ID} className="hover:bg-white/5 transition-colors">
-                        <td className="p-3 text-[#888888]">{log.TIMESTAMP.slice(11, 19)}</td>
+                      <tr key={log.LOG_ID} className="hover:bg-[#103A2E] transition-colors">
+                        <td className="p-3 text-[#91A19A]">{log.TIMESTAMP.slice(11, 19)}</td>
                         <td className="p-3">
                           <span className={`px-1.5 py-0.5 rounded-xs text-[10px] font-bold ${
                             log.TYPE === 'ERROR' ? 'bg-red-950 text-red-400' :
@@ -1516,12 +1516,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                             {log.TYPE}
                           </span>
                         </td>
-                        <td className="p-3 text-[#C5A059] font-semibold">{log.ACTION}</td>
-                        <td className="p-3 text-[#AAAAAA]">{log.USER}</td>
-                        <td className="p-3 text-[#777777]">{log.REFERENCE_ID}</td>
+                        <td className="p-3 text-[#C9A45C] font-semibold">{log.ACTION}</td>
+                        <td className="p-3 text-[#B4C0BA]">{log.USER}</td>
+                        <td className="p-3 text-[#81918A]">{log.REFERENCE_ID}</td>
                         <td className="p-3 text-white font-sans text-xs">{log.MESSAGE}</td>
                         <td className="p-3">
-                          <span className={log.STATUS === 'SUCCESS' ? 'text-[#00D222]' : 'text-red-400'}>
+                          <span className={log.STATUS === 'SUCCESS' ? 'text-[#4FCB91]' : 'text-red-400'}>
                             {log.STATUS}
                           </span>
                         </td>
@@ -1537,22 +1537,22 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
           {activeTab === 'codeHub' && (
             <div className="space-y-8">
               <div>
-                <span className="text-xs tracking-[0.2em] text-[#C5A059] font-bold uppercase block">
+                <span className="text-xs tracking-[0.2em] text-[#C9A45C] font-bold uppercase block">
                   Backend Source Code & Deployment
                 </span>
                 <h2 className="text-2xl font-serif-luxury text-white font-medium">
                   Google Apps Script & Drive Hub
                 </h2>
-                <p className="text-xs text-[#AAAAAA] mt-1">
+                <p className="text-xs text-[#B4C0BA] mt-1">
                   Salin file script berikut ke menu <strong>Extensions → Apps Script</strong> di Google Spreadsheet Anda untuk mengaktifkan backend resmi.
                 </p>
               </div>
 
               {/* Live Cloud Connection & Diagnostic Card */}
-              <div className="bg-[#161618] border border-[#C5A059]/30 rounded-sm p-6 space-y-4">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/10">
+              <div className="bg-[#09271F] border border-[#C9A45C]/30 rounded-sm p-6 space-y-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#245442]/45">
                   <div>
-                    <span className="text-[10px] tracking-widest text-[#00D222] font-mono font-bold uppercase flex items-center gap-1.5">
+                    <span className="text-[10px] tracking-widest text-[#4FCB91] font-mono font-bold uppercase flex items-center gap-1.5">
                       <Database className="w-3.5 h-3.5" />
                       Status Integrasi Google Apps Script
                     </span>
@@ -1566,7 +1566,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                       type="button"
                       onClick={handleTestConnection}
                       disabled={cloudStatus.checking}
-                      className="bg-[#1A1A1E] hover:bg-[#25252A] text-white border border-white/15 px-3.5 py-2 rounded-sm text-xs font-semibold flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                      className="bg-[#0D3429] hover:bg-[#164638] text-white border border-[#2A5A4A]/50 px-3.5 py-2 rounded-sm text-xs font-semibold flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
                     >
                       <RefreshCw className={`w-3.5 h-3.5 ${cloudStatus.checking ? 'animate-spin' : ''}`} />
                       <span>{cloudStatus.checking ? 'Menguji...' : 'Uji Koneksi'}</span>
@@ -1576,7 +1576,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                       type="button"
                       onClick={handlePullFromSpreadsheet}
                       disabled={isBulkSyncing}
-                      className="bg-[#1A1A1E] hover:bg-[#25252A] text-[#00D222] border border-[#00D222]/40 hover:border-[#00D222] font-semibold px-3.5 py-2 rounded-sm text-xs flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                      className="bg-[#0D3429] hover:bg-[#164638] text-[#4FCB91] border border-[#4FCB91]/40 hover:border-[#4FCB91] font-semibold px-3.5 py-2 rounded-sm text-xs flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
                     >
                       <RefreshCw className={`w-3.5 h-3.5 ${isBulkSyncing ? 'animate-spin' : ''}`} />
                       <span>{isBulkSyncing ? 'Menarik...' : 'Tarik dari Spreadsheet'}</span>
@@ -1586,7 +1586,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                       type="button"
                       onClick={handleBulkSyncNow}
                       disabled={isBulkSyncing}
-                      className="bg-[#C5A059] hover:bg-[#D4B06A] text-black font-bold px-4 py-2 rounded-sm text-xs flex items-center gap-1.5 cursor-pointer disabled:opacity-50 shadow-md shadow-[#C5A059]/10"
+                      className="bg-[#C9A45C] hover:bg-[#D7B66F] text-black font-bold px-4 py-2 rounded-sm text-xs flex items-center gap-1.5 cursor-pointer disabled:opacity-50 shadow-md shadow-[#C9A45C]/10"
                     >
                       <Save className="w-3.5 h-3.5" />
                       <span>{isBulkSyncing ? 'Menyinkronkan...' : 'Kirim Semua ke Spreadsheet'}</span>
@@ -1596,28 +1596,28 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
 
                 {/* Connection Details */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                  <div className="p-3 bg-[#0A0A0B] border border-white/5 rounded-xs space-y-1 font-mono">
-                    <span className="text-[10px] text-[#777777] uppercase block font-sans">Deployment Web App URL / ID Aktif</span>
-                    <span className="text-[#C5A059] font-bold text-[11px] break-all block">
+                  <div className="p-3 bg-[#061B16] border border-[#1D4639]/45 rounded-xs space-y-1 font-mono">
+                    <span className="text-[10px] text-[#81918A] uppercase block font-sans">Deployment Web App URL / ID Aktif</span>
+                    <span className="text-[#C9A45C] font-bold text-[11px] break-all block">
                       {gasSync.getWebAppUrl()}
                     </span>
-                    <span className="text-[10px] text-[#00D222] font-sans block pt-1">
+                    <span className="text-[10px] text-[#4FCB91] font-sans block pt-1">
                       Terhubung otomatis untuk semua browser Desktop, Tablet, dan Smartphone (HP).
                     </span>
                   </div>
 
-                  <div className="p-3 bg-[#0A0A0B] border border-white/5 rounded-xs space-y-1">
-                    <span className="text-[10px] text-[#777777] uppercase block font-sans">Hasil Uji / Sinkronisasi</span>
+                  <div className="p-3 bg-[#061B16] border border-[#1D4639]/45 rounded-xs space-y-1">
+                    <span className="text-[10px] text-[#81918A] uppercase block font-sans">Hasil Uji / Sinkronisasi</span>
                     {cloudStatus.tested ? (
-                      <p className={`text-xs font-mono font-medium ${cloudStatus.success ? 'text-[#00D222]' : 'text-amber-400'}`}>
+                      <p className={`text-xs font-mono font-medium ${cloudStatus.success ? 'text-[#4FCB91]' : 'text-amber-400'}`}>
                         {cloudStatus.message}
                       </p>
                     ) : bulkSyncResult ? (
-                      <p className={`text-xs font-mono font-medium ${bulkSyncResult.success ? 'text-[#00D222]' : 'text-amber-400'}`}>
+                      <p className={`text-xs font-mono font-medium ${bulkSyncResult.success ? 'text-[#4FCB91]' : 'text-amber-400'}`}>
                         [{bulkSyncResult.timestamp}] {bulkSyncResult.message}
                       </p>
                     ) : (
-                      <p className="text-xs text-[#888888]">
+                      <p className="text-xs text-[#91A19A]">
                         Klik <strong>"Uji Koneksi"</strong> untuk memastikan Google Apps Script siap menerima data.
                       </p>
                     )}
@@ -1630,12 +1630,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                     <AlertTriangle className="w-4 h-4 text-amber-400" />
                     <span>PENTING: Mengapa Muncul Error "doGet / doPost Belum Ditemukan"?</span>
                   </div>
-                  <ul className="list-disc list-inside space-y-1 text-[11px] text-[#DDDDDD] pl-1 leading-relaxed">
+                  <ul className="list-disc list-inside space-y-1 text-[11px] text-[#D8E0DC] pl-1 leading-relaxed">
                     <li>
                       Jika saat Uji Koneksi muncul <em>"Fungsi doGet belum aktif"</em>, itu artinya project Apps Script pada URL di atas belum memiliki fungsi <code>doGet(e)</code> dan <code>doPost(e)</code>.
                     </li>
                     <li>
-                      <strong>Cara Perbaikan Cepat (1 Menit):</strong> Klik tombol emas <strong className="text-[#C5A059]">"Salin Seluruh Kode (1 File Code.gs)"</strong> di bawah, buka project Apps Script URL Anda, paste ke <code>Code.gs</code>, klik <strong>Save</strong>, lalu <strong>Deploy → Manage deployments → Edit (pensil) → Version: New version → Deploy</strong>.
+                      <strong>Cara Perbaikan Cepat (1 Menit):</strong> Klik tombol emas <strong className="text-[#C9A45C]">"Salin Seluruh Kode (1 File Code.gs)"</strong> di bawah, buka project Apps Script URL Anda, paste ke <code>Code.gs</code>, klik <strong>Save</strong>, lalu <strong>Deploy → Manage deployments → Edit (pensil) → Version: New version → Deploy</strong>.
                     </li>
                     <li>
                       Pastikan di Apps Script: <strong>Execute as: Me</strong> dan <strong>Who has access: Anyone</strong>.
@@ -1645,15 +1645,15 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
               </div>
 
               {/* Quick 1-Click Copy All Script Box */}
-              <div className="bg-[#121214] border-2 border-[#C5A059]/40 rounded-sm p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div className="bg-[#09271F] border-2 border-[#C9A45C]/40 rounded-sm p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div>
-                  <span className="text-[10px] tracking-widest text-[#C5A059] font-bold uppercase block font-mono">
+                  <span className="text-[10px] tracking-widest text-[#C9A45C] font-bold uppercase block font-mono">
                     Solusi 1 File Praktis (Recommended)
                   </span>
                   <h3 className="text-base font-bold text-white mt-0.5">
                     Salin Seluruh Backend ke 1 File Code.gs
                   </h3>
-                  <p className="text-xs text-[#AAAAAA] mt-1 max-w-xl leading-relaxed">
+                  <p className="text-xs text-[#B4C0BA] mt-1 max-w-xl leading-relaxed">
                     Tidak perlu repot membuat 8 file terpisah! Salin seluruh fungsi lengkap (doGet, doPost, setupDatabase, setupDrive) sekaligus ke file <code>Code.gs</code> di Google Apps Script Anda.
                   </p>
                 </div>
@@ -1661,7 +1661,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                 <button
                   type="button"
                   onClick={() => handleCopyCode('AllInOne_Code.gs', getCombinedAppsScriptCode())}
-                  className="bg-[#C5A059] hover:bg-[#D4B06A] text-black font-bold px-5 py-3 rounded-sm text-xs flex items-center gap-2 transition-transform active:scale-95 cursor-pointer whitespace-nowrap shadow-lg shadow-[#C5A059]/20"
+                  className="bg-[#C9A45C] hover:bg-[#D7B66F] text-black font-bold px-5 py-3 rounded-sm text-xs flex items-center gap-2 transition-transform active:scale-95 cursor-pointer whitespace-nowrap shadow-lg shadow-[#C9A45C]/20"
                 >
                   {copiedFile === 'AllInOne_Code.gs' ? (
                     <>
@@ -1678,19 +1678,19 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
               </div>
 
               {/* Deployment Step Guide */}
-              <div className="bg-[#161618] border border-white/10 rounded-sm p-6 space-y-4">
-                <h3 className="text-xs font-bold uppercase tracking-widest text-[#C5A059] flex items-center gap-2">
+              <div className="bg-[#09271F] border border-[#245442]/45 rounded-sm p-6 space-y-4">
+                <h3 className="text-xs font-bold uppercase tracking-widest text-[#C9A45C] flex items-center gap-2">
                   <span>Panduan Langkah Deployment Google Apps Script (11 Langkah)</span>
                 </h3>
 
-                <ol className="list-decimal list-inside space-y-2 text-xs text-[#CCCCCC] leading-relaxed">
+                <ol className="list-decimal list-inside space-y-2 text-xs text-[#CBD5D0] leading-relaxed">
                   <li>Buka <strong>Google Spreadsheet</strong> database Anda di Google Drive.</li>
-                  <li>Buka menu: <code className="bg-[#0A0A0B] text-[#C5A059] px-1.5 py-0.5 rounded-xs">Extensions → Apps Script</code>.</li>
-                  <li>Hapus kode bawaan, lalu tempel kode lengkap yang telah disalin di atas ke file <code className="text-[#C5A059]">Code.gs</code>.</li>
-                  <li>Pilih fungsi <code className="text-[#C5A059]">initializeBonlesSystem()</code> di toolbar atas Apps Script lalu klik <strong>Run</strong>.</li>
+                  <li>Buka menu: <code className="bg-[#061B16] text-[#C9A45C] px-1.5 py-0.5 rounded-xs">Extensions → Apps Script</code>.</li>
+                  <li>Hapus kode bawaan, lalu tempel kode lengkap yang telah disalin di atas ke file <code className="text-[#C9A45C]">Code.gs</code>.</li>
+                  <li>Pilih fungsi <code className="text-[#C9A45C]">initializeBonlesSystem()</code> di toolbar atas Apps Script lalu klik <strong>Run</strong>.</li>
                   <li>Berikan izin akses otorisasi (*Authorization*) untuk Google Sheets & Google Drive.</li>
                   <li>Pastikan 9 Sheet database berhasil dibuat secara otomatis beserta header resminya.</li>
-                  <li>Pastikan folder <code className="text-[#C5A059]">BONLES FOOD NUSANTARA/</code> dan subfoldernya berhasil dibuat di Google Drive.</li>
+                  <li>Pastikan folder <code className="text-[#C9A45C]">BONLES FOOD NUSANTARA/</code> dan subfoldernya berhasil dibuat di Google Drive.</li>
                   <li>Klik tombol <strong>Deploy → Manage deployments</strong> (atau New deployment).</li>
                   <li>Pilih type <strong>Web App</strong>, set <em>Execute as: Me</em>, dan <em>Who has access: Anyone</em>.</li>
                   <li>Pastikan memilih <strong>New version</strong> setiap kali memperbarui kode script!</li>
@@ -1706,32 +1706,32 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
 
                 <div className="space-y-4">
                   {APPS_SCRIPT_FILES.map((f) => (
-                    <div key={f.filename} className="bg-[#161618] border border-white/10 rounded-sm overflow-hidden">
-                      <div className="p-3 bg-[#111113] border-b border-white/10 flex items-center justify-between">
+                    <div key={f.filename} className="bg-[#09271F] border border-[#245442]/45 rounded-sm overflow-hidden">
+                      <div className="p-3 bg-[#09271F] border-b border-[#245442]/45 flex items-center justify-between">
                         <div>
-                          <span className="font-mono text-xs font-bold text-[#C5A059]">{f.filename}</span>
-                          <p className="text-[11px] text-[#777777]">{f.description}</p>
+                          <span className="font-mono text-xs font-bold text-[#C9A45C]">{f.filename}</span>
+                          <p className="text-[11px] text-[#81918A]">{f.description}</p>
                         </div>
 
                         <button
                           onClick={() => handleCopyCode(f.filename, f.code)}
-                          className="bg-[#0A0A0B] hover:bg-[#1F1F23] text-white border border-white/10 hover:border-[#C5A059] px-3 py-1.5 rounded-sm text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                          className="bg-[#061B16] hover:bg-[#103A2E] text-white border border-[#245442]/45 hover:border-[#C9A45C] px-3 py-1.5 rounded-sm text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
                         >
                           {copiedFile === f.filename ? (
                             <>
-                              <Check className="w-3.5 h-3.5 text-[#00D222]" />
-                              <span className="text-[#00D222]">Tersalin</span>
+                              <Check className="w-3.5 h-3.5 text-[#4FCB91]" />
+                              <span className="text-[#4FCB91]">Tersalin</span>
                             </>
                           ) : (
                             <>
-                              <Copy className="w-3.5 h-3.5 text-[#C5A059]" />
+                              <Copy className="w-3.5 h-3.5 text-[#C9A45C]" />
                               <span>Salin Kode</span>
                             </>
                           )}
                         </button>
                       </div>
 
-                      <div className="p-4 bg-[#0A0A0B] max-h-72 overflow-y-auto font-mono text-[11px] text-[#BBBBBB] whitespace-pre">
+                      <div className="p-4 bg-[#061B16] max-h-72 overflow-y-auto font-mono text-[11px] text-[#BCC8C2] whitespace-pre">
                         {f.code}
                       </div>
                     </div>
@@ -1748,15 +1748,15 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
       {/* 1. PRODUCT EDIT / ADD MODAL WITH PHOTO UPLOAD & URL */}
       {isProductModalOpen && editingProduct && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm overflow-y-auto">
-          <div className="relative w-full max-w-2xl bg-[#161618] border border-white/10 rounded-sm shadow-2xl p-6 space-y-5 my-8">
-            <div className="flex items-center justify-between pb-3 border-b border-white/10">
+          <div className="relative w-full max-w-2xl bg-[#09271F] border border-[#245442]/45 rounded-sm shadow-2xl p-6 space-y-5 my-8">
+            <div className="flex items-center justify-between pb-3 border-b border-[#245442]/45">
               <h3 className="text-lg font-serif-luxury text-white font-medium">
                 {editingProduct.ID ? `Edit Produk: ${editingProduct.SKU}` : 'Tambah Produk Baru'}
               </h3>
               <button
                 type="button"
                 onClick={() => setIsProductModalOpen(false)}
-                className="text-[#888888] hover:text-white"
+                className="text-[#91A19A] hover:text-white"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -1765,18 +1765,18 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
             <form onSubmit={handleSaveProductSubmit} className="space-y-4 text-xs">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="text-[#AAAAAA]">SKU Produk *</label>
+                  <label className="text-[#B4C0BA]">SKU Produk *</label>
                   <input
                     type="text"
                     required
                     value={editingProduct.SKU}
                     onChange={(e) => setEditingProduct({ ...editingProduct, SKU: e.target.value })}
-                    className="w-full bg-[#0A0A0B] border border-white/10 rounded-sm p-2 text-white font-mono"
+                    className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm p-2 text-white font-mono"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[#AAAAAA]">Kategori *</label>
+                  <label className="text-[#B4C0BA]">Kategori *</label>
                   <select
                     value={editingProduct.CATEGORY_ID}
                     onChange={(e) => {
@@ -1787,7 +1787,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                         CATEGORY_NAME: cat?.NAME || editingProduct.CATEGORY_NAME,
                       });
                     }}
-                    className="w-full bg-[#0A0A0B] border border-white/10 rounded-sm p-2 text-white"
+                    className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm p-2 text-white"
                   >
                     {categories.map(c => (
                       <option key={c.ID} value={c.ID}>{c.NAME}</option>
@@ -1797,65 +1797,65 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
               </div>
 
               <div className="space-y-1">
-                <label className="text-[#AAAAAA]">Nama Produk Lengkap *</label>
+                <label className="text-[#B4C0BA]">Nama Produk Lengkap *</label>
                 <input
                   type="text"
                   required
                   value={editingProduct.NAME}
                   onChange={(e) => setEditingProduct({ ...editingProduct, NAME: e.target.value })}
                   placeholder="Misal: Keripik Tempe Crispy Bonles Original 150g"
-                  className="w-full bg-[#0A0A0B] border border-white/10 rounded-sm p-2 text-white"
+                  className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm p-2 text-white"
                 />
               </div>
 
               <div className="grid grid-cols-3 gap-3">
                 <div className="space-y-1">
-                  <label className="text-[#AAAAAA]">Harga Normal (Rp) *</label>
+                  <label className="text-[#B4C0BA]">Harga Normal (Rp) *</label>
                   <input
                     type="number"
                     required
                     value={editingProduct.PRICE}
                     onChange={(e) => setEditingProduct({ ...editingProduct, PRICE: Number(e.target.value) })}
-                    className="w-full bg-[#0A0A0B] border border-white/10 rounded-sm p-2 text-white font-mono"
+                    className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm p-2 text-white font-mono"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[#AAAAAA]">Harga Diskon (Rp)</label>
+                  <label className="text-[#B4C0BA]">Harga Diskon (Rp)</label>
                   <input
                     type="number"
                     value={editingProduct.DISCOUNT_PRICE}
                     onChange={(e) => setEditingProduct({ ...editingProduct, DISCOUNT_PRICE: Number(e.target.value) })}
-                    className="w-full bg-[#0A0A0B] border border-white/10 rounded-sm p-2 text-white font-mono"
+                    className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm p-2 text-white font-mono"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[#AAAAAA]">Stok Fisik *</label>
+                  <label className="text-[#B4C0BA]">Stok Fisik *</label>
                   <input
                     type="number"
                     required
                     value={editingProduct.STOCK}
                     onChange={(e) => setEditingProduct({ ...editingProduct, STOCK: Number(e.target.value) })}
-                    className="w-full bg-[#0A0A0B] border border-white/10 rounded-sm p-2 text-white font-mono"
+                    className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm p-2 text-white font-mono"
                   />
                 </div>
               </div>
 
               <div className="space-y-1">
-                <label className="text-[#AAAAAA]">Berat Bersih / Kemasan</label>
+                <label className="text-[#B4C0BA]">Berat Bersih / Kemasan</label>
                 <input
                   type="text"
                   value={editingProduct.WEIGHT}
                   onChange={(e) => setEditingProduct({ ...editingProduct, WEIGHT: e.target.value })}
                   placeholder="Misal: 150 Gram (Standar Pouch)"
-                  className="w-full bg-[#0A0A0B] border border-white/10 rounded-sm p-2 text-white"
+                  className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm p-2 text-white"
                 />
               </div>
 
               {/* PHOTO UPLOAD & URL SECTION FOR PRODUCT */}
-              <div className="p-4 bg-[#0F0F11] border border-white/10 rounded-sm space-y-4">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#C5A059] block">
+              <div className="p-4 bg-[#071F19] border border-[#245442]/45 rounded-sm space-y-4">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#C9A45C] block">
                   Foto & Galeri Produk (Upload File atau Salin Link)
                 </span>
 
@@ -1869,7 +1869,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                 />
 
                 {/* 2. GALLERY 1 */}
-                <div className="pt-2 border-t border-white/5">
+                <div className="pt-2 border-t border-[#1D4639]/45">
                   <ImageUploadOrUrl
                     label="Galeri Tambahan 1 (Opsional)"
                     value={editingProduct.GALLERY_1_URL || ''}
@@ -1879,7 +1879,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                 </div>
 
                 {/* 3. GALLERY 2 */}
-                <div className="pt-2 border-t border-white/5">
+                <div className="pt-2 border-t border-[#1D4639]/45">
                   <ImageUploadOrUrl
                     label="Galeri Tambahan 2 (Opsional)"
                     value={editingProduct.GALLERY_2_URL || ''}
@@ -1890,34 +1890,34 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
               </div>
 
               <div className="space-y-1">
-                <label className="text-[#AAAAAA]">Deskripsi Produk</label>
+                <label className="text-[#B4C0BA]">Deskripsi Produk</label>
                 <textarea
                   rows={2}
                   value={editingProduct.DESCRIPTION}
                   onChange={(e) => setEditingProduct({ ...editingProduct, DESCRIPTION: e.target.value })}
                   placeholder="Jelaskan cita rasa, keunggulan gizi, dan keunikan camilan..."
-                  className="w-full bg-[#0A0A0B] border border-white/10 rounded-sm p-2 text-white"
+                  className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm p-2 text-white"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="text-[#AAAAAA]">Komposisi Bahan</label>
+                  <label className="text-[#B4C0BA]">Komposisi Bahan</label>
                   <input
                     type="text"
                     value={editingProduct.COMPOSITION}
                     onChange={(e) => setEditingProduct({ ...editingProduct, COMPOSITION: e.target.value })}
-                    className="w-full bg-[#0A0A0B] border border-white/10 rounded-sm p-2 text-white"
+                    className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm p-2 text-white"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[#AAAAAA]">Informasi Gizi / Nutrisi</label>
+                  <label className="text-[#B4C0BA]">Informasi Gizi / Nutrisi</label>
                   <input
                     type="text"
                     value={editingProduct.NUTRITION}
                     onChange={(e) => setEditingProduct({ ...editingProduct, NUTRITION: e.target.value })}
-                    className="w-full bg-[#0A0A0B] border border-white/10 rounded-sm p-2 text-white"
+                    className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm p-2 text-white"
                   />
                 </div>
               </div>
@@ -1928,7 +1928,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                     type="checkbox"
                     checked={editingProduct.ACTIVE}
                     onChange={(e) => setEditingProduct({ ...editingProduct, ACTIVE: e.target.checked })}
-                    className="rounded-xs accent-[#C5A059]"
+                    className="rounded-xs accent-[#C9A45C]"
                   />
                   <span>Tayang di Katalog Website (ACTIVE)</span>
                 </label>
@@ -1938,23 +1938,23 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                     type="checkbox"
                     checked={editingProduct.FEATURED}
                     onChange={(e) => setEditingProduct({ ...editingProduct, FEATURED: e.target.checked })}
-                    className="rounded-xs accent-[#C5A059]"
+                    className="rounded-xs accent-[#C9A45C]"
                   />
                   <span>Produk Unggulan / Hero (FEATURED)</span>
                 </label>
               </div>
 
-              <div className="flex justify-end gap-3 pt-4 border-t border-white/10">
+              <div className="flex justify-end gap-3 pt-4 border-t border-[#245442]/45">
                 <button
                   type="button"
                   onClick={() => setIsProductModalOpen(false)}
-                  className="px-4 py-2 bg-[#0A0A0B] border border-white/10 rounded-sm text-[#888888] hover:text-white cursor-pointer"
+                  className="px-4 py-2 bg-[#061B16] border border-[#245442]/45 rounded-sm text-[#91A19A] hover:text-white cursor-pointer"
                 >
                   Batal
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-[#C5A059] hover:bg-[#D4B06A] text-black font-bold rounded-sm uppercase tracking-wider text-xs flex items-center gap-1.5 cursor-pointer shadow-lg shadow-[#C5A059]/20"
+                  className="px-5 py-2 bg-[#C9A45C] hover:bg-[#D7B66F] text-black font-bold rounded-sm uppercase tracking-wider text-xs flex items-center gap-1.5 cursor-pointer shadow-lg shadow-[#C9A45C]/20"
                 >
                   <Save className="w-3.5 h-3.5" />
                   <span>Simpan Produk & Terapkan</span>
@@ -1968,32 +1968,32 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
       {/* 2. CATEGORY EDIT / ADD MODAL WITH PHOTO UPLOAD & URL */}
       {isCategoryModalOpen && editingCategory && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm overflow-y-auto">
-          <div className="relative w-full max-w-md bg-[#161618] border border-white/10 rounded-sm shadow-2xl p-6 space-y-4">
-            <h3 className="text-base font-serif-luxury text-white font-medium pb-2 border-b border-white/10">
+          <div className="relative w-full max-w-md bg-[#09271F] border border-[#245442]/45 rounded-sm shadow-2xl p-6 space-y-4">
+            <h3 className="text-base font-serif-luxury text-white font-medium pb-2 border-b border-[#245442]/45">
               {editingCategory.ID ? `Edit Kategori: ${editingCategory.NAME}` : 'Tambah Kategori'}
             </h3>
 
             <form onSubmit={handleSaveCategorySubmit} className="space-y-4 text-xs">
               <div className="space-y-1">
-                <label className="text-[#AAAAAA]">Nama Kategori *</label>
+                <label className="text-[#B4C0BA]">Nama Kategori *</label>
                 <input
                   type="text"
                   required
                   value={editingCategory.NAME}
                   onChange={(e) => setEditingCategory({ ...editingCategory, NAME: e.target.value })}
                   placeholder="Misal: Keripik Tempe Crispy"
-                  className="w-full bg-[#0A0A0B] border border-white/10 rounded-sm p-2 text-white"
+                  className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm p-2 text-white"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-[#AAAAAA]">Deskripsi Singkat</label>
+                <label className="text-[#B4C0BA]">Deskripsi Singkat</label>
                 <textarea
                   rows={2}
                   value={editingCategory.DESCRIPTION}
                   onChange={(e) => setEditingCategory({ ...editingCategory, DESCRIPTION: e.target.value })}
                   placeholder="Keterangan kategori..."
-                  className="w-full bg-[#0A0A0B] border border-white/10 rounded-sm p-2 text-white"
+                  className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm p-2 text-white"
                 />
               </div>
 
@@ -2007,12 +2007,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="text-[#AAAAAA]">Urutan Tampilan</label>
+                  <label className="text-[#B4C0BA]">Urutan Tampilan</label>
                   <input
                     type="number"
                     value={editingCategory.SORT_ORDER}
                     onChange={(e) => setEditingCategory({ ...editingCategory, SORT_ORDER: Number(e.target.value) })}
-                    className="w-full bg-[#0A0A0B] border border-white/10 rounded-sm p-2 text-white font-mono"
+                    className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm p-2 text-white font-mono"
                   />
                 </div>
 
@@ -2022,24 +2022,24 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                       type="checkbox"
                       checked={editingCategory.ACTIVE}
                       onChange={(e) => setEditingCategory({ ...editingCategory, ACTIVE: e.target.checked })}
-                      className="accent-[#C5A059]"
+                      className="accent-[#C9A45C]"
                     />
                     <span>Status Aktif</span>
                   </label>
                 </div>
               </div>
 
-              <div className="flex justify-end gap-3 pt-4 border-t border-white/10">
+              <div className="flex justify-end gap-3 pt-4 border-t border-[#245442]/45">
                 <button
                   type="button"
                   onClick={() => setIsCategoryModalOpen(false)}
-                  className="px-4 py-2 bg-[#0A0A0B] border border-white/10 rounded-sm text-[#888888] hover:text-white cursor-pointer"
+                  className="px-4 py-2 bg-[#061B16] border border-[#245442]/45 rounded-sm text-[#91A19A] hover:text-white cursor-pointer"
                 >
                   Batal
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-[#C5A059] hover:bg-[#D4B06A] text-black font-bold rounded-sm uppercase tracking-wider text-xs flex items-center gap-1.5 cursor-pointer"
+                  className="px-5 py-2 bg-[#C9A45C] hover:bg-[#D7B66F] text-black font-bold rounded-sm uppercase tracking-wider text-xs flex items-center gap-1.5 cursor-pointer"
                 >
                   <Save className="w-3.5 h-3.5" />
                   <span>Simpan Kategori</span>
@@ -2053,32 +2053,32 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
       {/* 3. BANNER EDIT / ADD MODAL WITH PHOTO UPLOAD & URL */}
       {isBannerModalOpen && editingBanner && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm overflow-y-auto">
-          <div className="relative w-full max-w-lg bg-[#161618] border border-white/10 rounded-sm shadow-2xl p-6 space-y-4 my-8">
-            <h3 className="text-base font-serif-luxury text-white font-medium pb-2 border-b border-white/10">
+          <div className="relative w-full max-w-lg bg-[#09271F] border border-[#245442]/45 rounded-sm shadow-2xl p-6 space-y-4 my-8">
+            <h3 className="text-base font-serif-luxury text-white font-medium pb-2 border-b border-[#245442]/45">
               {editingBanner.ID ? `Edit Banner: ${editingBanner.TITLE}` : 'Tambah Banner Promo'}
             </h3>
 
             <form onSubmit={handleSaveBannerSubmit} className="space-y-4 text-xs">
               <div className="space-y-1">
-                <label className="text-[#AAAAAA]">Judul Banner Utama *</label>
+                <label className="text-[#B4C0BA]">Judul Banner Utama *</label>
                 <input
                   type="text"
                   required
                   value={editingBanner.TITLE}
                   onChange={(e) => setEditingBanner({ ...editingBanner, TITLE: e.target.value })}
                   placeholder="Misal: Camilan Tempe Crispy Tinggi Protein"
-                  className="w-full bg-[#0A0A0B] border border-white/10 rounded-sm p-2 text-white"
+                  className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm p-2 text-white"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-[#AAAAAA]">Subtitle / Tagline Atas</label>
+                <label className="text-[#B4C0BA]">Subtitle / Tagline Atas</label>
                 <input
                   type="text"
                   value={editingBanner.SUBTITLE}
                   onChange={(e) => setEditingBanner({ ...editingBanner, SUBTITLE: e.target.value })}
                   placeholder="Misal: Kelezatan Asli Nusantara"
-                  className="w-full bg-[#0A0A0B] border border-white/10 rounded-sm p-2 text-white"
+                  className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm p-2 text-white"
                 />
               </div>
 
@@ -2092,33 +2092,33 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
               />
 
               <div className="space-y-1">
-                <label className="text-[#AAAAAA]">Deskripsi Singkat</label>
+                <label className="text-[#B4C0BA]">Deskripsi Singkat</label>
                 <textarea
                   rows={2}
                   value={editingBanner.DESCRIPTION}
                   onChange={(e) => setEditingBanner({ ...editingBanner, DESCRIPTION: e.target.value })}
-                  className="w-full bg-[#0A0A0B] border border-white/10 rounded-sm p-2 text-white"
+                  className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm p-2 text-white"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="text-[#AAAAAA]">Teks Tombol</label>
+                  <label className="text-[#B4C0BA]">Teks Tombol</label>
                   <input
                     type="text"
                     value={editingBanner.BUTTON_TEXT}
                     onChange={(e) => setEditingBanner({ ...editingBanner, BUTTON_TEXT: e.target.value })}
-                    className="w-full bg-[#0A0A0B] border border-white/10 rounded-sm p-2 text-white"
+                    className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm p-2 text-white"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[#AAAAAA]">Link Tombol</label>
+                  <label className="text-[#B4C0BA]">Link Tombol</label>
                   <input
                     type="text"
                     value={editingBanner.BUTTON_LINK}
                     onChange={(e) => setEditingBanner({ ...editingBanner, BUTTON_LINK: e.target.value })}
-                    className="w-full bg-[#0A0A0B] border border-white/10 rounded-sm p-2 text-white"
+                    className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm p-2 text-white"
                   />
                 </div>
               </div>
@@ -2128,22 +2128,22 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                   type="checkbox"
                   checked={editingBanner.ACTIVE}
                   onChange={(e) => setEditingBanner({ ...editingBanner, ACTIVE: e.target.checked })}
-                  className="accent-[#C5A059]"
+                  className="accent-[#C9A45C]"
                 />
                 <span>Tayangkan Banner di Website</span>
               </div>
 
-              <div className="flex justify-end gap-3 pt-4 border-t border-white/10">
+              <div className="flex justify-end gap-3 pt-4 border-t border-[#245442]/45">
                 <button
                   type="button"
                   onClick={() => setIsBannerModalOpen(false)}
-                  className="px-4 py-2 bg-[#0A0A0B] border border-white/10 rounded-sm text-[#888888] hover:text-white cursor-pointer"
+                  className="px-4 py-2 bg-[#061B16] border border-[#245442]/45 rounded-sm text-[#91A19A] hover:text-white cursor-pointer"
                 >
                   Batal
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-[#C5A059] hover:bg-[#D4B06A] text-black font-bold rounded-sm uppercase tracking-wider text-xs flex items-center gap-1.5 cursor-pointer"
+                  className="px-5 py-2 bg-[#C9A45C] hover:bg-[#D7B66F] text-black font-bold rounded-sm uppercase tracking-wider text-xs flex items-center gap-1.5 cursor-pointer"
                 >
                   <Save className="w-3.5 h-3.5" />
                   <span>Simpan Banner</span>
@@ -2157,21 +2157,21 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
       {/* 4. TESTIMONIAL EDIT / ADD MODAL WITH AVATAR PHOTO UPLOAD & URL */}
       {isTestimonialModalOpen && editingTestimonial && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm overflow-y-auto">
-          <div className="relative w-full max-w-md bg-[#161618] border border-white/10 rounded-sm shadow-2xl p-6 space-y-4">
-            <h3 className="text-base font-serif-luxury text-white font-medium pb-2 border-b border-white/10">
+          <div className="relative w-full max-w-md bg-[#09271F] border border-[#245442]/45 rounded-sm shadow-2xl p-6 space-y-4">
+            <h3 className="text-base font-serif-luxury text-white font-medium pb-2 border-b border-[#245442]/45">
               {editingTestimonial.ID ? `Edit Testimoni: ${editingTestimonial.CUSTOMER_NAME}` : 'Tambah Testimoni'}
             </h3>
 
             <form onSubmit={handleSaveTestimonialSubmit} className="space-y-4 text-xs">
               <div className="space-y-1">
-                <label className="text-[#AAAAAA]">Nama Pelanggan *</label>
+                <label className="text-[#B4C0BA]">Nama Pelanggan *</label>
                 <input
                   type="text"
                   required
                   value={editingTestimonial.CUSTOMER_NAME}
                   onChange={(e) => setEditingTestimonial({ ...editingTestimonial, CUSTOMER_NAME: e.target.value })}
                   placeholder="Misal: Sarah Anggraini (Jakarta)"
-                  className="w-full bg-[#0A0A0B] border border-white/10 rounded-sm p-2 text-white"
+                  className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm p-2 text-white"
                 />
               </div>
 
@@ -2184,11 +2184,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
               />
 
               <div className="space-y-1">
-                <label className="text-[#AAAAAA]">Rating Bintang (1 - 5)</label>
+                <label className="text-[#B4C0BA]">Rating Bintang (1 - 5)</label>
                 <select
                   value={editingTestimonial.RATING}
                   onChange={(e) => setEditingTestimonial({ ...editingTestimonial, RATING: Number(e.target.value) })}
-                  className="w-full bg-[#0A0A0B] border border-white/10 rounded-sm p-2 text-white"
+                  className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm p-2 text-white"
                 >
                   <option value={5}>⭐⭐⭐⭐⭐ (5 Bintang - Sangat Puas)</option>
                   <option value={4}>⭐⭐⭐⭐ (4 Bintang - Puas)</option>
@@ -2197,14 +2197,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
               </div>
 
               <div className="space-y-1">
-                <label className="text-[#AAAAAA]">Isi Ulasan / Review *</label>
+                <label className="text-[#B4C0BA]">Isi Ulasan / Review *</label>
                 <textarea
                   rows={3}
                   required
                   value={editingTestimonial.MESSAGE}
                   onChange={(e) => setEditingTestimonial({ ...editingTestimonial, MESSAGE: e.target.value })}
                   placeholder="Tulis ulasan pelanggan tentang kerenyahan dan rasa produk..."
-                  className="w-full bg-[#0A0A0B] border border-white/10 rounded-sm p-2 text-white"
+                  className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm p-2 text-white"
                 />
               </div>
 
@@ -2213,22 +2213,22 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                   type="checkbox"
                   checked={editingTestimonial.ACTIVE}
                   onChange={(e) => setEditingTestimonial({ ...editingTestimonial, ACTIVE: e.target.checked })}
-                  className="accent-[#C5A059]"
+                  className="accent-[#C9A45C]"
                 />
                 <span>Tayangkan Testimoni di Website</span>
               </div>
 
-              <div className="flex justify-end gap-3 pt-4 border-t border-white/10">
+              <div className="flex justify-end gap-3 pt-4 border-t border-[#245442]/45">
                 <button
                   type="button"
                   onClick={() => setIsTestimonialModalOpen(false)}
-                  className="px-4 py-2 bg-[#0A0A0B] border border-white/10 rounded-sm text-[#888888] hover:text-white cursor-pointer"
+                  className="px-4 py-2 bg-[#061B16] border border-[#245442]/45 rounded-sm text-[#91A19A] hover:text-white cursor-pointer"
                 >
                   Batal
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-[#C5A059] hover:bg-[#D4B06A] text-black font-bold rounded-sm uppercase tracking-wider text-xs flex items-center gap-1.5 cursor-pointer"
+                  className="px-5 py-2 bg-[#C9A45C] hover:bg-[#D7B66F] text-black font-bold rounded-sm uppercase tracking-wider text-xs flex items-center gap-1.5 cursor-pointer"
                 >
                   <Save className="w-3.5 h-3.5" />
                   <span>Simpan Testimoni</span>
@@ -2242,37 +2242,37 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
       {/* 5. VIEW ORDER DETAIL MODAL */}
       {viewingOrder && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm overflow-y-auto">
-          <div className="relative w-full max-w-lg bg-[#161618] border border-white/10 rounded-sm shadow-2xl p-6 space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-white/10">
+          <div className="relative w-full max-w-lg bg-[#09271F] border border-[#245442]/45 rounded-sm shadow-2xl p-6 space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-[#245442]/45">
               <div>
-                <span className="text-[10px] uppercase font-mono text-[#C5A059]">Rincian Transaksi</span>
+                <span className="text-[10px] uppercase font-mono text-[#C9A45C]">Rincian Transaksi</span>
                 <h3 className="text-base font-bold text-white font-mono">{viewingOrder.ORDER_ID}</h3>
               </div>
               <button
                 onClick={() => setViewingOrder(null)}
-                className="text-[#888888] hover:text-white text-xs cursor-pointer"
+                className="text-[#91A19A] hover:text-white text-xs cursor-pointer"
               >
                 Tutup
               </button>
             </div>
 
             <div className="space-y-2 text-xs">
-              <div className="grid grid-cols-2 gap-2 text-[#AAAAAA]">
+              <div className="grid grid-cols-2 gap-2 text-[#B4C0BA]">
                 <p>Nama: <span className="text-white font-medium">{viewingOrder.CUSTOMER_NAME}</span></p>
                 <p>WhatsApp: <span className="text-white font-mono">{viewingOrder.PHONE}</span></p>
                 <p>Kota: <span className="text-white">{viewingOrder.CITY}</span></p>
-                <p>Status: <span className="text-[#C5A059] font-bold">{viewingOrder.STATUS}</span></p>
+                <p>Status: <span className="text-[#C9A45C] font-bold">{viewingOrder.STATUS}</span></p>
               </div>
-              <p className="text-[#AAAAAA]">Alamat: <span className="text-white">{viewingOrder.ADDRESS}</span></p>
+              <p className="text-[#B4C0BA]">Alamat: <span className="text-white">{viewingOrder.ADDRESS}</span></p>
               {viewingOrder.NOTES && (
-                <p className="text-[#AAAAAA]">Catatan: <span className="text-amber-300">{viewingOrder.NOTES}</span></p>
+                <p className="text-[#B4C0BA]">Catatan: <span className="text-amber-300">{viewingOrder.NOTES}</span></p>
               )}
             </div>
 
             {/* Order Items */}
-            <div className="bg-[#0A0A0B] p-3 rounded-sm border border-white/5 space-y-2">
-              <span className="text-[10px] uppercase tracking-wider text-[#888888] font-bold">Barang Dipesan:</span>
-              <div className="divide-y divide-white/5 space-y-1">
+            <div className="bg-[#061B16] p-3 rounded-sm border border-[#1D4639]/45 space-y-2">
+              <span className="text-[10px] uppercase tracking-wider text-[#91A19A] font-bold">Barang Dipesan:</span>
+              <div className="divide-y divide-[#1D4639]/45 space-y-1">
                 {viewingOrder.ITEMS?.map((item, idx) => (
                   <div key={idx} className="pt-1 flex justify-between text-xs">
                     <span>{item.PRODUCT_NAME} x{item.QUANTITY}</span>
@@ -2280,7 +2280,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                   </div>
                 ))}
               </div>
-              <div className="pt-2 border-t border-white/10 flex justify-between font-bold text-xs text-[#C5A059]">
+              <div className="pt-2 border-t border-[#245442]/45 flex justify-between font-bold text-xs text-[#C9A45C]">
                 <span>Total Tagihan</span>
                 <span className="font-mono text-sm">Rp {viewingOrder.TOTAL.toLocaleString('id-ID')}</span>
               </div>
@@ -2292,7 +2292,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                 href={`https://wa.me/${viewingOrder.PHONE.replace(/\D/g, '')}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full bg-[#00D222] hover:bg-[#00B51D] text-black font-bold py-2.5 rounded-sm text-xs uppercase flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                className="w-full bg-[#4FCB91] hover:bg-[#3FAF7C] text-black font-bold py-2.5 rounded-sm text-xs uppercase flex items-center justify-center gap-2 transition-colors cursor-pointer"
               >
                 <span>Hubungi Pelanggan di WhatsApp</span>
                 <ExternalLink className="w-3.5 h-3.5" />
@@ -2305,27 +2305,27 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
       {/* 6. SAVE SUCCESS & WEB SYNC VERIFICATION MODAL */}
       {saveSuccessModal && saveSuccessModal.isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fade-in">
-          <div className="relative w-full max-w-md bg-[#161618] border border-[#00D222]/40 rounded-sm shadow-2xl p-6 space-y-5 text-center">
-            <div className="w-14 h-14 bg-[#00D222]/10 border border-[#00D222]/30 rounded-full flex items-center justify-center mx-auto text-[#00D222]">
+          <div className="relative w-full max-w-md bg-[#09271F] border border-[#4FCB91]/40 rounded-sm shadow-2xl p-6 space-y-5 text-center">
+            <div className="w-14 h-14 bg-[#4FCB91]/10 border border-[#4FCB91]/30 rounded-full flex items-center justify-center mx-auto text-[#4FCB91]">
               <CheckCircle2 className="w-8 h-8" />
             </div>
 
             <div>
-              <span className="text-[10px] uppercase font-mono tracking-widest text-[#00D222] font-bold">
+              <span className="text-[10px] uppercase font-mono tracking-widest text-[#4FCB91] font-bold">
                 Sinkronisasi Berhasil
               </span>
               <h3 className="text-xl font-serif-luxury text-white font-medium mt-1">
                 Semua Perubahan Berhasil Disimpan!
               </h3>
-              <p className="text-xs text-[#AAAAAA] mt-2 leading-relaxed">
+              <p className="text-xs text-[#B4C0BA] mt-2 leading-relaxed">
                 {saveSuccessModal.message}
               </p>
               {saveSuccessModal.cloudStatusText && (
-                <div className="mt-3 p-2.5 bg-[#0A0A0B] border border-white/10 rounded-xs text-[11px] text-left flex items-start gap-2">
-                  <Database className="w-4 h-4 text-[#C5A059] shrink-0 mt-0.5" />
+                <div className="mt-3 p-2.5 bg-[#061B16] border border-[#245442]/45 rounded-xs text-[11px] text-left flex items-start gap-2">
+                  <Database className="w-4 h-4 text-[#C9A45C] shrink-0 mt-0.5" />
                   <div>
                     <span className="font-bold text-white block">Status Google Sheets & Drive:</span>
-                    <span className="text-[#AAAAAA] font-mono text-[10px] leading-tight">
+                    <span className="text-[#B4C0BA] font-mono text-[10px] leading-tight">
                       {saveSuccessModal.cloudStatusText}
                     </span>
                   </div>
@@ -2333,21 +2333,21 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
               )}
             </div>
 
-            <div className="p-3 bg-[#0A0A0B] border border-white/10 rounded-xs grid grid-cols-3 gap-2 text-center text-xs">
+            <div className="p-3 bg-[#061B16] border border-[#245442]/45 rounded-xs grid grid-cols-3 gap-2 text-center text-xs">
               <div>
-                <span className="text-[10px] text-[#777777] block">Produk Aktif</span>
-                <span className="font-mono font-bold text-[#00D222] text-sm">
+                <span className="text-[10px] text-[#81918A] block">Produk Aktif</span>
+                <span className="font-mono font-bold text-[#4FCB91] text-sm">
                   {saveSuccessModal.activeProductCount} SKU
                 </span>
               </div>
               <div>
-                <span className="text-[10px] text-[#777777] block">Kategori</span>
-                <span className="font-mono font-bold text-[#C5A059] text-sm">
+                <span className="text-[10px] text-[#81918A] block">Kategori</span>
+                <span className="font-mono font-bold text-[#C9A45C] text-sm">
                   {saveSuccessModal.categoryCount}
                 </span>
               </div>
               <div>
-                <span className="text-[10px] text-[#777777] block">Waktu Simpan</span>
+                <span className="text-[10px] text-[#81918A] block">Waktu Simpan</span>
                 <span className="font-mono font-bold text-white text-xs">
                   {saveSuccessModal.timestamp}
                 </span>
@@ -2358,7 +2358,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
               <button
                 type="button"
                 onClick={() => setSaveSuccessModal(null)}
-                className="flex-1 bg-[#1A1A1E] hover:bg-[#25252A] text-white border border-white/10 py-2.5 rounded-sm text-xs font-semibold cursor-pointer"
+                className="flex-1 bg-[#0D3429] hover:bg-[#164638] text-white border border-[#245442]/45 py-2.5 rounded-sm text-xs font-semibold cursor-pointer"
               >
                 Tetap di Admin
               </button>
@@ -2368,7 +2368,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                   setSaveSuccessModal(null);
                   onCloseAdmin();
                 }}
-                className="flex-1 bg-gradient-to-r from-[#C5A059] to-[#E5C378] hover:from-[#D4B06A] hover:to-[#F0D08A] text-black font-bold py-2.5 rounded-sm text-xs flex items-center justify-center gap-1.5 cursor-pointer"
+                className="flex-1 bg-gradient-to-r from-[#C9A45C] to-[#E3C98B] hover:from-[#D7B66F] hover:to-[#F1D99F] text-black font-bold py-2.5 rounded-sm text-xs flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <Globe className="w-3.5 h-3.5" />
                 <span>Lihat Website Sekarang</span>
