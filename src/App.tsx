@@ -123,15 +123,6 @@ export default function App() {
       loadData();
     });
 
-    // Auto pull live data from Google Spreadsheet on website startup
-    store.pullFromCloudSpreadsheet('WEBSITE_AUTO_LOAD').then(res => {
-      if (res.success && (res.productCount > 0 || res.categoryCount > 0)) {
-        console.log(`[Google Sheets Auto-Sync] Data berhasil dimuat: ${res.productCount} produk, ${res.categoryCount} kategori.`);
-      }
-    }).catch(err => {
-      console.warn('[Google Sheets Auto-Sync] Warning:', err);
-    });
-
     // Secret shortcut for admin login (Ctrl+Shift+A or Cmd+Shift+A)
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
@@ -156,7 +147,7 @@ export default function App() {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [isAdminView, isSuperAdminAuthenticated]);
+  }, []);
 
   // Track product view and open detail modal
   const handleViewProduct = (product: Product) => {
