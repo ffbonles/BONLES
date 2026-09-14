@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 import { Product, Category, Order, Customer, Setting, SystemLog, Banner, Testimonial } from '../../types';
 import { store } from '../../services/store';
-import { SUPERADMIN_CREDENTIALS } from '../../services/auth';
+import { authService } from '../../services/auth';
 import { APPS_SCRIPT_FILES, getCombinedAppsScriptCode } from '../../data/appsScriptCode';
 import { gasSync } from '../../services/gasSyncService';
 import { BonlesLogo } from '../BonlesLogo';
@@ -134,6 +134,17 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
   const completedOrders = orders.filter(o => o.STATUS === 'COMPLETED').length;
   const totalSales = orders.reduce((sum, o) => sum + (o.STATUS !== 'CANCELLED' ? o.TOTAL : 0), 0);
 
+
+  useEffect(() => {
+    let cancelled = false;
+    const loadPrivateAdminData = async () => {
+      const res = await store.pullAdminDataFromCloudSpreadsheet(authService.getSession()?.email || 'ADMIN');
+      if (!cancelled && res.success) reloadData();
+    };
+    void loadPrivateAdminData();
+    return () => { cancelled = true; };
+  }, []);
+
   // Copy code helper
   const handleCopyCode = (filename: string, code: string) => {
     navigator.clipboard.writeText(code);
@@ -149,7 +160,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
       store.saveAllSettings(localSettings);
     }
 
-    const result = store.forceSyncAndVerify(SUPERADMIN_CREDENTIALS.USERNAME);
+    const result = store.forceSyncAndVerify(authService.getSession()?.email || 'ADMIN');
     reloadData();
 
     // Await cloud sync result
@@ -208,7 +219,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
   const handleBulkSyncNow = async () => {
     setIsBulkSyncing(true);
     setBulkSyncResult(null);
-    const res = await store.syncAllToCloudSpreadsheet(SUPERADMIN_CREDENTIALS.USERNAME);
+    const res = await store.syncAllToCloudSpreadsheet(authService.getSession()?.email || 'ADMIN');
     setIsBulkSyncing(false);
     setBulkSyncResult({
       success: res.success,
@@ -222,7 +233,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
   const handlePullFromSpreadsheet = async () => {
     setIsBulkSyncing(true);
     setBulkSyncResult(null);
-    const res = await store.pullFromCloudSpreadsheet(SUPERADMIN_CREDENTIALS.USERNAME);
+    const res = await store.pullFromCloudSpreadsheet(authService.getSession()?.email || 'ADMIN');
     setIsBulkSyncing(false);
     setBulkSyncResult({
       success: res.success,
@@ -381,7 +392,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
           </span>
           <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 bg-[#1A1A1E] border border-white/10 rounded-xs text-[11px] text-[#C5A059]">
             <ShieldCheck className="w-3.5 h-3.5 text-[#00D222]" />
-            <span className="font-mono text-white/90">{SUPERADMIN_CREDENTIALS.USERNAME}</span>
+            <span className="font-mono text-white/90">{authService.getSession()?.email || 'ADMIN'}</span>
             <span className="text-[9px] bg-[#C5A059]/20 px-1 rounded-2xs font-bold text-[#C5A059]">ADMIN</span>
           </div>
         </div>
