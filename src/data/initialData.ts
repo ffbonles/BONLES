@@ -65,6 +65,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     ACTIVE: true,
     CREATED_AT: '2026-09-01T10:00:00.000Z',
     UPDATED_AT: '2026-09-01T10:00:00.000Z',
+    DATA_TYPE: 'SAMPLE',
   },
   {
     ID: 'PRD-0002',
@@ -93,6 +94,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     ACTIVE: true,
     CREATED_AT: '2026-09-01T10:05:00.000Z',
     UPDATED_AT: '2026-09-01T10:05:00.000Z',
+    DATA_TYPE: 'SAMPLE',
   },
   {
     ID: 'PRD-0003',
@@ -121,6 +123,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     ACTIVE: true,
     CREATED_AT: '2026-09-01T10:10:00.000Z',
     UPDATED_AT: '2026-09-01T10:10:00.000Z',
+    DATA_TYPE: 'SAMPLE',
   },
   {
     ID: 'PRD-0004',
@@ -149,6 +152,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     ACTIVE: true,
     CREATED_AT: '2026-09-01T10:15:00.000Z',
     UPDATED_AT: '2026-09-01T10:15:00.000Z',
+    DATA_TYPE: 'SAMPLE',
   },
   {
     ID: 'PRD-0005',
@@ -177,6 +181,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     ACTIVE: true,
     CREATED_AT: '2026-09-01T10:20:00.000Z',
     UPDATED_AT: '2026-09-01T10:20:00.000Z',
+    DATA_TYPE: 'SAMPLE',
   },
   {
     ID: 'PRD-0006',
@@ -205,6 +210,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     ACTIVE: true,
     CREATED_AT: '2026-09-01T10:25:00.000Z',
     UPDATED_AT: '2026-09-01T10:25:00.000Z',
+    DATA_TYPE: 'SAMPLE',
   },
   {
     ID: 'PRD-0007',
@@ -233,6 +239,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     ACTIVE: true,
     CREATED_AT: '2026-09-01T10:30:00.000Z',
     UPDATED_AT: '2026-09-01T10:30:00.000Z',
+    DATA_TYPE: 'SAMPLE',
   },
   {
     ID: 'PRD-0008',
@@ -261,9 +268,9 @@ export const INITIAL_PRODUCTS: Product[] = [
     ACTIVE: true,
     CREATED_AT: '2026-09-01T10:35:00.000Z',
     UPDATED_AT: '2026-09-01T10:35:00.000Z',
+    DATA_TYPE: 'SAMPLE',
   },
 ];
-
 export const INITIAL_SETTINGS: Setting[] = [
   {
     SETTING: 'STORE_NAME',
