@@ -86,7 +86,7 @@ export default function App() {
   const [isLiveSyncing, setIsLiveSyncing] = useState<boolean>(false);
 
   const loadData = () => {
-    setProducts(store.getProducts(true)); // only active products for customer view
+    setProducts(store.getProducts(true, false)); // only active PRODUCTION products for customer view
     setCategories(store.getCategories().filter(c => c.ACTIVE));
     setBanners(store.getBanners().filter(b => b.ACTIVE));
     setTestimonials(store.getTestimonials().filter(t => t.ACTIVE));
