@@ -55,6 +55,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
     message: string;
     timestamp: string;
   } | null>(null);
+  const [isClearingSamples, setIsClearingSamples] = useState<boolean>(false);
 
   // Save state indicators
   const [lastSavedTime, setLastSavedTime] = useState<string>(() => {
@@ -329,10 +330,38 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
     }
   };
 
-  const handleResetData = () => {
-    if (window.confirm('Reset seluruh data ke konfigurasi dan sample data bawaan?')) {
-      store.resetToSampleData();
+  const handleResetData = async () => {
+    const sampleCount = products.filter(p => String(p.DATA_TYPE || 'PRODUCTION').toUpperCase() === 'SAMPLE').length;
+    if (sampleCount === 0) {
+      window.alert('Tidak ada data SAMPLE yang tersimpan. Data PRODUCTION tetap aman.');
+      return;
+    }
+
+    const confirmed = window.confirm(
+      `Hapus ${sampleCount} produk SAMPLE dari Google Spreadsheet?\n\nData PRODUCTION tidak akan dihapus. Tindakan ini hanya menghapus baris yang bertipe SAMPLE.`
+    );
+    if (!confirmed) return;
+
+    setIsClearingSamples(true);
+    try {
+      const result = await store.clearSampleProductsFromCloud();
+      if (!result.success) {
+        window.alert(`Gagal menghapus SAMPLE: ${result.message}`);
+        return;
+      }
+
+      setBulkSyncResult({
+        success: true,
+        message: `${result.deletedCount || 0} produk SAMPLE berhasil dihapus dari Spreadsheet. Data PRODUCTION tidak berubah.`,
+        timestamp: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' WIB',
+      });
+
+      await store.pullAdminDataFromCloudSpreadsheet(authService.getSession()?.email || 'ADMIN');
       reloadData();
+    } catch (error: any) {
+      window.alert(`Gagal menghapus SAMPLE: ${error?.message || String(error)}`);
+    } finally {
+      setIsClearingSamples(false);
     }
   };
 
@@ -808,7 +837,17 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                   </h2>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={handleResetData}
+                    disabled={isClearingSamples}
+                    className="bg-amber-950/70 hover:bg-amber-900 text-amber-300 border border-amber-800/50 disabled:opacity-50 px-3 py-2.5 rounded-sm text-[11px] font-bold tracking-wider uppercase flex items-center gap-2 transition-colors cursor-pointer disabled:cursor-wait"
+                    title="Hanya menghapus produk bertipe SAMPLE dari Google Spreadsheet"
+                  >
+                    <Trash2 className={`w-3.5 h-3.5 ${isClearingSamples ? 'animate-pulse' : ''}`} />
+                    <span>{isClearingSamples ? 'Membersihkan...' : 'Bersihkan Sample'}</span>
+                  </button>
                   <button
                     onClick={() => {
                       const newProd: Product = {
@@ -874,6 +913,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                       <th className="p-3">Harga</th>
                       <th className="p-3">Stok</th>
                       <th className="p-3">Unggulan</th>
+                      <th className="p-3">Tipe Data</th>
                       <th className="p-3">Status Web</th>
                       <th className="p-3 text-right">Aksi</th>
                     </tr>
@@ -923,6 +963,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                               </span>
                             ) : (
                               <span className="text-[10px] text-[#718079]">-</span>
+                            )}
+                          </td>
+                          <td className="p-3">
+                            {String(p.DATA_TYPE || 'PRODUCTION').toUpperCase() === 'SAMPLE' ? (
+                              <span className="text-[10px] px-2 py-0.5 rounded-xs font-semibold bg-amber-950/70 text-amber-300 border border-amber-800/40">SAMPLE</span>
+                            ) : (
+                              <span className="text-[10px] px-2 py-0.5 rounded-xs font-semibold bg-[#4FCB91]/10 text-[#4FCB91] border border-[#4FCB91]/25">PRODUCTION</span>
                             )}
                           </td>
                           <td className="p-3">
@@ -1821,6 +1868,23 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                 </div>
                 <div className="space-y-1.5"><label className="text-[#CBD5D0] font-medium">Informasi Gizi / Nutrisi</label>
                   <input type="text" value={editingProduct.NUTRITION} onChange={(e) => setEditingProduct({ ...editingProduct, NUTRITION: e.target.value })} className="w-full min-w-0 bg-[#061B16] border border-[#245442]/60 rounded-md p-2.5 text-white outline-none focus:border-[#4FCB91] focus:ring-1 focus:ring-[#4FCB91]/20" />
+                </div>
+              </div>
+
+              <div className="p-3 rounded-md bg-[#061B16] border border-[#245442]/45 space-y-2">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                  <div>
+                    <label className="text-[#CBD5D0] font-medium block">Tipe Data Produk</label>
+                    <p className="text-[10px] text-[#81918A] mt-0.5 leading-relaxed">SAMPLE hanya untuk demo/contoh dan dapat dibersihkan. PRODUCTION adalah data produk sebenarnya dan tidak ikut dibersihkan.</p>
+                  </div>
+                  <select
+                    value={editingProduct.DATA_TYPE || 'PRODUCTION'}
+                    onChange={(e) => setEditingProduct({ ...editingProduct, DATA_TYPE: e.target.value === 'SAMPLE' ? 'SAMPLE' : 'PRODUCTION' })}
+                    className="w-full sm:w-auto min-w-[150px] bg-[#09271F] border border-[#245442]/60 rounded-md p-2.5 text-white font-semibold outline-none focus:border-[#4FCB91] focus:ring-1 focus:ring-[#4FCB91]/20"
+                  >
+                    <option value="PRODUCTION">PRODUCTION — Data Sebenarnya</option>
+                    <option value="SAMPLE">SAMPLE — Data Demo</option>
+                  </select>
                 </div>
               </div>
 
