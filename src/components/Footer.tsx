@@ -51,7 +51,11 @@ export const Footer: React.FC<FooterProps> = ({
   const cleanWaNumber = waNumber.replace(/\D/g, '');
 
   const formattedWaNumber = cleanWaNumber
-    ? `+${cleanWaNumber.startsWith('62') ? cleanWaNumber : `62${cleanWaNumber.replace(/^0/, '')}`}`
+    ? `+${
+        cleanWaNumber.startsWith('62')
+          ? cleanWaNumber
+          : `62${cleanWaNumber.replace(/^0/, '')}`
+      }`
     : '';
 
   const whatsappUrl = cleanWaNumber
@@ -66,19 +70,20 @@ export const Footer: React.FC<FooterProps> = ({
 
   return (
     <footer
+      id="contact"
       className="
         relative
         overflow-hidden
         border-t
-        border-[#C9A45C]/20
+        border-[#F97316]/20
         bg-gradient-to-b
-        from-[#09271F]
-        via-[#0B3027]
-        to-[#061B16]
-        text-[#FCFAF5]
+        from-[#7A0F18]
+        via-[#5C0B12]
+        to-[#35070C]
+        text-[#FFF8F0]
       "
     >
-      {/* Decorative background */}
+      {/* Decorative Background */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div
           className="
@@ -88,7 +93,7 @@ export const Footer: React.FC<FooterProps> = ({
             h-80
             w-80
             rounded-full
-            bg-[#16805F]/10
+            bg-[#F97316]/15
             blur-3xl
           "
         />
@@ -101,7 +106,7 @@ export const Footer: React.FC<FooterProps> = ({
             h-96
             w-96
             rounded-full
-            bg-[#B83B32]/5
+            bg-[#F04438]/15
             blur-3xl
           "
         />
@@ -116,7 +121,20 @@ export const Footer: React.FC<FooterProps> = ({
             -translate-x-1/2
             -translate-y-1/2
             rounded-full
-            bg-[#16805F]/5
+            bg-[#F59E0B]/8
+            blur-3xl
+          "
+        />
+
+        <div
+          className="
+            absolute
+            right-1/4
+            bottom-0
+            h-56
+            w-56
+            rounded-full
+            bg-[#F04438]/8
             blur-3xl
           "
         />
@@ -129,6 +147,7 @@ export const Footer: React.FC<FooterProps> = ({
           {/* BRAND */}
           <div className="lg:col-span-5">
             <div className="max-w-md">
+
               <div className="mb-6">
                 <BonlesLogo
                   variant="horizontal"
@@ -137,38 +156,44 @@ export const Footer: React.FC<FooterProps> = ({
                 />
               </div>
 
-              <p className="max-w-md text-sm leading-7 text-[#CFCFC7] sm:text-[15px]">
+              <p className="max-w-md text-sm leading-7 text-[#FFE9D6] sm:text-[15px]">
                 {tagline}
               </p>
 
-              <p className="mt-4 max-w-lg text-sm leading-7 text-[#AEB8B2]">
+              <p className="mt-4 max-w-lg text-sm leading-7 text-[#EBC9B8]">
                 Menghadirkan cita rasa lokal Borneo dalam camilan modern
                 yang renyah, praktis, dan memiliki cerita.
               </p>
 
-              {/* Quality highlights */}
+              {/* Quality Highlights */}
               <div className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-3">
+
                 <div
                   className="
                     rounded-xl
                     border
-                    border-white/8
-                    bg-white/[0.035]
+                    border-[#F97316]/15
+                    bg-white/[0.045]
                     px-4
                     py-3
                     backdrop-blur-sm
+                    transition-all
+                    duration-300
+                    hover:-translate-y-0.5
+                    hover:border-[#F97316]/35
+                    hover:bg-white/[0.07]
                   "
                 >
                   <CheckCircle2
-                    className="mb-2 h-5 w-5 text-[#C9A45C]"
+                    className="mb-2 h-5 w-5 text-[#F59E0B]"
                     strokeWidth={1.8}
                   />
 
-                  <p className="text-xs font-semibold text-[#FCFAF5]">
+                  <p className="text-xs font-semibold text-[#FFF8F0]">
                     Produk Lokal
                   </p>
 
-                  <p className="mt-1 text-[10px] leading-4 text-[#91A19A]">
+                  <p className="mt-1 text-[10px] leading-4 text-[#DDB9A9]">
                     Rasa khas Borneo
                   </p>
                 </div>
@@ -177,23 +202,28 @@ export const Footer: React.FC<FooterProps> = ({
                   className="
                     rounded-xl
                     border
-                    border-white/8
-                    bg-white/[0.035]
+                    border-[#F97316]/15
+                    bg-white/[0.045]
                     px-4
                     py-3
                     backdrop-blur-sm
+                    transition-all
+                    duration-300
+                    hover:-translate-y-0.5
+                    hover:border-[#F97316]/35
+                    hover:bg-white/[0.07]
                   "
                 >
                   <CheckCircle2
-                    className="mb-2 h-5 w-5 text-[#C9A45C]"
+                    className="mb-2 h-5 w-5 text-[#F59E0B]"
                     strokeWidth={1.8}
                   />
 
-                  <p className="text-xs font-semibold text-[#FCFAF5]">
+                  <p className="text-xs font-semibold text-[#FFF8F0]">
                     High Protein
                   </p>
 
-                  <p className="mt-1 text-[10px] leading-4 text-[#91A19A]">
+                  <p className="mt-1 text-[10px] leading-4 text-[#DDB9A9]">
                     Camilan bernutrisi
                   </p>
                 </div>
@@ -202,26 +232,32 @@ export const Footer: React.FC<FooterProps> = ({
                   className="
                     rounded-xl
                     border
-                    border-white/8
-                    bg-white/[0.035]
+                    border-[#F97316]/15
+                    bg-white/[0.045]
                     px-4
                     py-3
                     backdrop-blur-sm
+                    transition-all
+                    duration-300
+                    hover:-translate-y-0.5
+                    hover:border-[#F97316]/35
+                    hover:bg-white/[0.07]
                   "
                 >
                   <CheckCircle2
-                    className="mb-2 h-5 w-5 text-[#C9A45C]"
+                    className="mb-2 h-5 w-5 text-[#F59E0B]"
                     strokeWidth={1.8}
                   />
 
-                  <p className="text-xs font-semibold text-[#FCFAF5]">
+                  <p className="text-xs font-semibold text-[#FFF8F0]">
                     Dibuat Lokal
                   </p>
 
-                  <p className="mt-1 text-[10px] leading-4 text-[#91A19A]">
+                  <p className="mt-1 text-[10px] leading-4 text-[#DDB9A9]">
                     Dari Borneo
                   </p>
                 </div>
+
               </div>
             </div>
           </div>
@@ -235,13 +271,14 @@ export const Footer: React.FC<FooterProps> = ({
                 font-bold
                 uppercase
                 tracking-[0.18em]
-                text-[#C9A45C]
+                text-[#F59E0B]
               "
             >
               Navigasi
             </h3>
 
             <nav className="space-y-3">
+
               <a
                 href="#home"
                 className="
@@ -250,12 +287,13 @@ export const Footer: React.FC<FooterProps> = ({
                   items-center
                   gap-2
                   text-sm
-                  text-[#CFCFC7]
+                  text-[#EBC9B8]
                   transition-colors
-                  hover:text-white
+                  hover:text-[#FFD166]
                 "
               >
                 Beranda
+
                 <ArrowUpRight
                   className="
                     h-3.5
@@ -265,6 +303,7 @@ export const Footer: React.FC<FooterProps> = ({
                     group-hover:translate-x-0.5
                     group-hover:-translate-y-0.5
                     group-hover:opacity-100
+                    text-[#F97316]
                   "
                 />
               </a>
@@ -277,12 +316,13 @@ export const Footer: React.FC<FooterProps> = ({
                   items-center
                   gap-2
                   text-sm
-                  text-[#CFCFC7]
+                  text-[#EBC9B8]
                   transition-colors
-                  hover:text-white
+                  hover:text-[#FFD166]
                 "
               >
                 Produk
+
                 <ArrowUpRight
                   className="
                     h-3.5
@@ -292,6 +332,7 @@ export const Footer: React.FC<FooterProps> = ({
                     group-hover:translate-x-0.5
                     group-hover:-translate-y-0.5
                     group-hover:opacity-100
+                    text-[#F97316]
                   "
                 />
               </a>
@@ -304,12 +345,13 @@ export const Footer: React.FC<FooterProps> = ({
                   items-center
                   gap-2
                   text-sm
-                  text-[#CFCFC7]
+                  text-[#EBC9B8]
                   transition-colors
-                  hover:text-white
+                  hover:text-[#FFD166]
                 "
               >
                 Cerita Kami
+
                 <ArrowUpRight
                   className="
                     h-3.5
@@ -319,6 +361,7 @@ export const Footer: React.FC<FooterProps> = ({
                     group-hover:translate-x-0.5
                     group-hover:-translate-y-0.5
                     group-hover:opacity-100
+                    text-[#F97316]
                   "
                 />
               </a>
@@ -331,12 +374,13 @@ export const Footer: React.FC<FooterProps> = ({
                   items-center
                   gap-2
                   text-sm
-                  text-[#CFCFC7]
+                  text-[#EBC9B8]
                   transition-colors
-                  hover:text-white
+                  hover:text-[#FFD166]
                 "
               >
                 Keunggulan
+
                 <ArrowUpRight
                   className="
                     h-3.5
@@ -346,6 +390,7 @@ export const Footer: React.FC<FooterProps> = ({
                     group-hover:translate-x-0.5
                     group-hover:-translate-y-0.5
                     group-hover:opacity-100
+                    text-[#F97316]
                   "
                 />
               </a>
@@ -358,12 +403,13 @@ export const Footer: React.FC<FooterProps> = ({
                   items-center
                   gap-2
                   text-sm
-                  text-[#CFCFC7]
+                  text-[#EBC9B8]
                   transition-colors
-                  hover:text-white
+                  hover:text-[#FFD166]
                 "
               >
                 Kontak
+
                 <ArrowUpRight
                   className="
                     h-3.5
@@ -373,9 +419,11 @@ export const Footer: React.FC<FooterProps> = ({
                     group-hover:translate-x-0.5
                     group-hover:-translate-y-0.5
                     group-hover:opacity-100
+                    text-[#F97316]
                   "
                 />
               </a>
+
             </nav>
           </div>
 
@@ -388,7 +436,7 @@ export const Footer: React.FC<FooterProps> = ({
                 font-bold
                 uppercase
                 tracking-[0.18em]
-                text-[#C9A45C]
+                text-[#F59E0B]
               "
             >
               Hubungi Kami
@@ -404,18 +452,19 @@ export const Footer: React.FC<FooterProps> = ({
                 block
                 rounded-2xl
                 border
-                border-[#C9A45C]/20
+                border-[#F97316]/20
                 bg-white/[0.045]
                 p-5
                 transition-all
                 duration-300
                 hover:-translate-y-1
-                hover:border-[#C9A45C]/40
-                hover:bg-white/[0.07]
+                hover:border-[#F59E0B]/50
+                hover:bg-white/[0.075]
                 hover:shadow-[0_15px_40px_rgba(0,0,0,0.22)]
               "
             >
               <div className="flex items-start gap-4">
+
                 <div
                   className="
                     flex
@@ -425,27 +474,27 @@ export const Footer: React.FC<FooterProps> = ({
                     items-center
                     justify-center
                     rounded-full
-                    bg-[#16805F]/15
+                    bg-[#F97316]/15
                     ring-1
-                    ring-[#16805F]/30
+                    ring-[#F97316]/30
                   "
                 >
                   <MessageCircle
-                    className="h-5 w-5 text-[#65C9A5]"
+                    className="h-5 w-5 text-[#25D366]"
                     strokeWidth={1.8}
                   />
                 </div>
 
                 <div className="min-w-0 flex-1">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-[#91A19A]">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-[#DDB9A9]">
                     Pesan Sekarang
                   </p>
 
-                  <p className="mt-1 text-sm font-semibold text-[#FCFAF5]">
+                  <p className="mt-1 text-sm font-semibold text-[#FFF8F0]">
                     Order via WhatsApp
                   </p>
 
-                  <p className="mt-1 text-xs text-[#9EAAA4]">
+                  <p className="mt-1 text-xs text-[#D3AA99]">
                     {formattedWaNumber}
                   </p>
                 </div>
@@ -455,13 +504,14 @@ export const Footer: React.FC<FooterProps> = ({
                     h-5
                     w-5
                     shrink-0
-                    text-[#C9A45C]
+                    text-[#F59E0B]
                     transition-transform
                     duration-300
                     group-hover:-translate-y-1
                     group-hover:translate-x-1
                   "
                 />
+
               </div>
             </a>
 
@@ -474,34 +524,37 @@ export const Footer: React.FC<FooterProps> = ({
                 items-center
                 gap-3
                 text-sm
-                text-[#CFCFC7]
+                text-[#EBC9B8]
                 transition-colors
-                hover:text-white
+                hover:text-[#FFD166]
               "
             >
               <Mail
-                className="h-4 w-4 shrink-0 text-[#C9A45C]"
+                className="h-4 w-4 shrink-0 text-[#F59E0B]"
                 strokeWidth={1.8}
               />
-              <span className="truncate">{email}</span>
+
+              <span className="truncate">
+                {email}
+              </span>
             </a>
 
             {/* Address */}
             <div className="mt-4 flex items-start gap-3">
               <MapPin
-                className="mt-0.5 h-4 w-4 shrink-0 text-[#C9A45C]"
+                className="mt-0.5 h-4 w-4 shrink-0 text-[#F59E0B]"
                 strokeWidth={1.8}
               />
 
-              <p className="text-sm leading-6 text-[#AEB8B2]">
+              <p className="text-sm leading-6 text-[#DDB9A9]">
                 {address}
               </p>
             </div>
           </div>
         </div>
 
-        {/* Gold divider */}
-        <div className="my-10 h-px bg-gradient-to-r from-transparent via-[#C9A45C]/25 to-transparent" />
+        {/* Warm Divider */}
+        <div className="my-10 h-px bg-gradient-to-r from-transparent via-[#F97316]/35 to-transparent" />
 
         {/* Bottom Bar */}
         <div
@@ -515,17 +568,18 @@ export const Footer: React.FC<FooterProps> = ({
             sm:justify-between
           "
         >
-          <div className="text-[#7F8C86]">
+          <div className="text-[#B98C7D]">
             © {currentYear}{' '}
-            <span className="text-[#AEB8B2]">
+            <span className="text-[#DDB9A9]">
               {storeName}
             </span>
             . All rights reserved.
           </div>
 
           <div className="flex items-center gap-4">
-            <span className="flex items-center gap-2 text-[#718079]">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#16805F]" />
+
+            <span className="flex items-center gap-2 text-[#B98C7D]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#F59E0B]" />
               Produk Lokal Borneo
             </span>
 
@@ -538,9 +592,9 @@ export const Footer: React.FC<FooterProps> = ({
                   flex
                   items-center
                   gap-1.5
-                  text-[#596761]
+                  text-[#9E7064]
                   transition-colors
-                  hover:text-[#C9A45C]
+                  hover:text-[#FFD166]
                 "
                 aria-label={
                   isAuthenticated
@@ -560,6 +614,7 @@ export const Footer: React.FC<FooterProps> = ({
                 </span>
               </button>
             )}
+
           </div>
         </div>
       </div>
