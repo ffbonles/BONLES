@@ -1,219 +1,124 @@
-import React from 'react';
-import { ArrowDownRight, Sparkles } from 'lucide-react';
-import { motion } from 'motion/react';
+import React, { useState, useEffect } from 'react';
+import { ShieldCheck, HeartHandshake, Zap, Award, PackageCheck } from 'lucide-react';
+import { BonlesLogo } from './BonlesLogo';
+import { BONLES_IMAGES } from '../assets/productImages';
+import { store } from '../services/store';
 
-const About: React.FC = () => {
-return ( <section
-   id="about"
-   className="relative overflow-hidden bg-[var(--color-cream)] py-20 sm:py-24 lg:py-32"
- >
-{/* Decorative background */} <div
-     aria-hidden="true"
-     className="pointer-events-none absolute -right-32 top-20 h-80 w-80 rounded-full border border-[var(--color-gold)]/15"
-   />
+export const AboutSection: React.FC = () => {
+  const [settings, setSettings] = useState<Record<string, string>>(() => store.getSettingsMap());
 
-```
-  <div
-    aria-hidden="true"
-    className="pointer-events-none absolute -right-20 top-32 h-56 w-56 rounded-full border border-[var(--color-gold)]/10"
-  />
+  useEffect(() => {
+    const unsubscribe = store.subscribe(() => {
+      setSettings(store.getSettingsMap());
+    });
+    return unsubscribe;
+  }, []);
 
-  <div className="bonles-container relative">
-    <div className="grid items-center gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
-      
-      {/* LEFT — Story visual */}
-      <motion.div
-        initial={{ opacity: 0, x: -30 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true, amount: 0.25 }}
-        transition={{ duration: 0.7, ease: 'easeOut' }}
-        className="relative"
-      >
-        <div className="relative mx-auto max-w-xl">
-          {/* Main image frame */}
-          <div className="relative overflow-hidden rounded-[2rem] bg-[var(--color-green-deep)] p-3 shadow-[var(--shadow-premium)]">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem] bg-[var(--color-green)]">
+  const aboutTitle = settings['ABOUT_TITLE'] || 'PT. Bonles Food Nusantara';
+  const aboutDescription = settings['ABOUT_DESCRIPTION'] || 
+    'PT. Bonles Food Nusantara berdedikasi menciptakan inovasi camilan snack kemasan sehat dan oleh-oleh berkualitas tinggi. Melalui perpaduan bahan baku nabati pilihan seperti kedelai nusantara dan rempah tradisional, kami menghadirkan produk snack dengan positioning unggulan: Snack Tinggi Protein dalam Kemasan Pouch Modern yang lezat, higienis, dan praktis dibawa ke mana saja.';
+
+  return (
+    <section id="about" className="py-20 bg-gradient-to-b from-[#FFF8F0] via-white to-[#FFF5EB] border-t border-orange-200/70 relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          {/* Left Visual Bento with Brand Key Visual Logo */}
+          <div className="lg:col-span-5 space-y-4">
+            <div className="relative rounded-3xl overflow-hidden bg-white border border-orange-200 p-2.5 shadow-xl shadow-orange-500/10">
               <img
-                src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=1200&q=85"
-                alt="Inspirasi pangan lokal Borneo dan proses pengolahan pangan"
-                className="h-full w-full object-cover"
-                loading="lazy"
+                src={BONLES_IMAGES.heroBanner}
+                alt="Produksi dan Kemasan Snack PT. Bonles Food Nusantara"
+                referrerPolicy="no-referrer"
+                className="w-full h-80 object-cover rounded-2xl"
               />
+              <div className="absolute top-5 left-5 bg-white/95 backdrop-blur-md p-2.5 rounded-xl border border-orange-200 shadow-md">
+                <BonlesLogo size="sm" variant="horizontal" />
+              </div>
 
-              {/* Image overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-green-deep)]/70 via-transparent to-transparent" />
-
-              {/* Image label */}
-              <div className="absolute bottom-6 left-6 right-6">
-                <div className="flex items-center gap-3 text-white">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-white/10 backdrop-blur-sm">
-                    <Sparkles size={16} />
+              <div className="absolute bottom-5 left-5 right-5 bg-stone-900/90 backdrop-blur-md p-4 rounded-2xl border border-orange-400/30 text-white">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="text-[10px] tracking-[0.2em] font-extrabold text-amber-400 uppercase block">
+                    Key Visual & Kemasan Pouch
                   </span>
-
-                  <div>
-                    <p className="font-brand text-[10px] uppercase tracking-[0.25em] text-[var(--color-gold-light)]">
-                      Borneo Crafted
-                    </p>
-                    <p className="mt-1 font-display text-lg">
-                      Pangan lokal, cerita yang hidup.
-                    </p>
-                  </div>
                 </div>
+                <p className="text-xs text-stone-200 mt-1 font-normal">
+                  Inovasi camilan ringan kemasan standing pouch zipper berkualitas premium dengan cita rasa nusantara.
+                </p>
               </div>
             </div>
           </div>
 
-          {/* Gold corner decoration */}
-          <div
-            aria-hidden="true"
-            className="absolute -bottom-5 -left-5 h-24 w-24 border-b border-l border-[var(--color-gold)]/60"
-          />
+          {/* Right Content */}
+          <div className="lg:col-span-7 space-y-6">
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <span className="text-xs tracking-[0.25em] text-[#EA580C] font-extrabold uppercase">
+                  Tentang Brand Kami
+                </span>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#FF7A00]" />
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-serif-luxury text-stone-900 font-bold leading-tight">
+                {aboutTitle}
+              </h2>
+            </div>
 
-          <div
-            aria-hidden="true"
-            className="absolute -right-5 -top-5 h-24 w-24 border-r border-t border-[var(--color-gold)]/60"
-          />
+            <p className="text-sm text-stone-600 leading-relaxed font-normal">
+              {aboutDescription}
+            </p>
 
-          {/* Floating number */}
-          <div className="absolute -bottom-7 right-6 hidden h-20 w-20 items-center justify-center rounded-full border border-[var(--color-gold)]/40 bg-[var(--color-cream)] shadow-lg sm:flex">
-            <span className="font-display text-2xl text-[var(--color-green-deep)]">
-              01
-            </span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+              <div className="bg-white border border-orange-100 p-4 rounded-2xl space-y-2 hover:border-orange-300 transition-all shadow-xs hover:shadow-md group">
+                <div className="flex items-center gap-2 text-[#EA580C]">
+                  <Zap className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-stone-900">
+                    Nutrisi Tinggi Protein
+                  </h3>
+                </div>
+                <p className="text-xs text-stone-500 leading-relaxed">
+                  Diolah dengan teknik pemanggangan presisi guna menjaga keutuhan gizi alami kedelai dan bahan pangan lokal.
+                </p>
+              </div>
+
+              <div className="bg-white border border-emerald-100 p-4 rounded-2xl space-y-2 hover:border-emerald-300 transition-all shadow-xs hover:shadow-md group">
+                <div className="flex items-center gap-2 text-emerald-600">
+                  <PackageCheck className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-stone-900">
+                    Kemasan Pouch Zipper
+                  </h3>
+                </div>
+                <p className="text-xs text-stone-500 leading-relaxed">
+                  Kemasan kedap udara aluminium foil yang menjaga kerenyahan maksimal serta higienis dan mudah ditutup kembali.
+                </p>
+              </div>
+
+              <div className="bg-white border border-amber-100 p-4 rounded-2xl space-y-2 hover:border-amber-300 transition-all shadow-xs hover:shadow-md group">
+                <div className="flex items-center gap-2 text-amber-500">
+                  <Award className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-stone-900">
+                    Cita Rasa Nusantara
+                  </h3>
+                </div>
+                <p className="text-xs text-stone-500 leading-relaxed">
+                  Formula bumbu rempah autentik tanpa bahan pengawet berlebih untuk kenikmatan rasa yang otentik.
+                </p>
+              </div>
+
+              <div className="bg-white border border-orange-100 p-4 rounded-2xl space-y-2 hover:border-orange-300 transition-all shadow-xs hover:shadow-md group">
+                <div className="flex items-center gap-2 text-[#FF7A00]">
+                  <HeartHandshake className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-stone-900">
+                    Pemberdayaan Petani
+                  </h3>
+                </div>
+                <p className="text-xs text-stone-500 leading-relaxed">
+                  Mendukung ketahanan pangan dan kesejahteraan petani kedelai serta hasil bumi lokal Indonesia.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </motion.div>
-
-      {/* RIGHT — Story copy */}
-      <motion.div
-        initial={{ opacity: 0, x: 30 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true, amount: 0.25 }}
-        transition={{ duration: 0.7, ease: 'easeOut', delay: 0.1 }}
-        className="max-w-2xl"
-      >
-        {/* Eyebrow */}
-        <div className="bonles-eyebrow mb-5">
-          <span className="h-px w-8 bg-[var(--color-gold)]" />
-          Our Story
-        </div>
-
-        {/* Heading */}
-        <h2 className="bonles-heading max-w-2xl text-4xl leading-[1.08] text-[var(--color-green-deep)] sm:text-5xl lg:text-6xl">
-          Dari Borneo,
-          <span className="block italic font-normal text-[var(--color-gold-dark)]">
-            diolah dengan cara modern.
-          </span>
-        </h2>
-
-        {/* Main story */}
-        <div className="mt-8 space-y-5 text-[var(--color-ink-soft)]">
-          <p className="bonles-copy text-base leading-8 sm:text-lg">
-            Berawal dari kekayaan hasil perairan Kalimantan Timur, kami
-            ingin membuktikan bahwa pangan lokal Borneo dapat diolah
-            menjadi camilan modern yang memiliki nilai dan cerita.
-          </p>
-
-          <p className="bonles-copy text-base leading-8">
-            Ikan Bawis kami pilih dan olah menjadi keripik ikan tanpa
-            tulang tengah, sehingga menghasilkan camilan yang renyah,
-            praktis, dan kaya protein.
-          </p>
-
-          <p className="bonles-copy text-base leading-8">
-            Bagi kami, BONLES bukan hanya tentang sebuah camilan.
-            Ini adalah cara untuk membawa cita rasa dan kekayaan pangan
-            lokal Borneo ke lebih banyak orang — dari Indonesia hingga
-            dunia.
-          </p>
-        </div>
-
-        {/* Divider */}
-        <div className="my-9 h-px w-full bg-[var(--color-border)]" />
-
-        {/* Story pillars */}
-        <div className="grid gap-6 sm:grid-cols-3">
-          <div>
-            <p className="font-brand text-[10px] uppercase tracking-[0.2em] text-[var(--color-gold-dark)]">
-              01
-            </p>
-            <h3 className="mt-2 font-display text-lg text-[var(--color-green-deep)]">
-              Lokal
-            </h3>
-            <p className="mt-2 text-sm leading-6 text-[var(--color-ink-muted)]">
-              Terinspirasi dari kekayaan pangan Borneo.
-            </p>
-          </div>
-
-          <div>
-            <p className="font-brand text-[10px] uppercase tracking-[0.2em] text-[var(--color-gold-dark)]">
-              02
-            </p>
-            <h3 className="mt-2 font-display text-lg text-[var(--color-green-deep)]">
-              Modern
-            </h3>
-            <p className="mt-2 text-sm leading-6 text-[var(--color-ink-muted)]">
-              Diolah menjadi camilan yang praktis dan relevan.
-            </p>
-          </div>
-
-          <div>
-            <p className="font-brand text-[10px] uppercase tracking-[0.2em] text-[var(--color-gold-dark)]">
-              03
-            </p>
-            <h3 className="mt-2 font-display text-lg text-[var(--color-green-deep)]">
-              Mendunia
-            </h3>
-            <p className="mt-2 text-sm leading-6 text-[var(--color-ink-muted)]">
-              Membawa cerita Borneo ke Indonesia dan dunia.
-            </p>
-          </div>
-        </div>
-
-        {/* Story CTA */}
-        <div className="mt-9">
-          <a
-            href="#our-story"
-            className="group inline-flex items-center gap-3 text-sm font-semibold text-[var(--color-green-deep)]"
-          >
-            <span className="border-b border-[var(--color-gold)] pb-1 transition-colors group-hover:border-[var(--color-green-deep)]">
-              Kenali cerita BONLES
-            </span>
-
-            <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--color-border-strong)] transition-all duration-300 group-hover:border-[var(--color-gold)] group-hover:bg-[var(--color-gold)] group-hover:text-white">
-              <ArrowDownRight
-                size={16}
-                className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:translate-y-0.5"
-              />
-            </span>
-          </a>
-        </div>
-      </motion.div>
-    </div>
-
-    {/* Bottom brand statement */}
-    <motion.div
-      initial={{ opacity: 0, y: 25 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.7 }}
-      className="mt-20 border-t border-[var(--color-border)] pt-8 lg:mt-28"
-    >
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <p className="font-brand text-[10px] uppercase tracking-[0.25em] text-[var(--color-gold-dark)]">
-          BONLES FOOD NUSANTARA
-        </p>
-
-        <p className="max-w-xl text-sm leading-6 text-[var(--color-ink-muted)] sm:text-right">
-          Cita rasa Borneo dalam bentuk yang lebih modern, praktis,
-          dan bernilai.
-        </p>
       </div>
-    </motion.div>
-  </div>
-</section>
-```
-
-);
+    </section>
+  );
 };
-
-export default About;
