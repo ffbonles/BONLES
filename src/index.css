@@ -1,38 +1,720 @@
 @import "tailwindcss";
 
+/* =========================================================
+   BONLES FOOD NUSANTARA
+   DESIGN SYSTEM — MODERN BORNEO PREMIUM
+   ========================================================= */
+
+/* =========================================================
+   DESIGN TOKENS
+   ========================================================= */
+
+@theme {
+  /* Brand */
+  --color-borneo-950: #09271F;
+  --color-borneo-900: #0D3027;
+  --color-borneo-800: #123C32;
+  --color-borneo-700: #185043;
+  --color-borneo-600: #246353;
+
+  /* Premium Accent */
+  --color-gold-700: #9E793A;
+  --color-gold-600: #B18B4B;
+  --color-gold-500: #C9A45C;
+  --color-gold-400: #D8B878;
+  --color-gold-300: #E5CC9B;
+
+  /* Warm Neutral */
+  --color-cream-50: #FCFAF5;
+  --color-cream-100: #F8F4EA;
+  --color-cream-200: #F3EDE0;
+  --color-cream-300: #E9DFCF;
+  --color-sand-400: #D8C9B3;
+
+  /* Text */
+  --color-ink-950: #18201D;
+  --color-ink-900: #202824;
+  --color-ink-800: #303934;
+  --color-ink-700: #4B554F;
+  --color-ink-600: #65706A;
+  --color-ink-500: #7C8580;
+
+  /* Functional */
+  --color-success: #3E7657;
+  --color-warning: #B78A3D;
+  --color-danger: #A84B43;
+
+  /* Typography */
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-brand: "Cinzel", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+
+  /* Shadows */
+  --shadow-borneo-soft:
+    0 12px 40px rgba(9, 39, 31, 0.08);
+
+  --shadow-borneo-card:
+    0 8px 30px rgba(9, 39, 31, 0.07);
+
+  --shadow-borneo-lift:
+    0 18px 50px rgba(9, 39, 31, 0.13);
+
+  /* Radius */
+  --radius-borneo-sm: 4px;
+  --radius-borneo-md: 8px;
+  --radius-borneo-lg: 14px;
+  --radius-borneo-xl: 20px;
+
+  /* Animation */
+  --ease-borneo:
+    cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+
+/* =========================================================
+   BASE
+   ========================================================= */
+
 @layer base {
-  body {
-    background-color: #FAF6ED;
-    color: #2D1508;
-    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-    -webkit-font-smoothing: antialiased;
+
+  html {
+    scroll-behavior: smooth;
+    background: var(--color-cream-50);
   }
 
-  h1, h2, h3, .font-serif-luxury {
-    font-family: 'Playfair Display', Georgia, serif;
+  body {
+    margin: 0;
+    min-width: 320px;
+
+    background:
+      linear-gradient(
+        180deg,
+        var(--color-cream-50) 0%,
+        var(--color-cream-100) 100%
+      );
+
+    color: var(--color-ink-900);
+
+    font-family:
+      var(--font-sans);
+
+    font-size: 15px;
+    line-height: 1.7;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--color-gold-500);
+    color: var(--color-borneo-950);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .font-serif-luxury {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
   }
 
   .font-brand {
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-brand);
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold-500);
+    outline-offset: 3px;
   }
 }
 
-/* Vibrant warm culinary scrollbar */
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
 ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #F5EEDB;
+  background: var(--color-cream-200);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #FF9E2C;
-  border-radius: 4px;
+  background: var(--color-borneo-800);
+  border-radius: 999px;
+  border: 2px solid var(--color-cream-200);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #FF6A00;
+  background: var(--color-gold-600);
 }
 
+
+/* =========================================================
+   GLOBAL CONTAINER
+   ========================================================= */
+
+.bonles-container {
+  width: min(
+    calc(100% - 40px),
+    1280px
+  );
+
+  margin-inline: auto;
+}
+
+@media (max-width: 640px) {
+  .bonles-container {
+    width: min(
+      calc(100% - 28px),
+      1280px
+    );
+  }
+}
+
+
+/* =========================================================
+   SECTION SYSTEM
+   ========================================================= */
+
+.bonles-section {
+  position: relative;
+  padding-block: 96px;
+}
+
+.bonles-section-sm {
+  position: relative;
+  padding-block: 64px;
+}
+
+.bonles-section-lg {
+  position: relative;
+  padding-block: 120px;
+}
+
+@media (max-width: 768px) {
+
+  .bonles-section {
+    padding-block: 72px;
+  }
+
+  .bonles-section-sm {
+    padding-block: 52px;
+  }
+
+  .bonles-section-lg {
+    padding-block: 88px;
+  }
+}
+
+
+/* =========================================================
+   SECTION EYEBROW
+   ========================================================= */
+
+.bonles-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  color: var(--color-gold-700);
+
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.bonles-eyebrow::before {
+  content: "";
+
+  width: 28px;
+  height: 1px;
+
+  background: currentColor;
+}
+
+
+/* =========================================================
+   PREMIUM HEADING
+   ========================================================= */
+
+.bonles-heading {
+  margin: 0;
+
+  color: var(--color-borneo-950);
+
+  font-family: var(--font-display);
+
+  font-size: clamp(
+    2.25rem,
+    5vw,
+    4.6rem
+  );
+
+  font-weight: 500;
+
+  line-height: 1.02;
+
+  letter-spacing: -0.035em;
+}
+
+.bonles-heading-sm {
+  margin: 0;
+
+  color: var(--color-borneo-950);
+
+  font-family: var(--font-display);
+
+  font-size: clamp(
+    1.8rem,
+    3vw,
+    3.2rem
+  );
+
+  font-weight: 500;
+
+  line-height: 1.08;
+
+  letter-spacing: -0.025em;
+}
+
+
+/* =========================================================
+   BODY COPY
+   ========================================================= */
+
+.bonles-copy {
+  color: var(--color-ink-700);
+
+  font-size: 15px;
+  line-height: 1.85;
+
+  max-width: 680px;
+}
+
+.bonles-copy-lg {
+  color: var(--color-ink-700);
+
+  font-size: clamp(
+    1rem,
+    1.4vw,
+    1.15rem
+  );
+
+  line-height: 1.8;
+
+  max-width: 720px;
+}
+
+
+/* =========================================================
+   PREMIUM BUTTONS
+   ========================================================= */
+
+.bonles-btn {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  min-height: 48px;
+
+  padding-inline: 24px;
+
+  border: 1px solid transparent;
+
+  border-radius: var(--radius-borneo-sm);
+
+  font-size: 12px;
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  transition:
+    transform 300ms var(--ease-borneo),
+    background-color 300ms ease,
+    border-color 300ms ease,
+    color 300ms ease,
+    box-shadow 300ms ease;
+}
+
+.bonles-btn:hover {
+  transform: translateY(-2px);
+}
+
+.bonles-btn:active {
+  transform: translateY(0);
+}
+
+
+/* Primary */
+
+.bonles-btn-primary {
+  background: var(--color-borneo-800);
+  color: #FFFFFF;
+
+  box-shadow:
+    0 8px 24px rgba(18, 60, 50, 0.18);
+}
+
+.bonles-btn-primary:hover {
+  background: var(--color-borneo-950);
+
+  box-shadow:
+    0 12px 30px rgba(18, 60, 50, 0.24);
+}
+
+
+/* Gold */
+
+.bonles-btn-gold {
+  background: var(--color-gold-500);
+  color: var(--color-borneo-950);
+
+  box-shadow:
+    0 8px 24px rgba(201, 164, 92, 0.18);
+}
+
+.bonles-btn-gold:hover {
+  background: var(--color-gold-400);
+
+  box-shadow:
+    0 12px 30px rgba(201, 164, 92, 0.26);
+}
+
+
+/* Outline */
+
+.bonles-btn-outline {
+  background: transparent;
+
+  border-color: var(--color-borneo-800);
+
+  color: var(--color-borneo-800);
+}
+
+.bonles-btn-outline:hover {
+  background: var(--color-borneo-800);
+  color: #FFFFFF;
+}
+
+
+/* Light */
+
+.bonles-btn-light {
+  background: var(--color-cream-50);
+
+  color: var(--color-borneo-950);
+
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.bonles-btn-light:hover {
+  background: #FFFFFF;
+}
+
+
+/* =========================================================
+   PREMIUM CARD
+   ========================================================= */
+
+.bonles-card {
+  background: rgba(255, 255, 255, 0.72);
+
+  border: 1px solid
+    rgba(18, 60, 50, 0.10);
+
+  border-radius:
+    var(--radius-borneo-lg);
+
+  box-shadow:
+    var(--shadow-borneo-card);
+
+  transition:
+    transform 400ms var(--ease-borneo),
+    box-shadow 400ms ease,
+    border-color 400ms ease;
+}
+
+.bonles-card:hover {
+  transform: translateY(-5px);
+
+  border-color:
+    rgba(201, 164, 92, 0.38);
+
+  box-shadow:
+    var(--shadow-borneo-lift);
+}
+
+
+/* =========================================================
+   PREMIUM DIVIDER
+   ========================================================= */
+
+.bonles-divider {
+  width: 100%;
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(18, 60, 50, 0.16),
+      transparent
+    );
+}
+
+
+/* =========================================================
+   GOLD LINE
+   ========================================================= */
+
+.bonles-gold-line {
+  width: 52px;
+  height: 1px;
+
+  background: var(--color-gold-500);
+}
+
+
+/* =========================================================
+   IMAGE SYSTEM
+   ========================================================= */
+
+.bonles-image {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition:
+    transform 800ms var(--ease-borneo);
+}
+
+.bonles-image-hover:hover .bonles-image {
+  transform: scale(1.035);
+}
+
+
+/* =========================================================
+   IMAGE OVERLAY
+   ========================================================= */
+
+.bonles-overlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(9, 39, 31, 0.04) 0%,
+      rgba(9, 39, 31, 0.12) 45%,
+      rgba(9, 39, 31, 0.72) 100%
+    );
+}
+
+
+/* =========================================================
+   BORNEO TEXTURE
+   ========================================================= */
+
+.bonles-texture {
+  position: relative;
+  isolation: isolate;
+}
+
+.bonles-texture::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  z-index: -1;
+
+  pointer-events: none;
+
+  opacity: 0.035;
+
+  background-image:
+    radial-gradient(
+      rgba(9, 39, 31, 0.9) 0.6px,
+      transparent 0.6px
+    );
+
+  background-size: 7px 7px;
+}
+
+
+/* =========================================================
+   GOLD GLOW
+   ========================================================= */
+
+.bonles-gold-glow {
+  position: relative;
+}
+
+.bonles-gold-glow::before {
+  content: "";
+
+  position: absolute;
+
+  width: 260px;
+  height: 260px;
+
+  border-radius: 999px;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(201, 164, 92, 0.14),
+      transparent 70%
+    );
+
+  pointer-events: none;
+
+  filter: blur(8px);
+}
+
+
+/* =========================================================
+   PREMIUM REVEAL ANIMATION
+   ========================================================= */
+
+.bonles-reveal {
+  animation:
+    bonlesReveal
+    800ms
+    var(--ease-borneo)
+    both;
+}
+
+@keyframes bonlesReveal {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+}
+
+
+/* =========================================================
+   SOFT FLOAT
+   ========================================================= */
+
+.bonles-float {
+  animation:
+    bonlesFloat
+    6s
+    ease-in-out
+    infinite;
+}
+
+@keyframes bonlesFloat {
+
+  0%,
+  100% {
+    transform:
+      translateY(0);
+  }
+
+  50% {
+    transform:
+      translateY(-7px);
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+/* =========================================================
+   MOBILE REFINEMENT
+   ========================================================= */
+
+@media (max-width: 640px) {
+
+  .bonles-heading {
+    font-size: 2.45rem;
+  }
+
+  .bonles-heading-sm {
+    font-size: 2rem;
+  }
+
+  .bonles-copy {
+    font-size: 14px;
+    line-height: 1.75;
+  }
+
+  .bonles-btn {
+    min-height: 46px;
+    padding-inline: 20px;
+
+    font-size: 11px;
+  }
+}
