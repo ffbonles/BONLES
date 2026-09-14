@@ -31,75 +31,126 @@ export const AboutSection: React.FC = () => {
     settings['ABOUT_DESCRIPTION'] ||
     'Berawal dari kekayaan hasil perairan Kalimantan Timur, kami ingin membuktikan bahwa pangan lokal Borneo dapat diolah menjadi camilan modern yang memiliki nilai dan cerita.';
 
+  const values = [
+    {
+      number: '01',
+      title: 'Khas Borneo',
+      description:
+        'Berangkat dari kekayaan hasil perairan dan pangan lokal Kalimantan Timur.',
+      icon: MapPin,
+      iconStyle:
+        'border-[#F04438]/30 bg-[#F04438]/8 text-[#D92D20] group-hover:border-[#F04438] group-hover:bg-[#F04438] group-hover:text-white',
+    },
+    {
+      number: '02',
+      title: 'Ikan Bawis',
+      description:
+        'Diolah menjadi keripik ikan tanpa tulang tengah yang renyah, praktis, dan kaya protein.',
+      icon: Fish,
+      iconStyle:
+        'border-[#F97316]/30 bg-[#F97316]/8 text-[#EA580C] group-hover:border-[#F97316] group-hover:bg-[#F97316] group-hover:text-white',
+    },
+    {
+      number: '03',
+      title: 'Modern Craft',
+      description:
+        'Pangan lokal diolah menjadi camilan modern dengan nilai dan pengalaman yang lebih tinggi.',
+      icon: Sparkles,
+      iconStyle:
+        'border-[#FFB703]/40 bg-[#FFB703]/10 text-[#D97706] group-hover:border-[#FFB703] group-hover:bg-[#FFB703] group-hover:text-[#7F1712]',
+    },
+    {
+      number: '04',
+      title: 'From Borneo to the World',
+      description:
+        'Membawa cerita, cita rasa, dan potensi pangan lokal Borneo lebih jauh.',
+      icon: HeartHandshake,
+      iconStyle:
+        'border-[#F04438]/30 bg-[#F04438]/8 text-[#D92D20] group-hover:border-[#F04438] group-hover:bg-[#F04438] group-hover:text-white',
+    },
+  ];
+
   return (
     <section
       id="about"
-      className="relative overflow-hidden border-t border-[#F2C4A8] bg-[#FFF9F4] py-20 sm:py-24 lg:py-32"
+      className="relative overflow-hidden border-t border-[#F3D2BD] bg-[#FFF9F4] py-20 sm:py-24 lg:py-32"
     >
-      {/* Decorative background */}
+      {/* =========================================================
+          BACKGROUND DECORATION
+      ========================================================== */}
+
       <div
-        className="pointer-events-none absolute right-0 top-0 h-80 w-80 rounded-full bg-[#F04438]/10 blur-3xl"
+        className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-[#F04438]/8 blur-3xl"
         aria-hidden="true"
       />
 
       <div
-        className="pointer-events-none absolute bottom-0 left-0 h-72 w-72 rounded-full bg-[#FFB703]/10 blur-3xl"
+        className="pointer-events-none absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-[#FFB703]/10 blur-3xl"
         aria-hidden="true"
       />
 
       <div
-        className="pointer-events-none absolute left-1/2 top-1/3 h-56 w-56 -translate-x-1/2 rounded-full bg-[#F97316]/5 blur-3xl"
+        className="pointer-events-none absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#F97316]/5 blur-3xl"
         aria-hidden="true"
       />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
 
-          {/* LEFT — VISUAL */}
+          {/* =====================================================
+              LEFT — BRAND VISUAL
+          ====================================================== */}
+
           <div className="lg:col-span-5">
             <div className="relative">
 
+              {/* Corner accents */}
               <div
-                className="absolute -left-3 -top-3 z-10 h-16 w-16 border-l-2 border-t-2 border-[#F04438]/70"
+                className="absolute -left-3 -top-3 z-10 h-16 w-16 border-l-2 border-t-2 border-[#F04438]"
                 aria-hidden="true"
               />
 
               <div
-                className="absolute -bottom-3 -right-3 z-10 h-16 w-16 border-b-2 border-r-2 border-[#FFB703]/80"
+                className="absolute -bottom-3 -right-3 z-10 h-16 w-16 border-b-2 border-r-2 border-[#FFB703]"
                 aria-hidden="true"
               />
 
-              <div className="relative overflow-hidden rounded-[1.5rem] border border-[#F2C4A8] bg-white p-2 shadow-[0_20px_50px_rgba(240,68,56,0.12)]">
-                <div className="relative overflow-hidden rounded-[1.15rem]">
+              {/* Image container */}
+              <div className="relative overflow-hidden rounded-[1.75rem] border border-[#F3D2BD] bg-white p-2 shadow-[0_24px_70px_rgba(127,23,18,0.12)]">
+
+                <div className="relative overflow-hidden rounded-[1.35rem]">
 
                   <img
                     src={BONLES_IMAGES.heroBanner}
                     alt="BONLES Food Nusantara — Cita Rasa Borneo"
                     referrerPolicy="no-referrer"
-                    className="h-80 w-full object-cover transition-transform duration-700 hover:scale-[1.02] sm:h-[26rem]"
+                    className="h-[22rem] w-full object-cover transition-transform duration-700 hover:scale-[1.025] sm:h-[28rem]"
                   />
 
+                  {/* Image overlay */}
                   <div
-                    className="absolute inset-0 bg-gradient-to-t from-[#8F1712]/90 via-[#D92D20]/15 to-transparent"
+                    className="absolute inset-0 bg-gradient-to-t from-[#65100C]/95 via-[#8F1712]/25 to-transparent"
                     aria-hidden="true"
                   />
 
-                  <div className="absolute left-5 top-5 rounded-xl border border-white/80 bg-white/95 p-2.5 shadow-lg backdrop-blur-sm">
+                  {/* Logo */}
+                  <div className="absolute left-5 top-5 rounded-xl border border-white/70 bg-white/95 p-2.5 shadow-xl backdrop-blur-md sm:left-6 sm:top-6">
                     <BonlesLogo size="sm" variant="horizontal" />
                   </div>
 
-                  <div className="absolute bottom-5 left-5 right-5">
+                  {/* Image copy */}
+                  <div className="absolute bottom-5 left-5 right-5 sm:bottom-7 sm:left-7 sm:right-7">
                     <div className="border-l-2 border-[#FFB703] pl-4">
 
                       <div className="flex items-center gap-2">
                         <span className="h-1.5 w-1.5 rounded-full bg-[#FFB703]" />
 
-                        <span className="font-brand text-[9px] font-semibold uppercase tracking-[0.24em] text-[#FFD166]">
+                        <span className="font-brand text-[9px] font-bold uppercase tracking-[0.25em] text-[#FFD166]">
                           Born in Borneo
                         </span>
                       </div>
 
-                      <p className="mt-2 max-w-sm font-display text-xl leading-tight text-white sm:text-2xl">
+                      <p className="mt-2 max-w-sm font-display text-xl leading-[1.15] text-white sm:text-2xl">
                         Kekayaan pangan lokal,
                         <span className="block italic text-[#FFE08A]">
                           dalam bentuk yang modern.
@@ -112,38 +163,50 @@ export const AboutSection: React.FC = () => {
                 </div>
               </div>
 
+              {/* Location line */}
               <div className="mt-5 flex items-center justify-between px-1">
-                <span className="font-brand text-[9px] font-semibold uppercase tracking-[0.25em] text-[#D9382E]">
+                <span className="font-brand text-[9px] font-bold uppercase tracking-[0.25em] text-[#C92C22]">
                   EAST BORNEO • INDONESIA
                 </span>
 
-                <span className="h-px w-16 bg-[#F97316]/60 sm:w-24" />
+                <div className="flex items-center gap-2">
+                  <span className="h-px w-10 bg-[#F97316]/50 sm:w-16" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#FFB703]" />
+                </div>
               </div>
 
             </div>
           </div>
 
-          {/* RIGHT — STORY */}
+          {/* =====================================================
+              RIGHT — STORY
+          ====================================================== */}
+
           <div className="lg:col-span-7">
             <div className="max-w-2xl">
 
+              {/* Section label */}
               <div className="mb-5 flex items-center gap-3">
-                <span className="h-1 w-8 rounded-full bg-gradient-to-r from-[#F04438] to-[#FFB703]" />
+                <span className="h-1 w-9 rounded-full bg-gradient-to-r from-[#F04438] to-[#FFB703]" />
 
-                <span className="font-brand text-[10px] font-semibold uppercase tracking-[0.25em] text-[#D9382E]">
+                <span className="font-brand text-[10px] font-bold uppercase tracking-[0.25em] text-[#D9382E]">
                   Our Story
                 </span>
               </div>
 
-              <h2 className="font-display text-4xl font-semibold leading-[1.08] text-[#7F1712] sm:text-5xl lg:text-6xl">
+              {/* Heading */}
+              <h2 className="font-display text-4xl font-semibold leading-[1.08] tracking-tight text-[#74140F] sm:text-5xl lg:text-6xl">
                 {aboutTitle}
               </h2>
 
+              {/* Accent divider */}
               <div className="mt-7 flex items-center gap-3">
-                <span className="h-1 w-12 rounded-full bg-[#F04438]" />
+                <span className="h-1 w-14 rounded-full bg-[#F04438]" />
                 <span className="h-2 w-2 rounded-full bg-[#FFB703]" />
+                <span className="h-px w-12 bg-[#F97316]/40" />
               </div>
 
+              {/* Story */}
               <div className="mt-7 space-y-5">
                 <p className="text-base leading-8 text-[#5F514B] sm:text-lg">
                   {aboutDescription}
@@ -163,125 +226,83 @@ export const AboutSection: React.FC = () => {
                 </p>
               </div>
 
-              {/* VALUES */}
-              <div className="mt-10 grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2">
+              {/* =================================================
+                  VALUES
+              ================================================== */}
 
-                {/* 01 */}
-                <div className="group border-t border-[#F2C4A8] pt-5 transition-colors duration-300 hover:border-[#F04438]">
-                  <div className="flex items-center gap-3">
+              <div className="mt-10 grid grid-cols-1 gap-0 sm:grid-cols-2 sm:gap-x-8">
 
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#F04438]/35 bg-[#F04438]/5 text-[#D9382E] transition-all duration-300 group-hover:border-[#F04438] group-hover:bg-[#F04438] group-hover:text-white">
-                      <MapPin className="h-4 w-4" />
-                    </span>
+                {values.map((value) => {
+                  const Icon = value.icon;
 
-                    <div>
-                      <span className="font-brand text-[8px] font-semibold uppercase tracking-[0.22em] text-[#F97316]">
-                        01
-                      </span>
+                  return (
+                    <div
+                      key={value.number}
+                      className="group border-t border-[#EBCFBE] py-6 transition-all duration-300 first:pt-5 sm:py-6"
+                    >
+                      <div className="flex items-start gap-4">
 
-                      <h3 className="mt-0.5 font-display text-lg text-[#7F1712]">
-                        Khas Borneo
-                      </h3>
+                        {/* Icon */}
+                        <span
+                          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border transition-all duration-300 ${value.iconStyle}`}
+                        >
+                          <Icon className="h-[18px] w-[18px]" />
+                        </span>
+
+                        {/* Content */}
+                        <div className="min-w-0">
+
+                          <div className="flex items-center gap-2">
+                            <span className="font-brand text-[8px] font-bold uppercase tracking-[0.22em] text-[#F97316]">
+                              {value.number}
+                            </span>
+
+                            <span className="h-px w-4 bg-[#F3D2BD]" />
+                          </div>
+
+                          <h3 className="mt-1 font-display text-lg font-semibold text-[#74140F] transition-colors duration-300 group-hover:text-[#D9382E]">
+                            {value.title}
+                          </h3>
+
+                          <p className="mt-2 text-sm leading-6 text-[#756963]">
+                            {value.description}
+                          </p>
+
+                        </div>
+                      </div>
                     </div>
-
-                  </div>
-
-                  <p className="mt-3 pl-[3.25rem] text-sm leading-6 text-[#756963]">
-                    Berangkat dari kekayaan hasil perairan dan pangan lokal
-                    Kalimantan Timur.
-                  </p>
-                </div>
-
-                {/* 02 */}
-                <div className="group border-t border-[#F2C4A8] pt-5 transition-colors duration-300 hover:border-[#F04438]">
-                  <div className="flex items-center gap-3">
-
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#F04438]/35 bg-[#F04438]/5 text-[#D9382E] transition-all duration-300 group-hover:border-[#F04438] group-hover:bg-[#F04438] group-hover:text-white">
-                      <Fish className="h-4 w-4" />
-                    </span>
-
-                    <div>
-                      <span className="font-brand text-[8px] font-semibold uppercase tracking-[0.22em] text-[#F97316]">
-                        02
-                      </span>
-
-                      <h3 className="mt-0.5 font-display text-lg text-[#7F1712]">
-                        Ikan Bawis
-                      </h3>
-                    </div>
-
-                  </div>
-
-                  <p className="mt-3 pl-[3.25rem] text-sm leading-6 text-[#756963]">
-                    Diolah menjadi keripik ikan tanpa tulang tengah yang renyah,
-                    praktis, dan kaya protein.
-                  </p>
-                </div>
-
-                {/* 03 */}
-                <div className="group border-t border-[#F2C4A8] pt-5 transition-colors duration-300 hover:border-[#F04438]">
-                  <div className="flex items-center gap-3">
-
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#FFB703]/45 bg-[#FFB703]/10 text-[#D97706] transition-all duration-300 group-hover:border-[#FFB703] group-hover:bg-[#FFB703] group-hover:text-[#7F1712]">
-                      <Sparkles className="h-4 w-4" />
-                    </span>
-
-                    <div>
-                      <span className="font-brand text-[8px] font-semibold uppercase tracking-[0.22em] text-[#F97316]">
-                        03
-                      </span>
-
-                      <h3 className="mt-0.5 font-display text-lg text-[#7F1712]">
-                        Modern Craft
-                      </h3>
-                    </div>
-
-                  </div>
-
-                  <p className="mt-3 pl-[3.25rem] text-sm leading-6 text-[#756963]">
-                    Pangan lokal diolah menjadi camilan modern dengan nilai dan
-                    pengalaman yang lebih tinggi.
-                  </p>
-                </div>
-
-                {/* 04 */}
-                <div className="group border-t border-[#F2C4A8] pt-5 transition-colors duration-300 hover:border-[#F04438]">
-                  <div className="flex items-center gap-3">
-
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#F04438]/35 bg-[#F04438]/5 text-[#D9382E] transition-all duration-300 group-hover:border-[#F04438] group-hover:bg-[#F04438] group-hover:text-white">
-                      <HeartHandshake className="h-4 w-4" />
-                    </span>
-
-                    <div>
-                      <span className="font-brand text-[8px] font-semibold uppercase tracking-[0.22em] text-[#F97316]">
-                        04
-                      </span>
-
-                      <h3 className="mt-0.5 font-display text-lg text-[#7F1712]">
-                        From Borneo to the World
-                      </h3>
-                    </div>
-
-                  </div>
-
-                  <p className="mt-3 pl-[3.25rem] text-sm leading-6 text-[#756963]">
-                    Membawa cerita, cita rasa, dan potensi pangan lokal Borneo
-                    lebih jauh.
-                  </p>
-                </div>
+                  );
+                })}
 
               </div>
 
-              {/* Brand statement */}
-              <div className="mt-10 border-t border-[#F2C4A8] pt-6">
-                <div className="flex items-start gap-4">
+              {/* =================================================
+                  BRAND STATEMENT
+              ================================================== */}
 
-                  <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-[#F04438]" />
+              <div className="relative mt-8 overflow-hidden rounded-2xl border border-[#F1C6AA] bg-gradient-to-r from-[#FFF1E8] via-[#FFF8F2] to-[#FFF3D1] p-5 sm:p-6">
 
-                  <p className="font-display text-base italic leading-7 text-[#7F1712] sm:text-lg">
-                    “Cita rasa Borneo dalam bentuk yang lebih modern, praktis,
-                    dan bernilai.”
-                  </p>
+                <div
+                  className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-[#FFB703]/15 blur-2xl"
+                  aria-hidden="true"
+                />
+
+                <div className="relative flex items-start gap-4">
+
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#F04438]/10">
+                    <ShieldCheck className="h-4.5 w-4.5 text-[#D92D20]" />
+                  </div>
+
+                  <div>
+                    <span className="font-brand text-[8px] font-bold uppercase tracking-[0.22em] text-[#F97316]">
+                      BONLES PHILOSOPHY
+                    </span>
+
+                    <p className="mt-1 font-display text-base italic leading-7 text-[#74140F] sm:text-lg">
+                      “Cita rasa Borneo dalam bentuk yang lebih modern,
+                      praktis, dan bernilai.”
+                    </p>
+                  </div>
 
                 </div>
               </div>
