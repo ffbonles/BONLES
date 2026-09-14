@@ -26,26 +26,26 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage(null);
     setIsLoading(true);
 
-    // Simulate authenticating for smooth secure UX
-    setTimeout(() => {
-      const result = authService.login(username, password, rememberMe);
-      setIsLoading(false);
-
+    try {
+      const result = await authService.login(username, password, rememberMe);
       if (result.success) {
         onLoginSuccess();
         onClose();
-        // Reset form
         setUsername('');
         setPassword('');
       } else {
         setErrorMessage(result.message);
       }
-    }, 350);
+    } catch {
+      setErrorMessage('Tidak dapat menghubungi server autentikasi. Periksa koneksi lalu coba lagi.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
