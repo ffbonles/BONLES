@@ -861,136 +861,305 @@ function createOrder(orderPayload) {
 `
   },
   {
+    filename: 'Security.gs',
+    description: 'Autentikasi server-side admin menggunakan Script Properties, hash SHA-256, token sementara di CacheService, dan validasi role.',
+    code: `/**
+ * PT. BONLES FOOD NUSANTARA
+ * File: Security.gs - Server-side Admin Authentication
+ *
+ * PENTING:
+ * Jangan simpan username/password admin di repository.
+ * Jalankan setBonlesAdminUser(...) sekali dari Apps Script editor untuk membuat akun.
+ */
+
+const SECURITY_CONFIG = {
+  USERS_PROPERTY: 'BONLES_ADMIN_USERS_JSON',
+  TOKEN_PREFIX: 'BONLES_ADMIN_SESSION_',
+  TOKEN_TTL_SECONDS: 6 * 60 * 60,
+  MAX_LOGIN_ATTEMPTS: 5,
+  LOGIN_WINDOW_SECONDS: 10 * 60
+};
+
+function sha256Hex(value) {
+  const bytes = Utilities.computeDigest(
+    Utilities.DigestAlgorithm.SHA_256,
+    String(value),
+    Utilities.Charset.UTF_8
+  );
+  return bytes.map(function(b) {
+    const n = b < 0 ? b + 256 : b;
+    return ('0' + n.toString(16)).slice(-2);
+  }).join('');
+}
+
+function constantTimeEqual(a, b) {
+  a = String(a || '');
+  b = String(b || '');
+  if (a.length !== b.length) return false;
+  let diff = 0;
+  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return diff === 0;
+}
+
+function normalizeAdminUsername(value) {
+  return String(value || '').trim().toLowerCase();
+}
+
+function getAdminUsers() {
+  const raw = PropertiesService.getScriptProperties().getProperty(SECURITY_CONFIG.USERS_PROPERTY);
+  if (!raw) return [];
+  try {
+    const users = JSON.parse(raw);
+    return Array.isArray(users) ? users : [];
+  } catch (err) {
+    console.error('BONLES_ADMIN_USERS_JSON invalid:', err);
+    return [];
+  }
+}
+
+function saveAdminUsers(users) {
+  PropertiesService.getScriptProperties().setProperty(
+    SECURITY_CONFIG.USERS_PROPERTY,
+    JSON.stringify(users)
+  );
+}
+
+function setBonlesAdminUser(username, password, email, role, name) {
+  username = normalizeAdminUsername(username);
+  if (!username || !password || String(password).length < 10) {
+    throw new Error('Username dan password wajib diisi; password minimal 10 karakter.');
+  }
+  const users = getAdminUsers().filter(function(u) {
+    return normalizeAdminUsername(u.username) !== username;
+  });
+  users.push({
+    username: username,
+    email: String(email || username),
+    role: String(role || 'Administrator'),
+    name: String(name || 'Administrator Bonles'),
+    passwordHash: sha256Hex(password),
+    active: true
+  });
+  saveAdminUsers(users);
+  return 'Admin berhasil disimpan untuk: ' + username;
+}
+
+function disableBonlesAdminUser(username) {
+  username = normalizeAdminUsername(username);
+  const users = getAdminUsers();
+  let changed = false;
+  users.forEach(function(u) {
+    if (normalizeAdminUsername(u.username) === username) {
+      u.active = false;
+      changed = true;
+    }
+  });
+  if (changed) saveAdminUsers(users);
+  return changed;
+}
+
+function getLoginThrottleKey(username) {
+  return 'BONLES_LOGIN_FAIL_' + sha256Hex(normalizeAdminUsername(username)).slice(0, 24);
+}
+
+function authenticateAdmin(username, password) {
+  username = normalizeAdminUsername(username);
+  if (!username || !password) throw new Error('Kredensial tidak lengkap.');
+
+  const cache = CacheService.getScriptCache();
+  const throttleKey = getLoginThrottleKey(username);
+  const attempts = Number(cache.get(throttleKey) || 0);
+  if (attempts >= SECURITY_CONFIG.MAX_LOGIN_ATTEMPTS) {
+    throw new Error('Terlalu banyak percobaan login. Coba lagi beberapa menit lagi.');
+  }
+
+  const passwordHash = sha256Hex(password);
+  const user = getAdminUsers().find(function(u) {
+    return u.active !== false && normalizeAdminUsername(u.username) === username;
+  });
+
+  if (!user || !constantTimeEqual(user.passwordHash, passwordHash)) {
+    cache.put(throttleKey, String(attempts + 1), SECURITY_CONFIG.LOGIN_WINDOW_SECONDS);
+    throw new Error('Username/email atau password tidak valid.');
+  }
+
+  cache.remove(throttleKey);
+  const token = Utilities.getUuid() + '-' + Utilities.getUuid();
+  cache.put(SECURITY_CONFIG.TOKEN_PREFIX + token, JSON.stringify({
+    username: username,
+    email: user.email,
+    role: user.role,
+    name: user.name,
+    issuedAt: new Date().toISOString()
+  }), SECURITY_CONFIG.TOKEN_TTL_SECONDS);
+
+  logSystemEvent('AUDIT', 'ADMIN_LOGIN', user.email, '-', 'Login admin berhasil.', 'SUCCESS');
+  return {
+    token: token,
+    email: user.email,
+    role: user.role,
+    name: user.name
+  };
+}
+
+function getAdminSession(token) {
+  if (!token) return null;
+  const raw = CacheService.getScriptCache().get(SECURITY_CONFIG.TOKEN_PREFIX + String(token));
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw);
+  } catch (err) {
+    return null;
+  }
+}
+
+function requireAdmin(token) {
+  const session = getAdminSession(token);
+  if (!session) throw new Error('Sesi admin tidak valid atau sudah kedaluwarsa. Silakan login kembali.');
+  return session;
+}
+
+function revokeAdminToken(token) {
+  if (token) CacheService.getScriptCache().remove(SECURITY_CONFIG.TOKEN_PREFIX + String(token));
+}
+` 
+  },
+  {
     filename: 'Code.gs',
     description: 'Dispatcher utama API GET & POST untuk melayani Web App, sinkronisasi massal, dan inisialisasi sistem.',
     code: `/**
  * PT. BONLES FOOD NUSANTARA
- * File: Code.gs - API Routing Entrypoint (GET & POST)
+ * File: Code.gs - Secure API Routing Entrypoint
  */
+
+function getRowsAsObjects(sheetName) {
+  const sheet = getSheet(sheetName);
+  if (!sheet) return [];
+  const values = sheet.getDataRange().getValues();
+  if (values.length <= 1) return [];
+  const headers = values[0];
+  return values.slice(1).map(function(row) {
+    const obj = {};
+    headers.forEach(function(key, index) { obj[key] = row[index]; });
+    return obj;
+  });
+}
+
+function upsertSheetObject(sheetName, object, columns) {
+  setupDatabase();
+  const sheet = getSheet(sheetName);
+  if (!sheet) throw new Error('Sheet tidak ditemukan: ' + sheetName);
+  const now = new Date().toISOString();
+  const values = sheet.getDataRange().getValues();
+  const id = String(object.ID || '');
+  let rowIndex = -1;
+  if (id && values.length > 1) {
+    for (let i = 1; i < values.length; i++) {
+      if (String(values[i][0]) === id) { rowIndex = i + 1; break; }
+    }
+  }
+  const row = columns.map(function(column) {
+    if (column === 'CREATED_AT') return object.CREATED_AT || now;
+    if (column === 'UPDATED_AT') return now;
+    const value = object[column];
+    if (column === 'ACTIVE') return value === true || value === 'TRUE' ? 'TRUE' : 'FALSE';
+    return value === undefined || value === null ? '' : value;
+  });
+  if (rowIndex > 0) sheet.getRange(rowIndex, 1, 1, row.length).setValues([row]);
+  else sheet.appendRow(row);
+  return object;
+}
+
+function saveBannerToSheet(banner) {
+  return upsertSheetObject(CONFIG.SHEETS.BANNERS, banner, SCHEMAS[CONFIG.SHEETS.BANNERS]);
+}
+
+function saveTestimonialToSheet(testimonial) {
+  return upsertSheetObject(CONFIG.SHEETS.TESTIMONIALS, testimonial, SCHEMAS[CONFIG.SHEETS.TESTIMONIALS]);
+}
+
+function getPublicData() {
+  setupDatabase();
+  const settings = getSettings();
+  const publicSettingKeys = [
+    'WHATSAPP_NUMBER', 'STORE_EMAIL', 'STORE_ADDRESS',
+    'DEFAULT_SHIPPING_COST', 'STORE_NAME', 'STORE_DESCRIPTION',
+    'INSTAGRAM_URL', 'FACEBOOK_URL', 'TIKTOK_URL'
+  ];
+  const safeSettings = (Array.isArray(settings) ? settings : []).filter(function(item) {
+    return publicSettingKeys.indexOf(String(item.SETTING || '')) >= 0;
+  });
+  return {
+    products: getProducts(true),
+    categories: getRowsAsObjects(CONFIG.SHEETS.CATEGORIES).filter(function(x) { return x.ACTIVE === true || x.ACTIVE === 'TRUE'; }),
+    settings: safeSettings,
+    banners: getRowsAsObjects(CONFIG.SHEETS.BANNERS).filter(function(x) { return x.ACTIVE === true || x.ACTIVE === 'TRUE'; }),
+    testimonials: getRowsAsObjects(CONFIG.SHEETS.TESTIMONIALS).filter(function(x) { return x.ACTIVE === true || x.ACTIVE === 'TRUE'; })
+  };
+}
+
+function getAdminData(token) {
+  const session = requireAdmin(token);
+  return {
+    session: session,
+    products: getProducts(false),
+    categories: getRowsAsObjects(CONFIG.SHEETS.CATEGORIES),
+    settings: getSettings(),
+    banners: getRowsAsObjects(CONFIG.SHEETS.BANNERS),
+    testimonials: getRowsAsObjects(CONFIG.SHEETS.TESTIMONIALS),
+    orders: getOrders(),
+    customers: getRowsAsObjects(CONFIG.SHEETS.CUSTOMERS),
+    logs: getRowsAsObjects(CONFIG.SHEETS.SYSTEM_LOG).slice(-200)
+  };
+}
+
+function getDashboardSummarySecure(token) {
+  const session = requireAdmin(token);
+  setupDatabase();
+  const prods = getProducts(false);
+  const orderData = getSheet(CONFIG.SHEETS.ORDERS).getDataRange().getValues();
+  let totalSales = 0;
+  let pendingOrders = 0;
+  for (let i = 1; i < orderData.length; i++) {
+    totalSales += parseNumber(orderData[i][14], 0);
+    if (String(orderData[i][15]) === 'PENDING') pendingOrders++;
+  }
+  return {
+    totalProducts: prods.length,
+    activeProducts: prods.filter(function(p) { return p.ACTIVE === true || p.ACTIVE === 'TRUE'; }).length,
+    lowStockProducts: prods.filter(function(p) { const n = parseNumber(p.STOCK, 0); return n > 0 && n <= 5; }).length,
+    outOfStockProducts: prods.filter(function(p) { return parseNumber(p.STOCK, 0) === 0; }).length,
+    totalOrders: Math.max(0, orderData.length - 1),
+    pendingOrders: pendingOrders,
+    totalSales: totalSales,
+    admin: { email: session.email, role: session.role, name: session.name }
+  };
+}
 
 function doGet(e) {
   try {
-    const action = (e && e.parameter && e.parameter.action) ? e.parameter.action : "getProducts";
-    
+    const action = e && e.parameter && e.parameter.action ? e.parameter.action : 'publicData';
     switch (action) {
-      case "getProducts":
-        return jsonResponse(getProducts(true), true, "Katalog produk berhasil dimuat");
-        
-      case "getAllProducts":
-        return jsonResponse(getProducts(false), true, "Seluruh produk berhasil dimuat");
-        
-      case "getProduct":
+      case 'publicData':
+      case 'getProducts':
+        return jsonResponse(getPublicData(), true, 'Katalog publik berhasil dimuat');
+      case 'getProduct':
         const id = e.parameter.id || e.parameter.sku;
         const prod = getProduct(id);
-        return prod ? jsonResponse(prod, true) : jsonError("Produk tidak ditemukan", 404);
-        
-      case "getCategories":
-        const catSheet = getSheet(CONFIG.SHEETS.CATEGORIES);
-        const catData = catSheet ? catSheet.getDataRange().getValues() : [];
-        const categories = [];
-        if (catData.length > 1) {
-          const h = catData[0];
-          for (let i = 1; i < catData.length; i++) {
-            const item = {};
-            for (let j = 0; j < h.length; j++) item[h[j]] = catData[i][j];
-            categories.push(item);
-          }
-        }
-        return jsonResponse(categories, true, "Kategori berhasil dimuat");
-        
-      case "getSettings":
-        return jsonResponse(getSettings(), true, "Pengaturan toko dimuat");
-        
-      case "getDashboardSummary":
-        setupDatabase();
-        const prods = getProducts(false);
-        const orderSheet = getSheet(CONFIG.SHEETS.ORDERS);
-        const orderData = orderSheet ? orderSheet.getDataRange().getValues() : [];
-        let totalSales = 0;
-        let pendingOrders = 0;
-        
-        for (let i = 1; i < orderData.length; i++) {
-          totalSales += parseNumber(orderData[i][14], 0);
-          if (orderData[i][15] === "PENDING") pendingOrders++;
-        }
-        
-        const summary = {
-          totalProducts: prods.length,
-          activeProducts: prods.filter(p => p.ACTIVE === true || p.ACTIVE === "TRUE").length,
-          lowStockProducts: prods.filter(p => parseNumber(p.STOCK, 0) > 0 && parseNumber(p.STOCK, 0) <= 5).length,
-          outOfStockProducts: prods.filter(p => parseNumber(p.STOCK, 0) === 0).length,
-          totalOrders: Math.max(0, orderData.length - 1),
-          pendingOrders: pendingOrders,
-          totalSales: totalSales
-        };
-        return jsonResponse(summary, true, "Dashboard summary berhasil dimuat");
-        
-      case "syncAll":
-      case "pullAllData":
-        return jsonResponse({
-          products: getProducts(false),
-          categories: (function() {
-            const s = getSheet(CONFIG.SHEETS.CATEGORIES);
-            if (!s) return [];
-            const d = s.getDataRange().getValues();
-            if (d.length <= 1) return [];
-            const h = d[0];
-            return d.slice(1).map(r => {
-              const o = {};
-              h.forEach((k, idx) => o[k] = r[idx]);
-              return o;
-            });
-          })(),
-          settings: getSettings(),
-          banners: (function() {
-            const s = getSheet(CONFIG.SHEETS.BANNERS);
-            if (!s) return [];
-            const d = s.getDataRange().getValues();
-            if (d.length <= 1) return [];
-            const h = d[0];
-            return d.slice(1).map(r => {
-              const o = {};
-              h.forEach((k, idx) => o[k] = r[idx]);
-              return o;
-            });
-          })(),
-          testimonials: (function() {
-            const s = getSheet(CONFIG.SHEETS.TESTIMONIALS);
-            if (!s) return [];
-            const d = s.getDataRange().getValues();
-            if (d.length <= 1) return [];
-            const h = d[0];
-            return d.slice(1).map(r => {
-              const o = {};
-              h.forEach((k, idx) => o[k] = r[idx]);
-              return o;
-            });
-          })(),
-          orders: getOrders(),
-          customers: (function() {
-            const s = getSheet(CONFIG.SHEETS.CUSTOMERS);
-            if (!s) return [];
-            const d = s.getDataRange().getValues();
-            if (d.length <= 1) return [];
-            const h = d[0];
-            return d.slice(1).map(r => {
-              const o = {};
-              h.forEach((k, idx) => o[k] = r[idx]);
-              return o;
-            });
-          })()
-        }, true, "Seluruh data tersinkronisasi");
-        
-      case "init":
-        setupDatabase();
-        setupDriveStructure();
-        return jsonResponse({ status: "initialized" }, true, "Sistem Bonles Food Nusantara berhasil diinisialisasi");
-        
+        return prod && (prod.ACTIVE === true || prod.ACTIVE === 'TRUE')
+          ? jsonResponse(prod, true)
+          : jsonError('Produk tidak ditemukan', 404);
+      case 'adminData':
+        return jsonResponse(getAdminData(e.parameter.token), true, 'Data admin berhasil dimuat');
+      case 'getDashboardSummary':
+        return jsonResponse(getDashboardSummarySecure(e.parameter.token), true, 'Dashboard summary berhasil dimuat');
       default:
-        return jsonError("Action tidak dikenali: " + action);
+        return jsonError('Action GET tidak valid.', 400);
     }
   } catch (err) {
-    return jsonError("Internal Server Error: " + err.message, 500);
+    const message = err && err.message ? err.message : 'Internal Server Error';
+    const status = message.indexOf('Sesi admin') >= 0 ? 401 : 500;
+    return jsonError(message, status);
   }
 }
 
@@ -998,83 +1167,43 @@ function doPost(e) {
   try {
     let postData = {};
     if (e && e.postData && e.postData.contents) {
-      try {
-        postData = JSON.parse(e.postData.contents);
-      } catch (err) {
-        postData = e.parameter || {};
-      }
+      try { postData = JSON.parse(e.postData.contents); }
+      catch (err) { postData = e.parameter || {}; }
     } else if (e && e.parameter) {
       postData = e.parameter;
     }
-    
-    const action = postData.action;
-    
-    switch (action) {
-      case "syncAll":
-      case "pullAllData":
-        return jsonResponse({
-          products: getProducts(false),
-          categories: (function() {
-            const s = getSheet(CONFIG.SHEETS.CATEGORIES);
-            if (!s) return [];
-            const d = s.getDataRange().getValues();
-            if (d.length <= 1) return [];
-            const h = d[0];
-            return d.slice(1).map(r => {
-              const o = {};
-              h.forEach((k, idx) => o[k] = r[idx]);
-              return o;
-            });
-          })(),
-          settings: getSettings(),
-          banners: (function() {
-            const s = getSheet(CONFIG.SHEETS.BANNERS);
-            if (!s) return [];
-            const d = s.getDataRange().getValues();
-            if (d.length <= 1) return [];
-            const h = d[0];
-            return d.slice(1).map(r => {
-              const o = {};
-              h.forEach((k, idx) => o[k] = r[idx]);
-              return o;
-            });
-          })(),
-          testimonials: (function() {
-            const s = getSheet(CONFIG.SHEETS.TESTIMONIALS);
-            if (!s) return [];
-            const d = s.getDataRange().getValues();
-            if (d.length <= 1) return [];
-            const h = d[0];
-            return d.slice(1).map(r => {
-              const o = {};
-              h.forEach((k, idx) => o[k] = r[idx]);
-              return o;
-            });
-          })(),
-          orders: getOrders(),
-          customers: (function() {
-            const s = getSheet(CONFIG.SHEETS.CUSTOMERS);
-            if (!s) return [];
-            const d = s.getDataRange().getValues();
-            if (d.length <= 1) return [];
-            const h = d[0];
-            return d.slice(1).map(r => {
-              const o = {};
-              h.forEach((k, idx) => o[k] = r[idx]);
-              return o;
-            });
-          })()
-        }, true, "Seluruh data tersinkronisasi");
 
-      case "syncAllData":
-        const syncRes = syncAllDataFromApp(postData.payload || postData);
-        return jsonResponse(syncRes, true, "Seluruh data berhasil disinkronkan ke Google Spreadsheet & Drive");
-        
-      case "saveProduct":
-        const savedProd = saveProductToSheet(postData.product, postData.imageBase64);
-        return jsonResponse(savedProd, true, "Produk berhasil disimpan ke Spreadsheet & Google Drive");
-        
-      case "saveCategory":
+    const action = String(postData.action || '');
+    switch (action) {
+      case 'ping':
+        return jsonResponse({ status: 'ok' }, true, 'Web App aktif.');
+      case 'publicData':
+        return jsonResponse(getPublicData(), true, 'Katalog publik berhasil dimuat');
+      case 'adminLogin':
+        return jsonResponse(authenticateAdmin(postData.username, postData.password), true, 'Autentikasi admin berhasil');
+      case 'adminLogout':
+        revokeAdminToken(postData.token);
+        return jsonResponse({ loggedOut: true }, true, 'Sesi admin diakhiri');
+      case 'createOrder':
+        // Public endpoint: pricing, stock, and totals are recalculated server-side by createOrder().
+        return jsonResponse(createOrder(postData), true, 'Pesanan berhasil dibuat dan dicatat');
+
+      case 'syncAll':
+      case 'pullAllData':
+        return jsonResponse(getAdminData(postData.token), true, 'Data admin berhasil dimuat');
+      case 'syncAllData':
+        requireAdmin(postData.token);
+        return jsonResponse(syncAllDataFromApp(postData.payload || postData), true, 'Seluruh data berhasil disinkronkan');
+      case 'init':
+        requireAdmin(postData.token);
+        setupDatabase();
+        setupDriveStructure();
+        return jsonResponse({ status: 'initialized' }, true, 'Database & Drive berhasil diinisialisasi');
+      case 'saveProduct':
+        requireAdmin(postData.token);
+        return jsonResponse(saveProductToSheet(postData.product, postData.imageBase64), true, 'Produk berhasil disimpan');
+      case 'saveCategory':
+        requireAdmin(postData.token);
         setupDatabase();
         const catSheet = getSheet(CONFIG.SHEETS.CATEGORIES);
         const cat = postData.category;
@@ -1082,68 +1211,46 @@ function doPost(e) {
         const catData = catSheet.getDataRange().getValues();
         let catFound = -1;
         for (let i = 1; i < catData.length; i++) {
-          if (catData[i][0] === cat.ID || catData[i][1] === cat.NAME) {
-            catFound = i + 1;
-            break;
-          }
+          if (catData[i][0] === cat.ID || catData[i][1] === cat.NAME) { catFound = i + 1; break; }
         }
-        const catRow = [
-          cat.ID, cat.NAME, cat.DESCRIPTION || "", cat.IMAGE_FILE_ID || "", cat.IMAGE_URL || "",
-          cat.ACTIVE === true || cat.ACTIVE === "TRUE" ? "TRUE" : "FALSE",
-          parseNumber(cat.SORT_ORDER, 1),
-          cat.CREATED_AT || now, now
-        ];
-        if (catFound > 0) {
-          catSheet.getRange(catFound, 1, 1, catRow.length).setValues([catRow]);
-        } else {
-          catSheet.appendRow(catRow);
-        }
-        return jsonResponse(cat, true, "Kategori berhasil disimpan ke Spreadsheet");
-        
-      case "saveSettings":
+        const catRow = [cat.ID, cat.NAME, cat.DESCRIPTION || '', cat.IMAGE_FILE_ID || '', cat.IMAGE_URL || '',
+          cat.ACTIVE === true || cat.ACTIVE === 'TRUE' ? 'TRUE' : 'FALSE', parseNumber(cat.SORT_ORDER, 1), cat.CREATED_AT || now, now];
+        if (catFound > 0) catSheet.getRange(catFound, 1, 1, catRow.length).setValues([catRow]);
+        else catSheet.appendRow(catRow);
+        return jsonResponse(cat, true, 'Kategori berhasil disimpan');
+      case 'saveSettings':
+        requireAdmin(postData.token);
         saveSettingsList(postData.settings);
-        return jsonResponse({ updated: true }, true, "Pengaturan toko berhasil disimpan ke Spreadsheet");
-        
-      case "createOrder":
-        const result = createOrder(postData);
-        return jsonResponse(result, true, "Pesanan berhasil dibuat dan dicatat di Spreadsheet");
-        
-      case "updateOrderStatus":
-        const updatedStatus = updateOrderStatusInSheet(postData.orderId, postData.status);
-        return jsonResponse({ updated: updatedStatus }, true, "Status pesanan berhasil diperbarui");
-        
-      case "uploadImage":
-        const imgResult = uploadProductImage(
-          postData.categoryName,
-          postData.sku,
-          postData.base64,
-          postData.filename,
-          postData.imageSlot || "main"
-        );
-        return jsonResponse(imgResult, true, "Foto berhasil diunggah ke Google Drive");
-        
-      case "init":
-        setupDatabase();
-        setupDriveStructure();
-        return jsonResponse({ status: "initialized" }, true, "Inisialisasi Database & Drive berhasil!");
-        
-      case "ping":
-        return jsonResponse({ status: "ok", timestamp: new Date().toISOString() }, true, "Web App aktif dan siap menerima data");
-        
+        return jsonResponse({ updated: true }, true, 'Pengaturan berhasil disimpan');
+      case 'saveBanner':
+        requireAdmin(postData.token);
+        return jsonResponse(saveBannerToSheet(postData.banner), true, 'Banner berhasil disimpan');
+      case 'saveTestimonial':
+        requireAdmin(postData.token);
+        return jsonResponse(saveTestimonialToSheet(postData.testimonial), true, 'Testimoni berhasil disimpan');
+      case 'uploadImage':
+        requireAdmin(postData.token);
+        return jsonResponse(uploadProductImage(postData.categoryName, postData.sku, postData.base64, postData.filename, postData.imageSlot || 'main'), true, 'Foto berhasil diunggah');
+      case 'updateOrderStatus':
+        requireAdmin(postData.token);
+        return jsonResponse({ updated: updateOrderStatusInSheet(postData.orderId, postData.status) }, true, 'Status pesanan diperbarui');
       default:
-        return jsonError("Action POST tidak valid: " + action);
+        return jsonError('Action POST tidak valid.', 400);
     }
   } catch (err) {
-    return jsonError("Gagal memproses request POST: " + err.message, 500);
+    const message = err && err.message ? err.message : 'Gagal memproses request POST';
+    const status = message.indexOf('Sesi admin') >= 0 ? 401 : 500;
+    return jsonError(message, status);
   }
 }
 
 function initializeBonlesSystem() {
   setupDatabase();
   setupDriveStructure();
-  logSystemEvent("INFO", "INITIALIZE_SYSTEM", "ADMIN", "ALL", "Inisialisasi sistem lengkap berhasil dijalankan.", "SUCCESS");
-  return "Inisialisasi PT. Bonles Food Nusantara berhasil! 9 Sheets dan Folder Google Drive siap digunakan.";
+  logSystemEvent('INFO', 'INITIALIZE_SYSTEM', 'SYSTEM', 'ALL', 'Inisialisasi sistem lengkap berhasil dijalankan.', 'SUCCESS');
+  return 'Inisialisasi PT. Bonles Food Nusantara berhasil.';
 }
+
 `
   }
 ];
