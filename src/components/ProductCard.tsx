@@ -44,7 +44,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         overflow-hidden
         flex
         flex-col
-        bg-[#FCFAF5]
+        bg-white
       "
     >
       {/* =====================================================
@@ -56,7 +56,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           aspect-[4/4.3]
           w-full
           overflow-hidden
-          bg-[#F3EDE0]
+          bg-[#FFF7ED]
         "
       >
         <img
@@ -88,7 +88,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             absolute
             inset-0
             bg-gradient-to-t
-            from-[#09271F]/25
+            from-[#7A0F18]/25
             via-transparent
             to-transparent
             opacity-50
@@ -116,20 +116,20 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 items-center
                 gap-1.5
                 border
-                border-[#C9A45C]/50
-                bg-[#FCFAF5]/95
+                border-[#FFC107]/60
+                bg-white/95
                 px-2.5
                 py-1
                 text-[9px]
                 font-bold
                 uppercase
                 tracking-[0.12em]
-                text-[#123C32]
+                text-[#7A0F18]
                 backdrop-blur-sm
               "
             >
               <Star
-                className="h-3 w-3 fill-[#C9A45C] text-[#C9A45C]"
+                className="h-3 w-3 fill-[#FFC107] text-[#FFC107]"
               />
 
               Unggulan
@@ -142,8 +142,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 inline-flex
                 items-center
                 border
-                border-[#B83B32]/20
-                bg-[#B83B32]/95
+                border-[#E53935]/30
+                bg-[#E53935]/95
                 px-2.5
                 py-1
                 text-[9px]
@@ -181,7 +181,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 gap-1.5
                 border
                 border-white/20
-                bg-[#09271F]/90
+                bg-[#7A0F18]/90
                 px-2.5
                 py-1
                 text-[9px]
@@ -202,15 +202,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 items-center
                 gap-1.5
                 border
-                border-[#C9A45C]/50
-                bg-[#FCFAF5]/95
+                border-[#FFC107]/60
+                bg-white/95
                 px-2.5
                 py-1
                 text-[9px]
                 font-bold
                 uppercase
                 tracking-[0.12em]
-                text-[#9E793A]
+                text-[#E65100]
               "
             >
               <AlertTriangle className="h-3 w-3" />
@@ -224,15 +224,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 items-center
                 gap-1.5
                 border
-                border-[#3E7657]/20
-                bg-[#FCFAF5]/95
+                border-[#22C55E]/25
+                bg-white/95
                 px-2.5
                 py-1
                 text-[9px]
                 font-bold
                 uppercase
                 tracking-[0.12em]
-                text-[#3E7657]
+                text-[#166534]
               "
             >
               <CheckCircle2 className="h-3 w-3" />
@@ -254,7 +254,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             cursor-pointer
             items-center
             justify-center
-            bg-[#09271F]/25
+            bg-[#7A0F18]/30
             opacity-0
             transition-opacity
             duration-300
@@ -269,15 +269,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               items-center
               gap-2
               border
-              border-[#FCFAF5]/60
-              bg-[#FCFAF5]/95
+              border-white/70
+              bg-white/95
               px-4
               py-2.5
               text-[10px]
               font-bold
               uppercase
               tracking-[0.14em]
-              text-[#09271F]
+              text-[#4A1116]
               shadow-lg
               transition-transform
               duration-300
@@ -285,7 +285,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               translate-y-2
             "
           >
-            <Eye className="h-3.5 w-3.5 text-[#B18B4B]" />
+            <Eye className="h-3.5 w-3.5 text-[#E65100]" />
 
             Lihat Detail
           </span>
@@ -324,7 +324,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 font-bold
                 uppercase
                 tracking-[0.16em]
-                text-[#B18B4B]
+                text-[#E65100]
               "
             >
               {product.CATEGORY_NAME}
@@ -336,7 +336,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 font-mono
                 text-[9px]
                 tracking-wide
-                text-[#9BA29D]
+                text-[#A79A94]
               "
             >
               {product.SKU}
@@ -354,10 +354,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               font-medium
               leading-[1.15]
               tracking-[-0.02em]
-              text-[#09271F]
+              text-[#4A1116]
               transition-colors
               duration-300
-              group-hover:text-[#185043]
+              group-hover:text-[#A62B00]
               line-clamp-2
             "
           >
@@ -372,7 +372,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               items-center
               gap-2
               text-[11px]
-              text-[#7C8580]
+              text-[#8A756D]
             "
           >
             <span>Net weight</span>
@@ -382,7 +382,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 h-1
                 w-1
                 rounded-full
-                bg-[#C9A45C]
+                bg-[#FFC107]
               "
             />
 
@@ -400,7 +400,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             className="
               mb-4
               border-t
-              border-[#123C32]/10
+              border-[#E65100]/15
               pt-4
             "
           >
@@ -411,7 +411,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                   text-[18px]
                   font-bold
                   tracking-[-0.02em]
-                  text-[#123C32]
+                  text-[#7A0F18]
                 "
               >
                 Rp{' '}
@@ -425,7 +425,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                   className="
                     text-[10px]
                     font-medium
-                    text-[#9BA29D]
+                    text-[#A79A94]
                     line-through
                   "
                 >
@@ -468,7 +468,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 text-[10px]
                 ${
                   isOutOfStock
-                    ? 'cursor-not-allowed border border-[#D8D8D2] bg-[#E9E6DE] text-[#9BA29D]'
+                    ? 'cursor-not-allowed border border-[#D8D0CA] bg-[#EEE9E4] text-[#A79A94]'
                     : 'bonles-btn-primary'
                 }
               `}
