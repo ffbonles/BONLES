@@ -337,7 +337,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
   };
 
   return (
-    <div className="min-h-screen bg-[#061B16] text-[#E3EAE6] flex flex-col selection:bg-[#C9A45C] selection:text-black">
+    <div className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#061B16] text-[#E3EAE6] flex flex-col selection:bg-[#C9A45C] selection:text-black">
       {/* TOP STATUS BAR: CONFIRMATION OF SAVED STATE */}
       <div className="bg-[#09271F] border-b border-[#245442]/45 px-4 sm:px-8 py-2 flex flex-wrap items-center justify-between gap-2 text-xs">
         <div className="flex items-center gap-2">
@@ -428,9 +428,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
       </header>
 
       {/* ADMIN MAIN CONTAINER: SIDEBAR + CONTENT */}
-      <div className="flex-1 flex flex-col md:flex-row">
+      <div className="flex-1 min-w-0 flex flex-col md:flex-row">
         {/* SIDEBAR NAVIGATION */}
-        <aside className="w-full md:w-64 bg-[#09271F] border-r border-[#245442]/45 p-4 shrink-0 space-y-6">
+        <aside className="w-full md:w-64 bg-[#09271F] border-r border-[#245442]/45 p-4 shrink-0 space-y-6 md:max-h-[calc(100vh-105px)] md:overflow-y-auto">
           <div className="space-y-1">
             <span className="text-[10px] tracking-[0.2em] font-bold text-[#81918A] uppercase px-3 block">
               Menu Kontrol
@@ -636,7 +636,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
         </aside>
 
         {/* CONTENT AREA */}
-        <main className="flex-1 p-4 sm:p-8 overflow-y-auto">
+        <main className="flex-1 min-w-0 p-3 sm:p-5 lg:p-8 overflow-y-auto overflow-x-hidden">
           {/* TAB 1: SUMMARY */}
           {activeTab === 'summary' && (
             <div className="space-y-8">
@@ -1747,217 +1747,98 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
 
       {/* 1. PRODUCT EDIT / ADD MODAL WITH PHOTO UPLOAD & URL */}
       {isProductModalOpen && editingProduct && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm overflow-y-auto">
-          <div className="relative w-full max-w-2xl bg-[#09271F] border border-[#245442]/45 rounded-sm shadow-2xl p-6 space-y-5 my-8">
-            <div className="flex items-center justify-between pb-3 border-b border-[#245442]/45">
-              <h3 className="text-lg font-serif-luxury text-white font-medium">
-                {editingProduct.ID ? `Edit Produk: ${editingProduct.SKU}` : 'Tambah Produk Baru'}
-              </h3>
-              <button
-                type="button"
-                onClick={() => setIsProductModalOpen(false)}
-                className="text-[#91A19A] hover:text-white"
-              >
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/75 backdrop-blur-sm overflow-hidden">
+          <div className="relative w-full max-w-3xl max-h-[calc(100dvh-1rem)] sm:max-h-[calc(100dvh-2rem)] bg-[#09271F] border border-[#245442]/60 rounded-lg shadow-2xl overflow-hidden flex flex-col">
+            <div className="shrink-0 flex items-center justify-between gap-3 px-4 sm:px-6 py-3.5 border-b border-[#245442]/60 bg-[#0D3429]">
+              <div className="min-w-0">
+                <span className="block text-[10px] tracking-[0.18em] uppercase font-bold text-[#4FCB91]">Katalog Produk</span>
+                <h3 className="text-base sm:text-lg font-serif-luxury text-white font-medium truncate">
+                  {editingProduct.ID ? `Edit Produk: ${editingProduct.SKU}` : 'Tambah Produk Baru'}
+                </h3>
+              </div>
+              <button type="button" onClick={() => { setIsProductModalOpen(false); setEditingProduct(null); }}
+                className="shrink-0 w-9 h-9 inline-flex items-center justify-center rounded-md text-[#B4C0BA] hover:text-white hover:bg-[#164638] border border-transparent hover:border-[#245442] transition-colors cursor-pointer"
+                aria-label="Tutup modal edit produk">
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <form onSubmit={handleSaveProductSubmit} className="space-y-4 text-xs">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1">
-                  <label className="text-[#B4C0BA]">SKU Produk *</label>
-                  <input
-                    type="text"
-                    required
-                    value={editingProduct.SKU}
-                    onChange={(e) => setEditingProduct({ ...editingProduct, SKU: e.target.value })}
-                    className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm p-2 text-white font-mono"
-                  />
+            <form onSubmit={handleSaveProductSubmit} className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden overscroll-contain px-4 sm:px-6 py-4 space-y-4 text-xs">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                <div className="space-y-1.5"><label className="text-[#CBD5D0] font-medium">SKU Produk *</label>
+                  <input type="text" required value={editingProduct.SKU} onChange={(e) => setEditingProduct({ ...editingProduct, SKU: e.target.value })}
+                    className="w-full min-w-0 bg-[#061B16] border border-[#245442]/60 rounded-md p-2.5 text-white font-mono outline-none focus:border-[#4FCB91] focus:ring-1 focus:ring-[#4FCB91]/20" />
                 </div>
-
-                <div className="space-y-1">
-                  <label className="text-[#B4C0BA]">Kategori *</label>
-                  <select
-                    value={editingProduct.CATEGORY_ID}
-                    onChange={(e) => {
-                      const cat = categories.find(c => c.ID === e.target.value);
-                      setEditingProduct({
-                        ...editingProduct,
-                        CATEGORY_ID: e.target.value,
-                        CATEGORY_NAME: cat?.NAME || editingProduct.CATEGORY_NAME,
-                      });
-                    }}
-                    className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm p-2 text-white"
-                  >
-                    {categories.map(c => (
-                      <option key={c.ID} value={c.ID}>{c.NAME}</option>
-                    ))}
+                <div className="space-y-1.5"><label className="text-[#CBD5D0] font-medium">Kategori *</label>
+                  <select value={editingProduct.CATEGORY_ID} onChange={(e) => { const cat = categories.find(c => c.ID === e.target.value); setEditingProduct({ ...editingProduct, CATEGORY_ID: e.target.value, CATEGORY_NAME: cat?.NAME || editingProduct.CATEGORY_NAME }); }}
+                    className="w-full min-w-0 bg-[#061B16] border border-[#245442]/60 rounded-md p-2.5 text-white outline-none focus:border-[#4FCB91] focus:ring-1 focus:ring-[#4FCB91]/20">
+                    {categories.map(c => <option key={c.ID} value={c.ID}>{c.NAME}</option>)}
                   </select>
                 </div>
               </div>
 
-              <div className="space-y-1">
-                <label className="text-[#B4C0BA]">Nama Produk Lengkap *</label>
-                <input
-                  type="text"
-                  required
-                  value={editingProduct.NAME}
-                  onChange={(e) => setEditingProduct({ ...editingProduct, NAME: e.target.value })}
+              <div className="space-y-1.5"><label className="text-[#CBD5D0] font-medium">Nama Produk Lengkap *</label>
+                <input type="text" required value={editingProduct.NAME} onChange={(e) => setEditingProduct({ ...editingProduct, NAME: e.target.value })}
                   placeholder="Misal: Keripik Tempe Crispy Bonles Original 150g"
-                  className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm p-2 text-white"
-                />
+                  className="w-full min-w-0 bg-[#061B16] border border-[#245442]/60 rounded-md p-2.5 text-white outline-none focus:border-[#4FCB91] focus:ring-1 focus:ring-[#4FCB91]/20" />
               </div>
 
-              <div className="grid grid-cols-3 gap-3">
-                <div className="space-y-1">
-                  <label className="text-[#B4C0BA]">Harga Normal (Rp) *</label>
-                  <input
-                    type="number"
-                    required
-                    value={editingProduct.PRICE}
-                    onChange={(e) => setEditingProduct({ ...editingProduct, PRICE: Number(e.target.value) })}
-                    className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm p-2 text-white font-mono"
-                  />
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="space-y-1.5"><label className="text-[#CBD5D0] font-medium">Harga Normal (Rp) *</label>
+                  <input type="number" required min="0" value={editingProduct.PRICE} onChange={(e) => setEditingProduct({ ...editingProduct, PRICE: Number(e.target.value) })}
+                    className="w-full min-w-0 bg-[#061B16] border border-[#245442]/60 rounded-md p-2.5 text-white font-mono outline-none focus:border-[#4FCB91] focus:ring-1 focus:ring-[#4FCB91]/20" />
                 </div>
-
-                <div className="space-y-1">
-                  <label className="text-[#B4C0BA]">Harga Diskon (Rp)</label>
-                  <input
-                    type="number"
-                    value={editingProduct.DISCOUNT_PRICE}
-                    onChange={(e) => setEditingProduct({ ...editingProduct, DISCOUNT_PRICE: Number(e.target.value) })}
-                    className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm p-2 text-white font-mono"
-                  />
+                <div className="space-y-1.5"><label className="text-[#CBD5D0] font-medium">Harga Diskon (Rp)</label>
+                  <input type="number" min="0" value={editingProduct.DISCOUNT_PRICE} onChange={(e) => setEditingProduct({ ...editingProduct, DISCOUNT_PRICE: Number(e.target.value) })}
+                    className="w-full min-w-0 bg-[#061B16] border border-[#245442]/60 rounded-md p-2.5 text-white font-mono outline-none focus:border-[#4FCB91] focus:ring-1 focus:ring-[#4FCB91]/20" />
                 </div>
-
-                <div className="space-y-1">
-                  <label className="text-[#B4C0BA]">Stok Fisik *</label>
-                  <input
-                    type="number"
-                    required
-                    value={editingProduct.STOCK}
-                    onChange={(e) => setEditingProduct({ ...editingProduct, STOCK: Number(e.target.value) })}
-                    className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm p-2 text-white font-mono"
-                  />
+                <div className="space-y-1.5 rounded-md border border-[#4FCB91]/25 bg-[#0D3429]/60 p-2.5"><label className="text-[#4FCB91] font-bold block">Stok Fisik *</label>
+                  <input type="number" required min="0" value={editingProduct.STOCK} onChange={(e) => setEditingProduct({ ...editingProduct, STOCK: Number(e.target.value) })}
+                    className="w-full min-w-0 bg-[#061B16] border border-[#4FCB91]/40 rounded-md p-2.5 text-white font-mono font-bold outline-none focus:border-[#4FCB91] focus:ring-1 focus:ring-[#4FCB91]/20" />
                 </div>
               </div>
 
-              <div className="space-y-1">
-                <label className="text-[#B4C0BA]">Berat Bersih / Kemasan</label>
-                <input
-                  type="text"
-                  value={editingProduct.WEIGHT}
-                  onChange={(e) => setEditingProduct({ ...editingProduct, WEIGHT: e.target.value })}
-                  placeholder="Misal: 150 Gram (Standar Pouch)"
-                  className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm p-2 text-white"
-                />
+              <div className="space-y-1.5"><label className="text-[#CBD5D0] font-medium">Berat Bersih / Kemasan</label>
+                <input type="text" value={editingProduct.WEIGHT} onChange={(e) => setEditingProduct({ ...editingProduct, WEIGHT: e.target.value })}
+                  placeholder="Misal: 150 Gram (Standar Pouch)" className="w-full min-w-0 bg-[#061B16] border border-[#245442]/60 rounded-md p-2.5 text-white outline-none focus:border-[#4FCB91] focus:ring-1 focus:ring-[#4FCB91]/20" />
               </div>
 
-              {/* PHOTO UPLOAD & URL SECTION FOR PRODUCT */}
-              <div className="p-4 bg-[#071F19] border border-[#245442]/45 rounded-sm space-y-4">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#C9A45C] block">
-                  Foto & Galeri Produk (Upload File atau Salin Link)
-                </span>
+              <div className="p-3 sm:p-4 bg-[#071F19] border border-[#245442]/60 rounded-md space-y-4">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#4FCB91] block">Foto & Galeri Produk</span>
+                <ImageUploadOrUrl label="Foto Utama Produk (Wajib)" value={editingProduct.MAIN_IMAGE_URL} onChange={(url) => setEditingProduct({ ...editingProduct, MAIN_IMAGE_URL: url })} placeholder="https://... atau upload foto kemasan utama" required />
+                <div className="pt-2 border-t border-[#1D4639]/45"><ImageUploadOrUrl label="Galeri Tambahan 1 (Opsional)" value={editingProduct.GALLERY_1_URL || ''} onChange={(url) => setEditingProduct({ ...editingProduct, GALLERY_1_URL: url })} placeholder="https://... atau upload foto tampak samping/isi" /></div>
+                <div className="pt-2 border-t border-[#1D4639]/45"><ImageUploadOrUrl label="Galeri Tambahan 2 (Opsional)" value={editingProduct.GALLERY_2_URL || ''} onChange={(url) => setEditingProduct({ ...editingProduct, GALLERY_2_URL: url })} placeholder="https://... atau upload foto sertifikasi/serving suggestion" /></div>
+              </div>
 
-                {/* 1. MAIN IMAGE */}
-                <ImageUploadOrUrl
-                  label="Foto Utama Produk (Wajib)"
-                  value={editingProduct.MAIN_IMAGE_URL}
-                  onChange={(url) => setEditingProduct({ ...editingProduct, MAIN_IMAGE_URL: url })}
-                  placeholder="https://... atau upload foto kemasan utama"
-                  required
-                />
+              <div className="space-y-1.5"><label className="text-[#CBD5D0] font-medium">Deskripsi Produk</label>
+                <textarea rows={3} value={editingProduct.DESCRIPTION} onChange={(e) => setEditingProduct({ ...editingProduct, DESCRIPTION: e.target.value })}
+                  placeholder="Jelaskan cita rasa, keunggulan gizi, dan keunikan camilan..." className="w-full min-w-0 resize-y bg-[#061B16] border border-[#245442]/60 rounded-md p-2.5 text-white outline-none focus:border-[#4FCB91] focus:ring-1 focus:ring-[#4FCB91]/20" />
+              </div>
 
-                {/* 2. GALLERY 1 */}
-                <div className="pt-2 border-t border-[#1D4639]/45">
-                  <ImageUploadOrUrl
-                    label="Galeri Tambahan 1 (Opsional)"
-                    value={editingProduct.GALLERY_1_URL || ''}
-                    onChange={(url) => setEditingProduct({ ...editingProduct, GALLERY_1_URL: url })}
-                    placeholder="https://... atau upload foto tampak samping/isi"
-                  />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                <div className="space-y-1.5"><label className="text-[#CBD5D0] font-medium">Komposisi Bahan</label>
+                  <input type="text" value={editingProduct.COMPOSITION} onChange={(e) => setEditingProduct({ ...editingProduct, COMPOSITION: e.target.value })} className="w-full min-w-0 bg-[#061B16] border border-[#245442]/60 rounded-md p-2.5 text-white outline-none focus:border-[#4FCB91] focus:ring-1 focus:ring-[#4FCB91]/20" />
                 </div>
-
-                {/* 3. GALLERY 2 */}
-                <div className="pt-2 border-t border-[#1D4639]/45">
-                  <ImageUploadOrUrl
-                    label="Galeri Tambahan 2 (Opsional)"
-                    value={editingProduct.GALLERY_2_URL || ''}
-                    onChange={(url) => setEditingProduct({ ...editingProduct, GALLERY_2_URL: url })}
-                    placeholder="https://... atau upload foto sertifikasi/serving suggestion"
-                  />
+                <div className="space-y-1.5"><label className="text-[#CBD5D0] font-medium">Informasi Gizi / Nutrisi</label>
+                  <input type="text" value={editingProduct.NUTRITION} onChange={(e) => setEditingProduct({ ...editingProduct, NUTRITION: e.target.value })} className="w-full min-w-0 bg-[#061B16] border border-[#245442]/60 rounded-md p-2.5 text-white outline-none focus:border-[#4FCB91] focus:ring-1 focus:ring-[#4FCB91]/20" />
                 </div>
               </div>
 
-              <div className="space-y-1">
-                <label className="text-[#B4C0BA]">Deskripsi Produk</label>
-                <textarea
-                  rows={2}
-                  value={editingProduct.DESCRIPTION}
-                  onChange={(e) => setEditingProduct({ ...editingProduct, DESCRIPTION: e.target.value })}
-                  placeholder="Jelaskan cita rasa, keunggulan gizi, dan keunikan camilan..."
-                  className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm p-2 text-white"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1">
-                  <label className="text-[#B4C0BA]">Komposisi Bahan</label>
-                  <input
-                    type="text"
-                    value={editingProduct.COMPOSITION}
-                    onChange={(e) => setEditingProduct({ ...editingProduct, COMPOSITION: e.target.value })}
-                    className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm p-2 text-white"
-                  />
-                </div>
-
-                <div className="space-y-1">
-                  <label className="text-[#B4C0BA]">Informasi Gizi / Nutrisi</label>
-                  <input
-                    type="text"
-                    value={editingProduct.NUTRITION}
-                    onChange={(e) => setEditingProduct({ ...editingProduct, NUTRITION: e.target.value })}
-                    className="w-full bg-[#061B16] border border-[#245442]/45 rounded-sm p-2 text-white"
-                  />
-                </div>
-              </div>
-
-              <div className="flex items-center gap-6 pt-2">
-                <label className="flex items-center gap-2 cursor-pointer text-xs">
-                  <input
-                    type="checkbox"
-                    checked={editingProduct.ACTIVE}
-                    onChange={(e) => setEditingProduct({ ...editingProduct, ACTIVE: e.target.checked })}
-                    className="rounded-xs accent-[#C9A45C]"
-                  />
-                  <span>Tayang di Katalog Website (ACTIVE)</span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-4 pt-1">
+                <label className="flex items-start gap-2.5 p-3 rounded-md bg-[#061B16] border border-[#245442]/45 cursor-pointer hover:border-[#4FCB91]/50 transition-colors">
+                  <input type="checkbox" checked={editingProduct.ACTIVE} onChange={(e) => setEditingProduct({ ...editingProduct, ACTIVE: e.target.checked })} className="mt-0.5 rounded accent-[#4FCB91]" />
+                  <span className="text-[#D9E3DE] leading-relaxed">Tayang di Katalog Website <span className="text-[#81918A]">(ACTIVE)</span></span>
                 </label>
-
-                <label className="flex items-center gap-2 cursor-pointer text-xs">
-                  <input
-                    type="checkbox"
-                    checked={editingProduct.FEATURED}
-                    onChange={(e) => setEditingProduct({ ...editingProduct, FEATURED: e.target.checked })}
-                    className="rounded-xs accent-[#C9A45C]"
-                  />
-                  <span>Produk Unggulan / Hero (FEATURED)</span>
+                <label className="flex items-start gap-2.5 p-3 rounded-md bg-[#061B16] border border-[#245442]/45 cursor-pointer hover:border-[#C9A45C]/50 transition-colors">
+                  <input type="checkbox" checked={editingProduct.FEATURED} onChange={(e) => setEditingProduct({ ...editingProduct, FEATURED: e.target.checked })} className="mt-0.5 rounded accent-[#C9A45C]" />
+                  <span className="text-[#D9E3DE] leading-relaxed">Produk Unggulan / Hero <span className="text-[#81918A]">(FEATURED)</span></span>
                 </label>
               </div>
 
-              <div className="flex justify-end gap-3 pt-4 border-t border-[#245442]/45">
-                <button
-                  type="button"
-                  onClick={() => setIsProductModalOpen(false)}
-                  className="px-4 py-2 bg-[#061B16] border border-[#245442]/45 rounded-sm text-[#91A19A] hover:text-white cursor-pointer"
-                >
-                  Batal
-                </button>
-                <button
-                  type="submit"
-                  className="px-5 py-2 bg-[#C9A45C] hover:bg-[#D7B66F] text-black font-bold rounded-sm uppercase tracking-wider text-xs flex items-center gap-1.5 cursor-pointer shadow-lg shadow-[#C9A45C]/20"
-                >
-                  <Save className="w-3.5 h-3.5" />
-                  <span>Simpan Produk & Terapkan</span>
+              <div className="sticky bottom-0 -mx-4 sm:-mx-6 px-4 sm:px-6 py-3 bg-[#09271F]/95 backdrop-blur border-t border-[#245442]/60 flex flex-col-reverse sm:flex-row sm:justify-end gap-2.5">
+                <button type="button" onClick={() => { setIsProductModalOpen(false); setEditingProduct(null); }} className="w-full sm:w-auto px-5 py-2.5 bg-[#061B16] border border-[#245442]/60 rounded-md text-[#B4C0BA] hover:text-white hover:border-[#4FCB91]/50 cursor-pointer transition-colors">Batal</button>
+                <button type="submit" className="w-full sm:w-auto justify-center px-5 py-2.5 bg-[#4FCB91] hover:bg-[#63DDA5] text-[#061B16] font-bold rounded-md uppercase tracking-wider text-xs flex items-center gap-1.5 cursor-pointer shadow-lg shadow-[#4FCB91]/15 transition-colors">
+                  <Save className="w-3.5 h-3.5" /><span>Simpan Produk & Terapkan</span>
                 </button>
               </div>
             </form>
