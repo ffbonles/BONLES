@@ -328,31 +328,51 @@ function syncAllDataFromApp(payload) {
   }
   
   // 2. Products
+  // IMPORTANT: Products are reconciled by ID/SKU and are NEVER cleared wholesale.
+  // This prevents a stale browser payload from deleting or overwriting products
+  // that already exist in Google Sheets. Omitted rows are left untouched.
   if (payload.products && Array.isArray(payload.products)) {
     const prodSheet = getSheet(CONFIG.SHEETS.PRODUCTS);
-    if (prodSheet.getLastRow() > 1) {
-      prodSheet.getRange(2, 1, prodSheet.getLastRow() - 1, SCHEMAS[CONFIG.SHEETS.PRODUCTS].length).clearContent();
+    const existing = prodSheet.getDataRange().getValues();
+    const rowById = {};
+    const rowBySku = {};
+    for (let i = 1; i < existing.length; i++) {
+      const id = String(existing[i][0] || '').trim();
+      const sku = String(existing[i][1] || '').trim();
+      if (id) rowById[id] = i + 1;
+      if (sku) rowBySku[sku] = i + 1;
     }
-    const prodRows = payload.products.map(p => [
-      p.ID, p.SKU, p.NAME, p.CATEGORY_ID, p.CATEGORY_NAME,
-      p.CATEGORY_FOLDER_ID || "", p.PRODUCT_FOLDER_ID || "",
-      parseNumber(p.PRICE, 0), parseNumber(p.DISCOUNT_PRICE, 0),
-      p.WEIGHT || "", parseNumber(p.STOCK, 0),
-      p.DESCRIPTION || "", p.COMPOSITION || "", p.NUTRITION || "",
-      p.MAIN_IMAGE_FILE_ID || "", p.MAIN_IMAGE_URL || "",
-      p.GALLERY_1_FILE_ID || "", p.GALLERY_1_URL || "",
-      p.GALLERY_2_FILE_ID || "", p.GALLERY_2_URL || "",
-      p.GALLERY_3_FILE_ID || "", p.GALLERY_3_URL || "",
-      p.FEATURED === true || p.FEATURED === "TRUE" ? "TRUE" : "FALSE",
-      p.ACTIVE === true || p.ACTIVE === "TRUE" ? "TRUE" : "FALSE",
-      p.CREATED_AT || new Date().toISOString(),
-      p.UPDATED_AT || new Date().toISOString(),
-      String(p.DATA_TYPE || "PRODUCTION").toUpperCase() === "SAMPLE" ? "SAMPLE" : "PRODUCTION"
-    ]);
-    if (prodRows.length > 0) {
-      prodSheet.getRange(2, 1, prodRows.length, SCHEMAS[CONFIG.SHEETS.PRODUCTS].length).setValues(prodRows);
-      result.productsSynced = prodRows.length;
-    }
+
+    payload.products.forEach(function(p) {
+      const now = new Date().toISOString();
+      const id = String(p.ID || '').trim();
+      const sku = String(p.SKU || '').trim();
+      if (!id && !sku) return;
+
+      const rowData = [
+        id || ("PRD-" + Utilities.formatString("%04d", Math.max(1, prodSheet.getLastRow()))),
+        sku, p.NAME || "", p.CATEGORY_ID || "CAT-001", p.CATEGORY_NAME || "Snack",
+        p.CATEGORY_FOLDER_ID || "", p.PRODUCT_FOLDER_ID || "",
+        parseNumber(p.PRICE, 0), parseNumber(p.DISCOUNT_PRICE, 0), p.WEIGHT || "",
+        parseNumber(p.STOCK, 0), p.DESCRIPTION || "", p.COMPOSITION || "", p.NUTRITION || "",
+        p.MAIN_IMAGE_FILE_ID || "", p.MAIN_IMAGE_URL || "",
+        p.GALLERY_1_FILE_ID || "", p.GALLERY_1_URL || "",
+        p.GALLERY_2_FILE_ID || "", p.GALLERY_2_URL || "",
+        p.GALLERY_3_FILE_ID || "", p.GALLERY_3_URL || "",
+        p.FEATURED === true || p.FEATURED === "TRUE" ? "TRUE" : "FALSE",
+        p.ACTIVE === true || p.ACTIVE === "TRUE" ? "TRUE" : "FALSE",
+        p.CREATED_AT || now, p.UPDATED_AT || now,
+        String(p.DATA_TYPE || "PRODUCTION").toUpperCase() === "SAMPLE" ? "SAMPLE" : "PRODUCTION"
+      ];
+
+      const targetRow = rowById[id] || rowBySku[sku];
+      if (targetRow) {
+        prodSheet.getRange(targetRow, 1, 1, rowData.length).setValues([rowData]);
+      } else {
+        prodSheet.appendRow(rowData);
+      }
+      result.productsSynced++;
+    });
   }
   
   // 3. Banners
@@ -648,6 +668,29 @@ function saveProductToSheet(prod, imageBase64) {
   }
   
   return { ...prod, ID: id, MAIN_IMAGE_URL: mainImgUrl, MAIN_IMAGE_FILE_ID: mainImgId, UPDATED_AT: now, DATA_TYPE: String(prod.DATA_TYPE || "PRODUCTION").toUpperCase() === "SAMPLE" ? "SAMPLE" : "PRODUCTION" };
+}
+
+function deleteProductFromSheet(productIdOrSku) {
+  setupDatabase();
+  const key = String(productIdOrSku || '').trim();
+  if (!key) throw new Error("ID/SKU produk wajib diisi.");
+
+  const sheet = getSheet(CONFIG.SHEETS.PRODUCTS);
+  if (!sheet || sheet.getLastRow() <= 1) return { deleted: false, product: null };
+
+  const data = sheet.getDataRange().getValues();
+  for (let i = 1; i < data.length; i++) {
+    const id = String(data[i][0] || '').trim();
+    const sku = String(data[i][1] || '').trim();
+    if (id === key || sku === key) {
+      const deletedProduct = { ID: id, SKU: sku, NAME: String(data[i][2] || '') };
+      sheet.deleteRow(i + 1);
+      logSystemEvent("AUDIT", "DELETE_PRODUCT", "ADMIN", sku || id, "Produk " + deletedProduct.NAME + " dihapus permanen dari Spreadsheet", "SUCCESS");
+      return { deleted: true, product: deletedProduct };
+    }
+  }
+
+  return { deleted: false, product: null };
 }
 
 function deleteSampleProductsFromSheet() {
@@ -1245,6 +1288,9 @@ function doPost(e) {
       case 'deleteSampleProducts':
         requireAdmin(postData.token);
         return jsonResponse(deleteSampleProductsFromSheet(), true, 'Data SAMPLE berhasil dihapus dari Spreadsheet');
+      case 'deleteProduct':
+        requireAdmin(postData.token);
+        return jsonResponse(deleteProductFromSheet(postData.productId || postData.sku), true, 'Produk berhasil dihapus permanen dari Spreadsheet');
       case 'saveCategory':
         requireAdmin(postData.token);
         setupDatabase();
