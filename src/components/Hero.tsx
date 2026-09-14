@@ -86,9 +86,12 @@ export const Hero: React.FC<HeroProps> = ({
       className="
         relative
         overflow-hidden
-        bg-gradient-to-br from-[#7A0F18] via-[#E64A19] to-[#FFC107]
+        bg-gradient-to-br
+        from-[#6E1017]
+        via-[#B91C1C]
+        to-[#F59E0B]
         border-b
-        border-[#FFD54F]/50
+        border-[#FCD34D]/50
       "
     >
       {/* ======================================================
@@ -98,12 +101,12 @@ export const Hero: React.FC<HeroProps> = ({
       <div
         className="
           absolute
-          -top-32
-          -right-32
-          w-[420px]
-          h-[420px]
+          -top-40
+          -right-40
+          w-[500px]
+          h-[500px]
           rounded-full
-          bg-[#FFD54F]/20
+          bg-[#FDE047]/20
           blur-3xl
           pointer-events-none
         "
@@ -112,18 +115,32 @@ export const Hero: React.FC<HeroProps> = ({
       <div
         className="
           absolute
-          -bottom-40
-          -left-40
-          w-[420px]
-          h-[420px]
+          top-[35%]
+          -left-48
+          w-[480px]
+          h-[480px]
           rounded-full
-          bg-[#FF7043]/20
+          bg-[#EA580C]/30
           blur-3xl
           pointer-events-none
         "
       />
 
-      {/* Subtle vertical editorial line */}
+      <div
+        className="
+          absolute
+          bottom-[-220px]
+          right-[18%]
+          w-[420px]
+          h-[420px]
+          rounded-full
+          bg-[#991B1B]/30
+          blur-3xl
+          pointer-events-none
+        "
+      />
+
+      {/* Subtle editorial grid lines */}
       <div
         className="
           hidden
@@ -133,7 +150,21 @@ export const Hero: React.FC<HeroProps> = ({
           top-0
           bottom-0
           w-px
-          bg-white/20
+          bg-white/15
+          pointer-events-none
+        "
+      />
+
+      <div
+        className="
+          hidden
+          lg:block
+          absolute
+          right-[8%]
+          top-0
+          bottom-0
+          w-px
+          bg-white/10
           pointer-events-none
         "
       />
@@ -147,10 +178,10 @@ export const Hero: React.FC<HeroProps> = ({
           bonles-container
           relative
           z-10
-          py-12
-          sm:py-16
-          lg:py-20
-          xl:py-24
+          py-10
+          sm:py-14
+          lg:py-18
+          xl:py-22
         "
       >
         <div
@@ -158,9 +189,9 @@ export const Hero: React.FC<HeroProps> = ({
             grid
             grid-cols-1
             lg:grid-cols-12
-            gap-10
-            lg:gap-14
-            xl:gap-20
+            gap-9
+            lg:gap-12
+            xl:gap-18
             items-center
           "
         >
@@ -189,9 +220,9 @@ export const Hero: React.FC<HeroProps> = ({
               <span
                 className="
                   w-8
-                  sm:w-10
-                  h-px
-                  bg-[#FFB300]
+                  sm:w-12
+                  h-[2px]
+                  bg-[#FCD34D]
                 "
               />
 
@@ -202,7 +233,7 @@ export const Hero: React.FC<HeroProps> = ({
                   font-bold
                   uppercase
                   tracking-[0.22em]
-                  text-[#E65100]
+                  text-[#FFF7ED]
                 "
               >
                 {heroBadge}
@@ -214,13 +245,13 @@ export const Hero: React.FC<HeroProps> = ({
               className="
                 font-display
                 text-white
-                text-4xl
+                text-[2.45rem]
                 sm:text-5xl
                 lg:text-6xl
                 xl:text-[68px]
                 font-semibold
-                tracking-[-0.035em]
-                leading-[1.02]
+                tracking-[-0.04em]
+                leading-[1.01]
                 max-w-3xl
               "
             >
@@ -241,17 +272,21 @@ export const Hero: React.FC<HeroProps> = ({
                 className="
                   w-14
                   sm:w-20
-                  h-[2px]
-                  bg-[#FFB300]
+                  h-[3px]
+                  rounded-full
+                  bg-gradient-to-r
+                  from-[#FCD34D]
+                  to-[#F59E0B]
                 "
               />
 
               <span
                 className="
-                  w-1.5
-                  h-1.5
+                  w-2
+                  h-2
                   rounded-full
-                  bg-[#FFD54F]
+                  bg-[#FDE047]
+                  shadow-[0_0_12px_rgba(253,224,71,0.7)]
                 "
               />
             </div>
@@ -265,7 +300,7 @@ export const Hero: React.FC<HeroProps> = ({
                 sm:text-base
                 lg:text-[17px]
                 leading-[1.8]
-                text-white/90
+                text-white/88
                 max-w-2xl
               "
             >
@@ -295,38 +330,45 @@ export const Hero: React.FC<HeroProps> = ({
                   sm:block
                   items-center
                   gap-3
-                  p-3
+                  p-3.5
                   sm:p-4
-                  bg-white/12
+                  rounded-xl
+                  bg-white/[0.10]
                   backdrop-blur-md
                   border
                   border-white/20
-                  hover:border-[#FFD54F]
-                  transition-colors
+                  hover:bg-white/[0.16]
+                  hover:border-[#FCD34D]/80
+                  transition-all
+                  duration-300
                 "
               >
                 <div
                   className="
-                    w-8
-                    h-8
-                    rounded-full
-                    bg-white/15
+                    w-9
+                    h-9
+                    rounded-lg
+                    bg-[#F59E0B]/20
+                    border
+                    border-[#FCD34D]/30
                     flex
                     items-center
                     justify-center
                     shrink-0
                     mb-0
                     sm:mb-3
-                    group-hover:bg-white
-                    transition-colors
+                    group-hover:bg-[#FCD34D]
+                    transition-all
+                    duration-300
                   "
                 >
                   <Flame
                     className="
-                      w-3.5
-                      h-3.5
-                      text-[#FFD54F]
-                      group-hover:text-[#E65100]
+                      w-4
+                      h-4
+                      text-[#FDE047]
+                      group-hover:text-[#991B1B]
+                      transition-colors
                     "
                   />
                 </div>
@@ -348,7 +390,7 @@ export const Hero: React.FC<HeroProps> = ({
                       mt-0.5
                       text-[9px]
                       sm:text-[10px]
-                      text-white/70
+                      text-white/65
                     "
                   >
                     Fish-based snack
@@ -364,38 +406,45 @@ export const Hero: React.FC<HeroProps> = ({
                   sm:block
                   items-center
                   gap-3
-                  p-3
+                  p-3.5
                   sm:p-4
-                  bg-white/12
+                  rounded-xl
+                  bg-white/[0.10]
                   backdrop-blur-md
                   border
                   border-white/20
-                  hover:border-[#FFD54F]
-                  transition-colors
+                  hover:bg-white/[0.16]
+                  hover:border-[#FCD34D]/80
+                  transition-all
+                  duration-300
                 "
               >
                 <div
                   className="
-                    w-8
-                    h-8
-                    rounded-full
-                    bg-white/15
+                    w-9
+                    h-9
+                    rounded-lg
+                    bg-[#F59E0B]/20
+                    border
+                    border-[#FCD34D]/30
                     flex
                     items-center
                     justify-center
                     shrink-0
                     mb-0
                     sm:mb-3
-                    group-hover:bg-white
-                    transition-colors
+                    group-hover:bg-[#FCD34D]
+                    transition-all
+                    duration-300
                   "
                 >
                   <PackageCheck
                     className="
-                      w-3.5
-                      h-3.5
-                      text-[#FFD54F]
-                      group-hover:text-[#E65100]
+                      w-4
+                      h-4
+                      text-[#FDE047]
+                      group-hover:text-[#991B1B]
+                      transition-colors
                     "
                   />
                 </div>
@@ -417,7 +466,7 @@ export const Hero: React.FC<HeroProps> = ({
                       mt-0.5
                       text-[9px]
                       sm:text-[10px]
-                      text-white/70
+                      text-white/65
                     "
                   >
                     Ready to enjoy
@@ -433,38 +482,45 @@ export const Hero: React.FC<HeroProps> = ({
                   sm:block
                   items-center
                   gap-3
-                  p-3
+                  p-3.5
                   sm:p-4
-                  bg-white/12
+                  rounded-xl
+                  bg-white/[0.10]
                   backdrop-blur-md
                   border
                   border-white/20
-                  hover:border-[#FFD54F]
-                  transition-colors
+                  hover:bg-white/[0.16]
+                  hover:border-[#FCD34D]/80
+                  transition-all
+                  duration-300
                 "
               >
                 <div
                   className="
-                    w-8
-                    h-8
-                    rounded-full
-                    bg-white/15
+                    w-9
+                    h-9
+                    rounded-lg
+                    bg-[#F59E0B]/20
+                    border
+                    border-[#FCD34D]/30
                     flex
                     items-center
                     justify-center
                     shrink-0
                     mb-0
                     sm:mb-3
-                    group-hover:bg-white
-                    transition-colors
+                    group-hover:bg-[#FCD34D]
+                    transition-all
+                    duration-300
                   "
                 >
                   <Award
                     className="
-                      w-3.5
-                      h-3.5
-                      text-[#FFD54F]
-                      group-hover:text-[#E65100]
+                      w-4
+                      h-4
+                      text-[#FDE047]
+                      group-hover:text-[#991B1B]
+                      transition-colors
                     "
                   />
                 </div>
@@ -486,7 +542,7 @@ export const Hero: React.FC<HeroProps> = ({
                       mt-0.5
                       text-[9px]
                       sm:text-[10px]
-                      text-white/70
+                      text-white/65
                     "
                   >
                     Authentic local story
@@ -515,15 +571,27 @@ export const Hero: React.FC<HeroProps> = ({
                 onClick={onExploreCatalog}
                 id="hero-btn-catalog"
                 className="
-                  bonles-btn
-                  bonles-btn-primary
-                  min-h-[48px]
-                  sm:min-h-[52px]
+                  min-h-[50px]
+                  sm:min-h-[54px]
+                  inline-flex
+                  items-center
+                  justify-center
+                  gap-2.5
+                  rounded-xl
+                  bg-[#FFF7ED]
                   px-6
                   sm:px-7
                   text-[10px]
                   sm:text-[11px]
+                  font-bold
                   tracking-[0.14em]
+                  text-[#991B1B]
+                  shadow-[0_10px_30px_rgba(0,0,0,0.15)]
+                  hover:bg-[#FDE047]
+                  hover:text-[#7F1D1D]
+                  hover:-translate-y-0.5
+                  transition-all
+                  duration-300
                 "
               >
                 <ShoppingBag className="w-4 h-4" />
@@ -539,15 +607,29 @@ export const Hero: React.FC<HeroProps> = ({
                 onClick={onFeaturedClick}
                 id="hero-btn-featured"
                 className="
-                  bonles-btn
-                  bonles-btn-outline
-                  min-h-[48px]
-                  sm:min-h-[52px]
+                  min-h-[50px]
+                  sm:min-h-[54px]
+                  inline-flex
+                  items-center
+                  justify-center
+                  gap-2.5
+                  rounded-xl
+                  border
+                  border-white/35
+                  bg-white/[0.08]
+                  backdrop-blur-md
                   px-6
                   sm:px-7
                   text-[10px]
                   sm:text-[11px]
+                  font-bold
                   tracking-[0.14em]
+                  text-white
+                  hover:bg-white
+                  hover:text-[#991B1B]
+                  hover:border-white
+                  transition-all
+                  duration-300
                 "
               >
                 <Sparkles className="w-3.5 h-3.5" />
@@ -563,17 +645,18 @@ export const Hero: React.FC<HeroProps> = ({
               className="
                 mt-5
                 flex
+                flex-wrap
                 items-center
                 gap-2
                 text-[10px]
-                text-[#7A6858]
+                text-white/65
               "
             >
               <MessageCircle
                 className="
                   w-3.5
                   h-3.5
-                  text-[#2E7D32]
+                  text-[#86EFAC]
                 "
               />
 
@@ -587,8 +670,8 @@ export const Hero: React.FC<HeroProps> = ({
                 rel="noopener noreferrer"
                 className="
                   font-bold
-                  text-[#D84315]
-                  hover:text-[#E65100]
+                  text-[#FDE047]
+                  hover:text-white
                   transition-colors
                 "
               >
@@ -616,7 +699,7 @@ export const Hero: React.FC<HeroProps> = ({
                 max-w-[560px]
               "
             >
-              {/* Decorative gold frame */}
+              {/* Decorative yellow frame */}
               <div
                 className="
                   absolute
@@ -628,9 +711,9 @@ export const Hero: React.FC<HeroProps> = ({
                   h-20
                   sm:w-28
                   sm:h-28
-                  border-t
-                  border-r
-                  border-[#FFB300]/60
+                  border-t-2
+                  border-r-2
+                  border-[#FCD34D]/70
                   pointer-events-none
                 "
               />
@@ -646,9 +729,9 @@ export const Hero: React.FC<HeroProps> = ({
                   h-20
                   sm:w-28
                   sm:h-28
-                  border-b
-                  border-l
-                  border-[#FFB300]/60
+                  border-b-2
+                  border-l-2
+                  border-[#FCD34D]/70
                   pointer-events-none
                 "
               />
@@ -658,9 +741,11 @@ export const Hero: React.FC<HeroProps> = ({
                 className="
                   relative
                   overflow-hidden
-                  bg-[#FFE0B2]
+                  rounded-2xl
+                  bg-[#7F1D1D]
                   aspect-[4/5]
                   sm:aspect-[5/6]
+                  shadow-[0_24px_70px_rgba(0,0,0,0.28)]
                 "
               >
                 <img
@@ -686,9 +771,23 @@ export const Hero: React.FC<HeroProps> = ({
                     absolute
                     inset-0
                     bg-gradient-to-t
-                    from-[#6E1017]/90
-                    via-[#6E1017]/10
+                    from-[#450A0A]/95
+                    via-[#7F1D1D]/15
                     to-transparent
+                  "
+                />
+
+                {/* Warm glow */}
+                <div
+                  className="
+                    absolute
+                    inset-x-0
+                    bottom-0
+                    h-40
+                    bg-gradient-to-t
+                    from-[#EA580C]/25
+                    to-transparent
+                    pointer-events-none
                   "
                 />
 
@@ -712,7 +811,8 @@ export const Hero: React.FC<HeroProps> = ({
                       inline-flex
                       items-center
                       gap-2
-                      bg-[#FFF8F0]/95
+                      rounded-lg
+                      bg-[#FFF7ED]/95
                       backdrop-blur-sm
                       px-3
                       py-1.5
@@ -720,7 +820,7 @@ export const Hero: React.FC<HeroProps> = ({
                       sm:text-[9px]
                       tracking-[0.16em]
                       font-bold
-                      text-[#D84315]
+                      text-[#991B1B]
                     "
                   >
                     <span
@@ -728,7 +828,7 @@ export const Hero: React.FC<HeroProps> = ({
                         w-1.5
                         h-1.5
                         rounded-full
-                        bg-[#FFD54F]
+                        bg-[#F59E0B]
                       "
                     />
 
@@ -741,7 +841,8 @@ export const Hero: React.FC<HeroProps> = ({
                       sm:inline-flex
                       items-center
                       gap-1.5
-                      bg-[#6E1017]/80
+                      rounded-lg
+                      bg-[#450A0A]/75
                       backdrop-blur-sm
                       border
                       border-white/15
@@ -750,10 +851,15 @@ export const Hero: React.FC<HeroProps> = ({
                       text-[8px]
                       tracking-[0.14em]
                       font-bold
-                      text-[#FFF3E0]
+                      text-[#FFF7ED]
                     "
                   >
-                    <Sparkles className="w-3 h-3 text-[#FFE082]" />
+                    <Sparkles
+                      className="
+                        w-3 h-3
+                        text-[#FDE047]
+                      "
+                    />
 
                     SIGNATURE
                   </span>
@@ -781,9 +887,9 @@ export const Hero: React.FC<HeroProps> = ({
                   >
                     <span
                       className="
-                        h-px
+                        h-[2px]
                         w-8
-                        bg-[#FFE082]
+                        bg-[#FCD34D]
                       "
                     />
 
@@ -794,7 +900,7 @@ export const Hero: React.FC<HeroProps> = ({
                         tracking-[0.18em]
                         uppercase
                         font-bold
-                        text-[#FFE082]
+                        text-[#FDE047]
                       "
                     >
                       High Protein Fish Crunch
@@ -820,7 +926,7 @@ export const Hero: React.FC<HeroProps> = ({
                       mt-1
                       text-[10px]
                       sm:text-xs
-                      text-[#FFE0B2]
+                      text-[#FED7AA]
                       tracking-wide
                     "
                   >
@@ -840,10 +946,13 @@ export const Hero: React.FC<HeroProps> = ({
                   grid
                   grid-cols-3
                   divide-x
-                  divide-[#FFD1A8]
+                  divide-[#F5CBA7]
                   border
-                  border-[#FFD1A8]
-                  bg-[#FFF3E0]
+                  border-[#F5CBA7]
+                  rounded-xl
+                  overflow-hidden
+                  bg-[#FFF7ED]
+                  shadow-[0_10px_30px_rgba(127,29,29,0.12)]
                 "
               >
                 <div
@@ -859,7 +968,7 @@ export const Hero: React.FC<HeroProps> = ({
                     className="
                       w-3.5
                       h-3.5
-                      text-[#2E7D32]
+                      text-[#DC2626]
                       mx-auto
                       mb-1.5
                     "
@@ -870,7 +979,7 @@ export const Hero: React.FC<HeroProps> = ({
                       text-[9px]
                       sm:text-[10px]
                       font-bold
-                      text-[#3F3026]
+                      text-[#4A2520]
                     "
                   >
                     Tanpa Tulang Tengah
@@ -890,7 +999,7 @@ export const Hero: React.FC<HeroProps> = ({
                     className="
                       w-3.5
                       h-3.5
-                      text-[#E65100]
+                      text-[#EA580C]
                       mx-auto
                       mb-1.5
                     "
@@ -901,7 +1010,7 @@ export const Hero: React.FC<HeroProps> = ({
                       text-[9px]
                       sm:text-[10px]
                       font-bold
-                      text-[#3F3026]
+                      text-[#4A2520]
                     "
                   >
                     Kaya Protein
@@ -921,7 +1030,7 @@ export const Hero: React.FC<HeroProps> = ({
                     className="
                       w-3.5
                       h-3.5
-                      text-[#2E7D32]
+                      text-[#D97706]
                       mx-auto
                       mb-1.5
                     "
@@ -932,7 +1041,7 @@ export const Hero: React.FC<HeroProps> = ({
                       text-[9px]
                       sm:text-[10px]
                       font-bold
-                      text-[#3F3026]
+                      text-[#4A2520]
                     "
                   >
                     Praktis
@@ -956,7 +1065,7 @@ export const Hero: React.FC<HeroProps> = ({
                     sm:text-[9px]
                     uppercase
                     tracking-[0.16em]
-                    text-[#8B735B]
+                    text-[#FFE4C7]
                   "
                 >
                   A local ingredient.
@@ -966,7 +1075,7 @@ export const Hero: React.FC<HeroProps> = ({
                   className="
                     flex-1
                     h-px
-                    bg-[#FFD1A8]
+                    bg-[#FCD34D]/40
                   "
                 />
 
@@ -976,7 +1085,7 @@ export const Hero: React.FC<HeroProps> = ({
                     sm:text-[9px]
                     uppercase
                     tracking-[0.16em]
-                    text-[#8B735B]
+                    text-[#FFE4C7]
                   "
                 >
                   A modern experience.
@@ -996,8 +1105,9 @@ export const Hero: React.FC<HeroProps> = ({
           relative
           z-10
           border-t
-          border-[#FFD1A8]/60
-          bg-black/10
+          border-white/15
+          bg-[#450A0A]/20
+          backdrop-blur-sm
         "
       >
         <div
@@ -1021,7 +1131,7 @@ export const Hero: React.FC<HeroProps> = ({
               text-[10px]
               sm:text-xs
               tracking-[0.16em]
-              text-[#FFF3E0]
+              text-[#FFF7ED]
             "
           >
             BONLES FOOD NUSANTARA
@@ -1031,10 +1141,10 @@ export const Hero: React.FC<HeroProps> = ({
             className="
               hidden
               sm:block
-              w-1
-              h-1
+              w-1.5
+              h-1.5
               rounded-full
-              bg-[#FFB300]
+              bg-[#FCD34D]
             "
           />
 
@@ -1043,7 +1153,7 @@ export const Hero: React.FC<HeroProps> = ({
               text-[9px]
               sm:text-[10px]
               tracking-wide
-              text-white/75
+              text-white/70
             "
           >
             Dari Borneo, untuk Indonesia dan dunia.
@@ -1053,4 +1163,3 @@ export const Hero: React.FC<HeroProps> = ({
     </section>
   );
 };
-
