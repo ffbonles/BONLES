@@ -10,8 +10,8 @@ import { BONLES_IMAGES } from '../assets/productImages';
 import { store } from '../services/store';
 
 export const AboutSection: React.FC = () => {
-const [settings, setSettings] = useState<Record<string, string>>(() =>
-store.getSettingsMap()
+const [settings, setSettings] = useState<Record<string, string>>(
+() => store.getSettingsMap()
 );
 
 useEffect(() => {
@@ -34,14 +34,12 @@ settings['ABOUT_DESCRIPTION'] ||
 'Berawal dari kekayaan hasil perairan Kalimantan Timur, kami ingin membuktikan bahwa pangan lokal Borneo dapat diolah menjadi camilan modern yang memiliki nilai dan cerita.';
 
 const aboutImage =
-settings['ABOUT_IMAGE_URL'] ||
-BONLES_IMAGES.heroBanner;
+settings['ABOUT_IMAGE_URL'] || BONLES_IMAGES.heroBanner;
 
 return ( <section
    id="about"
    className="relative overflow-hidden bg-[var(--color-cream)] py-20 sm:py-24 lg:py-32"
- >
-{/* Decorative background */} <div
+ > <div
      aria-hidden="true"
      className="pointer-events-none absolute -right-32 top-16 h-80 w-80 rounded-full border border-[var(--color-gold)]/15"
    />
@@ -54,9 +52,6 @@ return ( <section
 
   <div className="bonles-container relative">
     <div className="grid items-center gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
-      {/* =====================================================
-          LEFT — VISUAL
-      ====================================================== */}
       <motion.div
         initial={{ opacity: 0, x: -30 }}
         whileInView={{ opacity: 1, x: 0 }}
@@ -65,7 +60,6 @@ return ( <section
         className="relative"
       >
         <div className="relative mx-auto max-w-xl">
-          {/* Main frame */}
           <div className="relative rounded-[2rem] bg-[var(--color-green-deep)] p-3 shadow-[var(--shadow-premium)]">
             <div className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem] bg-[var(--color-green)]">
               <img
@@ -76,10 +70,8 @@ return ( <section
                 loading="lazy"
               />
 
-              {/* Image overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-green-deep)]/80 via-transparent to-transparent" />
 
-              {/* Brand label */}
               <div className="absolute left-6 right-6 top-6 flex items-center justify-between">
                 <span className="rounded-full border border-white/25 bg-white/10 px-3 py-1.5 font-brand text-[9px] uppercase tracking-[0.2em] text-white backdrop-blur-md">
                   Borneo Crafted
@@ -90,7 +82,6 @@ return ( <section
                 </span>
               </div>
 
-              {/* Bottom story */}
               <div className="absolute bottom-6 left-6 right-6">
                 <p className="font-brand text-[9px] uppercase tracking-[0.25em] text-[var(--color-gold-light)]">
                   Local Heritage
@@ -106,7 +97,6 @@ return ( <section
             </div>
           </div>
 
-          {/* Gold corner decorations */}
           <div
             aria-hidden="true"
             className="absolute -bottom-5 -left-5 h-24 w-24 border-b border-l border-[var(--color-gold)]/60"
@@ -117,7 +107,6 @@ return ( <section
             className="absolute -right-5 -top-5 h-24 w-24 border-r border-t border-[var(--color-gold)]/60"
           />
 
-          {/* Floating number */}
           <div className="absolute -bottom-7 right-6 hidden h-20 w-20 items-center justify-center rounded-full border border-[var(--color-gold)]/40 bg-[var(--color-cream)] shadow-lg sm:flex">
             <span className="font-display text-2xl text-[var(--color-green-deep)]">
               01
@@ -126,9 +115,6 @@ return ( <section
         </div>
       </motion.div>
 
-      {/* =====================================================
-          RIGHT — STORY
-      ====================================================== */}
       <motion.div
         initial={{ opacity: 0, x: 30 }}
         whileInView={{ opacity: 1, x: 0 }}
@@ -140,13 +126,11 @@ return ( <section
         }}
         className="max-w-2xl"
       >
-        {/* Eyebrow */}
         <div className="bonles-eyebrow mb-5">
           <span className="h-px w-8 bg-[var(--color-gold)]" />
           Our Story
         </div>
 
-        {/* Heading */}
         <h2 className="bonles-heading max-w-2xl text-4xl leading-[1.08] text-[var(--color-green-deep)] sm:text-5xl lg:text-6xl">
           {aboutTitle.includes(',') ? (
             <>
@@ -160,7 +144,6 @@ return ( <section
           )}
         </h2>
 
-        {/* Story paragraphs */}
         <div className="mt-8 space-y-5">
           <p className="bonles-copy text-base leading-8 sm:text-lg">
             {aboutDescription}
@@ -179,15 +162,10 @@ return ( <section
           </p>
         </div>
 
-        {/* Divider */}
         <div className="my-9 h-px w-full bg-[var(--color-border)]" />
 
-        {/* =====================================================
-            STORY PILLARS
-        ====================================================== */}
         <div className="grid gap-6 sm:grid-cols-3">
-          {/* Local */}
-          <div className="group">
+          <div>
             <div className="flex items-center gap-3">
               <span className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--color-gold)]/40 bg-[var(--color-cream-soft)] text-[var(--color-gold-dark)]">
                 <Fish size={16} />
@@ -207,8 +185,7 @@ return ( <section
             </p>
           </div>
 
-          {/* Modern */}
-          <div className="group">
+          <div>
             <div className="flex items-center gap-3">
               <span className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--color-gold)]/40 bg-[var(--color-cream-soft)] text-[var(--color-gold-dark)]">
                 <Sparkles size={16} />
@@ -228,8 +205,7 @@ return ( <section
             </p>
           </div>
 
-          {/* Premium */}
-          <div className="group">
+          <div>
             <div className="flex items-center gap-3">
               <span className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--color-gold)]/40 bg-[var(--color-cream-soft)] text-[var(--color-gold-dark)]">
                 <PackageCheck size={16} />
@@ -250,7 +226,6 @@ return ( <section
           </div>
         </div>
 
-        {/* CTA */}
         <div className="mt-10">
           <a
             href="#our-story"
@@ -271,9 +246,6 @@ return ( <section
       </motion.div>
     </div>
 
-    {/* =====================================================
-        BOTTOM BRAND STATEMENT
-    ====================================================== */}
     <motion.div
       initial={{ opacity: 0, y: 25 }}
       whileInView={{ opacity: 1, y: 0 }}
