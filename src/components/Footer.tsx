@@ -51,308 +51,517 @@ export const Footer: React.FC<FooterProps> = ({
   const cleanWaNumber = waNumber.replace(/\D/g, '');
 
   const formattedWaNumber = cleanWaNumber
-    ? `+${cleanWaNumber}`
-    : waNumber;
+    ? `+${cleanWaNumber.startsWith('62') ? cleanWaNumber : `62${cleanWaNumber.replace(/^0/, '')}`}`
+    : '';
 
-  const whatsappUrl = `https://wa.me/${cleanWaNumber}`;
+  const whatsappUrl = cleanWaNumber
+    ? `https://wa.me/${
+        cleanWaNumber.startsWith('62')
+          ? cleanWaNumber
+          : `62${cleanWaNumber.replace(/^0/, '')}`
+      }`
+    : '#';
 
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative overflow-hidden bg-[#100406] text-[#F5EFE6] border-t border-[#D82824]/20">
+    <footer
+      className="
+        relative
+        overflow-hidden
+        border-t
+        border-[#C9A45C]/20
+        bg-gradient-to-b
+        from-[#09271F]
+        via-[#0B3027]
+        to-[#061B16]
+        text-[#FCFAF5]
+      "
+    >
+      {/* Decorative background */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div
+          className="
+            absolute
+            -right-32
+            -top-32
+            h-80
+            w-80
+            rounded-full
+            bg-[#16805F]/10
+            blur-3xl
+          "
+        />
 
-      {/* Decorative glow */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-32 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-[#D82824]/5 blur-3xl"
-      />
+        <div
+          className="
+            absolute
+            -bottom-40
+            -left-32
+            h-96
+            w-96
+            rounded-full
+            bg-[#B83B32]/5
+            blur-3xl
+          "
+        />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+          className="
+            absolute
+            left-1/2
+            top-1/2
+            h-72
+            w-72
+            -translate-x-1/2
+            -translate-y-1/2
+            rounded-full
+            bg-[#16805F]/5
+            blur-3xl
+          "
+        />
+      </div>
 
-        {/* Main Footer */}
-        <div className="py-16 lg:py-20">
+      {/* Main Footer */}
+      <div className="relative mx-auto max-w-7xl px-5 py-14 sm:px-8 lg:px-10">
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
 
-          <div className="grid grid-cols-1 gap-12 md:grid-cols-12 lg:gap-16">
-
-            {/* =========================================================
-                BRAND
-            ========================================================== */}
-            <div className="md:col-span-5">
-
-              <div className="mb-5">
+          {/* BRAND */}
+          <div className="lg:col-span-5">
+            <div className="max-w-md">
+              <div className="mb-6">
                 <BonlesLogo
-                  size="md"
                   variant="horizontal"
+                  size="lg"
+                  lightBg={false}
                 />
               </div>
 
-              <p className="max-w-md text-sm leading-7 text-[#A89886]">
-                {tagline}. Komitmen kami menghadirkan camilan berbahan
-                lokal pilihan dengan cita rasa khas Nusantara, dikemas
-                secara higienis dan modern untuk menemani setiap momen.
+              <p className="max-w-md text-sm leading-7 text-[#CFCFC7] sm:text-[15px]">
+                {tagline}
+              </p>
+
+              <p className="mt-4 max-w-lg text-sm leading-7 text-[#AEB8B2]">
+                Menghadirkan cita rasa lokal Borneo dalam camilan modern
+                yang renyah, praktis, dan memiliki cerita.
               </p>
 
               {/* Quality highlights */}
-              <div className="mt-7 space-y-3">
-
-                <div className="flex items-start gap-3">
-                  <CheckCircle2
-                    className="mt-0.5 h-4 w-4 shrink-0 text-[#00D222]"
-                    aria-hidden="true"
-                  />
-
-                  <span className="text-xs leading-5 text-[#DCD1C0]">
-                    Standing pouch zipper kedap udara & higienis
-                  </span>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <CheckCircle2
-                    className="mt-0.5 h-4 w-4 shrink-0 text-[#00D222]"
-                    aria-hidden="true"
-                  />
-
-                  <span className="text-xs leading-5 text-[#DCD1C0]">
-                    Bahan baku pilihan kaya nutrisi & tinggi protein alami
-                  </span>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <CheckCircle2
-                    className="mt-0.5 h-4 w-4 shrink-0 text-[#00D222]"
-                    aria-hidden="true"
-                  />
-
-                  <span className="text-xs leading-5 text-[#DCD1C0]">
-                    Cita rasa lokal Borneo dengan sentuhan modern
-                  </span>
-                </div>
-
-              </div>
-            </div>
-
-            {/* =========================================================
-                PRODUCT CATEGORIES
-            ========================================================== */}
-            <div className="md:col-span-3">
-
-              <h4 className="mb-5 text-[11px] font-bold uppercase tracking-[0.22em] text-[#F5A623]">
-                Produk
-              </h4>
-
-              <ul className="space-y-3">
-
-                <li>
-                  <a
-                    href="#catalog"
-                    className="group inline-flex items-center gap-1.5 text-sm text-[#DCD1C0] transition-colors duration-200 hover:text-white"
-                  >
-                    Snack Tinggi Protein
-                    <ArrowUpRight
-                      className="h-3 w-3 opacity-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100"
-                      aria-hidden="true"
-                    />
-                  </a>
-                </li>
-
-                <li>
-                  <a
-                    href="#catalog"
-                    className="group inline-flex items-center gap-1.5 text-sm text-[#DCD1C0] transition-colors duration-200 hover:text-white"
-                  >
-                    Amplang & Keripik Ikan
-                    <ArrowUpRight
-                      className="h-3 w-3 opacity-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100"
-                      aria-hidden="true"
-                    />
-                  </a>
-                </li>
-
-                <li>
-                  <a
-                    href="#catalog"
-                    className="group inline-flex items-center gap-1.5 text-sm text-[#DCD1C0] transition-colors duration-200 hover:text-white"
-                  >
-                    Oleh-Oleh Khas Nusantara
-                    <ArrowUpRight
-                      className="h-3 w-3 opacity-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100"
-                      aria-hidden="true"
-                    />
-                  </a>
-                </li>
-
-                <li>
-                  <a
-                    href="#catalog"
-                    className="group inline-flex items-center gap-1.5 text-sm text-[#DCD1C0] transition-colors duration-200 hover:text-white"
-                  >
-                    Gift Box & Hampers
-                    <ArrowUpRight
-                      className="h-3 w-3 opacity-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100"
-                      aria-hidden="true"
-                    />
-                  </a>
-                </li>
-
-              </ul>
-            </div>
-
-            {/* =========================================================
-                CONTACT
-            ========================================================== */}
-            <div className="md:col-span-4">
-
-              <h4 className="mb-5 text-[11px] font-bold uppercase tracking-[0.22em] text-[#F5A623]">
-                Hubungi Kami
-              </h4>
-
-              <div className="space-y-4">
-
-                {/* WhatsApp CTA */}
-                <a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`Hubungi Bonles melalui WhatsApp ${formattedWaNumber}`}
-                  className="group flex items-center gap-3 rounded-xl border border-[#00D222]/20 bg-[#00D222]/5 px-4 py-3.5 transition-all duration-300 hover:border-[#00D222]/40 hover:bg-[#00D222]/10"
+              <div className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                <div
+                  className="
+                    rounded-xl
+                    border
+                    border-white/8
+                    bg-white/[0.035]
+                    px-4
+                    py-3
+                    backdrop-blur-sm
+                  "
                 >
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#00D222]/10">
-                    <MessageCircle
-                      className="h-4 w-4 text-[#00D222]"
-                      aria-hidden="true"
-                    />
-                  </div>
-
-                  <div className="min-w-0">
-                    <p className="text-[10px] uppercase tracking-wider text-[#7F8B7F]">
-                      WhatsApp Customer Service
-                    </p>
-
-                    <p className="mt-0.5 truncate font-mono text-sm text-white transition-colors group-hover:text-[#F5A623]">
-                      {formattedWaNumber}
-                    </p>
-                  </div>
-
-                  <ArrowUpRight
-                    className="ml-auto h-4 w-4 shrink-0 text-[#5D6A5D] transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#00D222]"
-                    aria-hidden="true"
+                  <CheckCircle2
+                    className="mb-2 h-5 w-5 text-[#C9A45C]"
+                    strokeWidth={1.8}
                   />
-                </a>
 
-                {/* Email */}
-                <div className="flex items-start gap-3">
-                  <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#F5A623]/5">
-                    <Mail
-                      className="h-4 w-4 text-[#F5A623]"
-                      aria-hidden="true"
-                    />
-                  </div>
+                  <p className="text-xs font-semibold text-[#FCFAF5]">
+                    Produk Lokal
+                  </p>
 
-                  <div>
-                    <p className="text-[10px] uppercase tracking-wider text-[#68574B]">
-                      Email
-                    </p>
-
-                    <a
-                      href={`mailto:${email}`}
-                      className="mt-0.5 block text-sm text-[#DCD1C0] transition-colors hover:text-[#F5A623]"
-                    >
-                      {email}
-                    </a>
-                  </div>
+                  <p className="mt-1 text-[10px] leading-4 text-[#91A19A]">
+                    Rasa khas Borneo
+                  </p>
                 </div>
 
-                {/* Address */}
-                <div className="flex items-start gap-3">
-                  <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#D82824]/5">
-                    <MapPin
-                      className="h-4 w-4 text-[#D82824]"
-                      aria-hidden="true"
-                    />
-                  </div>
+                <div
+                  className="
+                    rounded-xl
+                    border
+                    border-white/8
+                    bg-white/[0.035]
+                    px-4
+                    py-3
+                    backdrop-blur-sm
+                  "
+                >
+                  <CheckCircle2
+                    className="mb-2 h-5 w-5 text-[#C9A45C]"
+                    strokeWidth={1.8}
+                  />
 
-                  <div>
-                    <p className="text-[10px] uppercase tracking-wider text-[#68574B]">
-                      Lokasi
-                    </p>
+                  <p className="text-xs font-semibold text-[#FCFAF5]">
+                    High Protein
+                  </p>
 
-                    <p className="mt-0.5 max-w-sm text-sm leading-6 text-[#A89886]">
-                      {address}
-                    </p>
-                  </div>
+                  <p className="mt-1 text-[10px] leading-4 text-[#91A19A]">
+                    Camilan bernutrisi
+                  </p>
                 </div>
 
+                <div
+                  className="
+                    rounded-xl
+                    border
+                    border-white/8
+                    bg-white/[0.035]
+                    px-4
+                    py-3
+                    backdrop-blur-sm
+                  "
+                >
+                  <CheckCircle2
+                    className="mb-2 h-5 w-5 text-[#C9A45C]"
+                    strokeWidth={1.8}
+                  />
+
+                  <p className="text-xs font-semibold text-[#FCFAF5]">
+                    Dibuat Lokal
+                  </p>
+
+                  <p className="mt-1 text-[10px] leading-4 text-[#91A19A]">
+                    Dari Borneo
+                  </p>
+                </div>
               </div>
             </div>
-
           </div>
-        </div>
 
-        {/* =========================================================
-            BOTTOM BAR
-        ========================================================== */}
-        <div className="border-t border-[#D82824]/15 py-6">
+          {/* NAVIGATION */}
+          <div className="lg:col-span-2">
+            <h3
+              className="
+                mb-5
+                text-xs
+                font-bold
+                uppercase
+                tracking-[0.18em]
+                text-[#C9A45C]
+              "
+            >
+              Navigasi
+            </h3>
 
-          <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+            <nav className="space-y-3">
+              <a
+                href="#home"
+                className="
+                  group
+                  flex
+                  items-center
+                  gap-2
+                  text-sm
+                  text-[#CFCFC7]
+                  transition-colors
+                  hover:text-white
+                "
+              >
+                Beranda
+                <ArrowUpRight
+                  className="
+                    h-3.5
+                    w-3.5
+                    opacity-0
+                    transition-all
+                    group-hover:translate-x-0.5
+                    group-hover:-translate-y-0.5
+                    group-hover:opacity-100
+                  "
+                />
+              </a>
 
-            <p className="text-center text-[11px] text-[#68574B] sm:text-left">
-              © {currentYear}{' '}
-              <span className="text-[#8C7B6D]">
-                {storeName}
-              </span>
-              . All rights reserved.
-            </p>
+              <a
+                href="#catalog"
+                className="
+                  group
+                  flex
+                  items-center
+                  gap-2
+                  text-sm
+                  text-[#CFCFC7]
+                  transition-colors
+                  hover:text-white
+                "
+              >
+                Produk
+                <ArrowUpRight
+                  className="
+                    h-3.5
+                    w-3.5
+                    opacity-0
+                    transition-all
+                    group-hover:translate-x-0.5
+                    group-hover:-translate-y-0.5
+                    group-hover:opacity-100
+                  "
+                />
+              </a>
 
-            <div className="flex flex-wrap items-center justify-center gap-3 text-[10px]">
+              <a
+                href="#story"
+                className="
+                  group
+                  flex
+                  items-center
+                  gap-2
+                  text-sm
+                  text-[#CFCFC7]
+                  transition-colors
+                  hover:text-white
+                "
+              >
+                Cerita Kami
+                <ArrowUpRight
+                  className="
+                    h-3.5
+                    w-3.5
+                    opacity-0
+                    transition-all
+                    group-hover:translate-x-0.5
+                    group-hover:-translate-y-0.5
+                    group-hover:opacity-100
+                  "
+                />
+              </a>
 
-              <span className="text-[#F5A623]">
-                Pemesanan Cepat
-              </span>
+              <a
+                href="#advantages"
+                className="
+                  group
+                  flex
+                  items-center
+                  gap-2
+                  text-sm
+                  text-[#CFCFC7]
+                  transition-colors
+                  hover:text-white
+                "
+              >
+                Keunggulan
+                <ArrowUpRight
+                  className="
+                    h-3.5
+                    w-3.5
+                    opacity-0
+                    transition-all
+                    group-hover:translate-x-0.5
+                    group-hover:-translate-y-0.5
+                    group-hover:opacity-100
+                  "
+                />
+              </a>
 
-              <span className="text-[#4D4039]">
-                •
-              </span>
+              <a
+                href="#contact"
+                className="
+                  group
+                  flex
+                  items-center
+                  gap-2
+                  text-sm
+                  text-[#CFCFC7]
+                  transition-colors
+                  hover:text-white
+                "
+              >
+                Kontak
+                <ArrowUpRight
+                  className="
+                    h-3.5
+                    w-3.5
+                    opacity-0
+                    transition-all
+                    group-hover:translate-x-0.5
+                    group-hover:-translate-y-0.5
+                    group-hover:opacity-100
+                  "
+                />
+              </a>
+            </nav>
+          </div>
 
-              <span className="text-[#8C7B6D]">
-                Kualitas Terjamin
-              </span>
+          {/* CONTACT */}
+          <div className="lg:col-span-5">
+            <h3
+              className="
+                mb-5
+                text-xs
+                font-bold
+                uppercase
+                tracking-[0.18em]
+                text-[#C9A45C]
+              "
+            >
+              Hubungi Kami
+            </h3>
 
-              {onOpenAdminLogin && (
-                <>
-                  <span className="text-[#4D4039]">
-                    •
-                  </span>
+            {/* WhatsApp CTA */}
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="
+                group
+                block
+                rounded-2xl
+                border
+                border-[#C9A45C]/20
+                bg-white/[0.045]
+                p-5
+                transition-all
+                duration-300
+                hover:-translate-y-1
+                hover:border-[#C9A45C]/40
+                hover:bg-white/[0.07]
+                hover:shadow-[0_15px_40px_rgba(0,0,0,0.22)]
+              "
+            >
+              <div className="flex items-start gap-4">
+                <div
+                  className="
+                    flex
+                    h-11
+                    w-11
+                    shrink-0
+                    items-center
+                    justify-center
+                    rounded-full
+                    bg-[#16805F]/15
+                    ring-1
+                    ring-[#16805F]/30
+                  "
+                >
+                  <MessageCircle
+                    className="h-5 w-5 text-[#65C9A5]"
+                    strokeWidth={1.8}
+                  />
+                </div>
 
-                  <button
-                    type="button"
-                    onClick={onOpenAdminLogin}
-                    aria-label={
-                      isAuthenticated
-                        ? 'Buka Panel Admin'
-                        : 'Buka Akses Staf'
-                    }
-                    className="group inline-flex cursor-pointer items-center gap-1.5 text-[#4D4039] transition-colors duration-200 hover:text-[#A89886]"
-                    title="Akses Portal Pengelola"
-                  >
-                    <Lock
-                      className="h-3 w-3 text-[#4D4039] transition-colors group-hover:text-[#A89886]"
-                      aria-hidden="true"
-                    />
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-[#91A19A]">
+                    Pesan Sekarang
+                  </p>
 
-                    <span>
-                      {isAuthenticated
-                        ? 'Panel Admin'
-                        : 'Akses Staf'}
-                    </span>
-                  </button>
-                </>
-              )}
+                  <p className="mt-1 text-sm font-semibold text-[#FCFAF5]">
+                    Order via WhatsApp
+                  </p>
 
+                  <p className="mt-1 text-xs text-[#9EAAA4]">
+                    {formattedWaNumber}
+                  </p>
+                </div>
+
+                <ArrowUpRight
+                  className="
+                    h-5
+                    w-5
+                    shrink-0
+                    text-[#C9A45C]
+                    transition-transform
+                    duration-300
+                    group-hover:-translate-y-1
+                    group-hover:translate-x-1
+                  "
+                />
+              </div>
+            </a>
+
+            {/* Email */}
+            <a
+              href={`mailto:${email}`}
+              className="
+                mt-4
+                flex
+                items-center
+                gap-3
+                text-sm
+                text-[#CFCFC7]
+                transition-colors
+                hover:text-white
+              "
+            >
+              <Mail
+                className="h-4 w-4 shrink-0 text-[#C9A45C]"
+                strokeWidth={1.8}
+              />
+              <span className="truncate">{email}</span>
+            </a>
+
+            {/* Address */}
+            <div className="mt-4 flex items-start gap-3">
+              <MapPin
+                className="mt-0.5 h-4 w-4 shrink-0 text-[#C9A45C]"
+                strokeWidth={1.8}
+              />
+
+              <p className="text-sm leading-6 text-[#AEB8B2]">
+                {address}
+              </p>
             </div>
           </div>
-
         </div>
 
+        {/* Gold divider */}
+        <div className="my-10 h-px bg-gradient-to-r from-transparent via-[#C9A45C]/25 to-transparent" />
+
+        {/* Bottom Bar */}
+        <div
+          className="
+            flex
+            flex-col
+            gap-5
+            text-xs
+            sm:flex-row
+            sm:items-center
+            sm:justify-between
+          "
+        >
+          <div className="text-[#7F8C86]">
+            © {currentYear}{' '}
+            <span className="text-[#AEB8B2]">
+              {storeName}
+            </span>
+            . All rights reserved.
+          </div>
+
+          <div className="flex items-center gap-4">
+            <span className="flex items-center gap-2 text-[#718079]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#16805F]" />
+              Produk Lokal Borneo
+            </span>
+
+            {onOpenAdminLogin && (
+              <button
+                type="button"
+                onClick={onOpenAdminLogin}
+                className="
+                  group
+                  flex
+                  items-center
+                  gap-1.5
+                  text-[#596761]
+                  transition-colors
+                  hover:text-[#C9A45C]
+                "
+                aria-label={
+                  isAuthenticated
+                    ? 'Buka panel admin'
+                    : 'Akses staf'
+                }
+              >
+                <Lock
+                  className="h-3 w-3"
+                  strokeWidth={1.8}
+                />
+
+                <span>
+                  {isAuthenticated
+                    ? 'Admin'
+                    : 'Staff'}
+                </span>
+              </button>
+            )}
+          </div>
+        </div>
       </div>
     </footer>
   );
