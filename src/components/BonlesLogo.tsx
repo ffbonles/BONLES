@@ -1,692 +1,319 @@
 import React from 'react';
 
-/**
- * BONLES FOOD NUSANTARA
- * Main brand logo
- *
- * Source:
- * Google Drive
- * File ID: 1-Jx5r3beNRUhML37QbWnfskpaa8S26HG
- */
-
-const LOGO_FILE_ID = '1-Jx5r3beNRUhML37QbWnfskpaa8S26HG';
-
-/**
- * Google Drive image URL.
- *
- * File permission must be:
- * "Anyone with the link" -> Viewer
- */
-export const BONLES_LOGO_URL =
-  `https://drive.google.com/uc?export=view&id=${LOGO_FILE_ID}`;
-
-export type BonlesLogoSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-export type BonlesLogoVariant = 'horizontal' | 'stacked';
-
 interface BonlesLogoProps {
-  size?: BonlesLogoSize;
-  variant?: BonlesLogoVariant;
   className?: string;
-  priority?: boolean;
-  onClick?: () => void;
+  variant?: 'full' | 'horizontal' | 'mark' | 'badge';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  lightBg?: boolean;
 }
-
-const sizeClasses: Record<BonlesLogoSize, string> = {
-  xs: 'h-8',
-  sm: 'h-10',
-  md: 'h-12',
-  lg: 'h-16',
-  xl: 'h-24',
-};
 
 export const BonlesLogo: React.FC<BonlesLogoProps> = ({
-  size = 'md',
-  variant = 'horizontal',
   className = '',
-  priority = false,
-  onClick,
+  variant = 'horizontal',
+  size = 'md',
+  lightBg = true,
 }) => {
-  const isClickable = Boolean(onClick);
-
-  return (
-    <div
-      className={`
-        inline-flex
-        items-center
-        justify-center
-        shrink-0
-        ${variant === 'stacked' ? 'flex-col' : 'flex-row'}
-        ${isClickable ? 'cursor-pointer' : ''}
-        ${className}
-      `}
-      onClick={onClick}
-      role={isClickable ? 'button' : undefined}
-      tabIndex={isClickable ? 0 : undefined}
-      onKeyDown={(event) => {
-        if (!isClickable) return;
-
-        if (event.key === 'Enter' || event.key === ' ') {
-          event.preventDefault();
-          onClick?.();
-        }
-      }}
-      aria-label="BONLES FOOD NUSANTARA"
-    >
-      <img
-        src={BONLES_LOGO_URL}
-        alt="BONLES FOOD NUSANTARA"
-        className={`
-          ${sizeClasses[size]}
-          w-auto
-          max-w-[220px]
-          object-contain
-          object-center
-          select-none
-        `}
-        loading={priority ? 'eager' : 'lazy'}
-        decoding="async"
-        draggable={false}
-      />
-    </div>
-  );
-};
-
-export default BonlesLogo;
-Navbar.tsx
-
-Navbar berikut dibuat agar logo asli dari Drive menjadi pusat identitas header, dengan tampilan premium, sticky, responsive, smooth-scroll, dan CTA WhatsApp.
-
-import React, { useEffect, useState } from 'react';
-import {
-  Menu,
-  X,
-  MessageCircle,
-  ArrowUpRight,
-  ShieldCheck,
-} from 'lucide-react';
-
-import { BonlesLogo } from './BonlesLogo';
-import { store } from '../services/store';
-
-interface NavbarProps {
-  onOpenAdminLogin?: () => void;
-  isAuthenticated?: boolean;
-}
-
-interface NavItem {
-  label: string;
-  href: string;
-}
-
-const NAV_ITEMS: NavItem[] = [
-  {
-    label: 'Beranda',
-    href: '#home',
-  },
-  {
-    label: 'Produk',
-    href: '#catalog',
-  },
-  {
-    label: 'Cerita Kami',
-    href: '#story',
-  },
-  {
-    label: 'Keunggulan',
-    href: '#advantages',
-  },
-  {
-    label: 'Kontak',
-    href: '#contact',
-  },
-];
-
-export const Navbar: React.FC<NavbarProps> = ({
-  onOpenAdminLogin,
-  isAuthenticated = false,
-}) => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
-
-  const [settings, setSettings] = useState<Record<string, string>>(() =>
-    store.getSettingsMap()
-  );
-
-  useEffect(() => {
-    const unsubscribe = store.subscribe(() => {
-      setSettings(store.getSettingsMap());
-    });
-
-    return unsubscribe;
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 24);
-    };
-
-    handleScroll();
-
-    window.addEventListener('scroll', handleScroll, {
-      passive: true,
-    });
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 1024) {
-        setIsMobileOpen(false);
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  useEffect(() => {
-    document.body.style.overflow = isMobileOpen ? 'hidden' : '';
-
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isMobileOpen]);
-
-  const storeName =
-    settings['STORE_NAME'] || 'PT. BONLES FOOD NUSANTARA';
-
-  const waNumber =
-    settings['WHATSAPP_NUMBER'] || '6285174333902';
-
-  const cleanWaNumber = waNumber.replace(/\D/g, '');
-
-  const whatsappUrl = cleanWaNumber
-    ? `https://wa.me/${cleanWaNumber}?text=${encodeURIComponent(
-        'Halo BONLES FOOD NUSANTARA, saya ingin mengetahui produk BONLES.'
-      )}`
-    : '#';
-
-  const handleNavClick = (href: string) => {
-    setIsMobileOpen(false);
-
-    if (!href.startsWith('#')) return;
-
-    const element = document.querySelector(href);
-
-    if (element) {
-      element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      });
-    }
+  const sizeMap = {
+    sm: {
+      icon: 'w-8 h-8',
+      text: 'text-[17px]',
+      sub: 'text-[8px]',
+      gap: 'gap-2',
+    },
+    md: {
+      icon: 'w-10 h-10',
+      text: 'text-[21px]',
+      sub: 'text-[9px]',
+      gap: 'gap-2.5',
+    },
+    lg: {
+      icon: 'w-14 h-14',
+      text: 'text-[30px]',
+      sub: 'text-[10px]',
+      gap: 'gap-3',
+    },
+    xl: {
+      icon: 'w-20 h-20',
+      text: 'text-[42px]',
+      sub: 'text-[12px]',
+      gap: 'gap-4',
+    },
   };
 
-  return (
-    <>
-      <header
-        className={`
-          fixed
-          inset-x-0
-          top-0
-          z-[100]
-          transition-all
-          duration-500
-          ease-out
-          ${
-            isScrolled
-              ? 'border-b border-[#D9A441]/15 bg-[#100406]/95 shadow-[0_12px_40px_rgba(0,0,0,0.28)] backdrop-blur-xl'
-              : 'bg-gradient-to-b from-black/55 via-black/20 to-transparent'
-          }
-        `}
+  const currentSize = sizeMap[size];
+
+  /*
+   * BONLES BRAND MARK
+   *
+   * Warna utama logo tetap dipertahankan sebagai identitas:
+   * - Red
+   * - Green
+   *
+   * Namun stroke dibuat lebih refined agar cocok
+   * dengan visual premium.
+   */
+  const LogoMark = (
+    <svg
+      viewBox="0 0 280 200"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={`${currentSize.icon} shrink-0 select-none transition-transform duration-500 ease-out group-hover:scale-[1.03]`}
+      aria-hidden="true"
+    >
+      {/* Upper Green Fish Head */}
+      <path
+        d="M148 46
+           C180 32 222 36 238 48
+           C220 70 178 72 150 56Z"
+        fill="#16805F"
+        stroke="#09271F"
+        strokeWidth="3"
+        strokeLinejoin="round"
+      />
+
+      {/* Eye */}
+      <circle
+        cx="206"
+        cy="48"
+        r="4"
+        fill="#09271F"
+      />
+
+      {/* Main Red Dynamic Body */}
+      <path
+        d="M104 68
+           L110 57
+           C142 56 192 68 238 58
+           C220 86 172 96 126 94
+           C82 108 64 148 60 188
+           C54 150 72 102 104 68Z"
+        fill="#B83B32"
+        stroke="#09271F"
+        strokeWidth="3"
+        strokeLinejoin="round"
+      />
+
+      {/* Lower Green Belly */}
+      <path
+        d="M94 96
+           C144 94 186 98 206 82
+           C188 120 116 122 94 96Z"
+        fill="#16805F"
+        stroke="#09271F"
+        strokeWidth="2.75"
+        strokeLinejoin="round"
+      />
+
+      {/* Tail / Fin */}
+      <path
+        d="M28 66
+           C52 82 68 96 70 108
+           C54 94 38 82 28 66Z"
+        fill="#16805F"
+        stroke="#09271F"
+        strokeWidth="2.75"
+        strokeLinejoin="round"
+      />
+
+      {/* BFF Badge */}
+      <circle
+        cx="78"
+        cy="74"
+        r="14"
+        fill="#FCFAF5"
+        stroke="#09271F"
+        strokeWidth="2"
+      />
+
+      <text
+        x="78"
+        y="78"
+        textAnchor="middle"
+        fontSize="11"
+        fontWeight="800"
+        fontFamily="Plus Jakarta Sans, sans-serif"
+        fill="#09271F"
+        letterSpacing="-0.5"
       >
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div
-            className={`
-              flex
-              items-center
-              justify-between
-              transition-all
-              duration-500
-              ${
-                isScrolled
-                  ? 'h-[72px]'
-                  : 'h-[84px]'
-              }
-            `}
-          >
-            {/* =====================================================
-                LOGO
-            ====================================================== */}
-            <button
-              type="button"
-              onClick={() => handleNavClick('#home')}
-              className="
-                group
-                flex
-                shrink-0
-                items-center
-                outline-none
-                focus-visible:ring-2
-                focus-visible:ring-[#F5A623]
-                focus-visible:ring-offset-2
-                focus-visible:ring-offset-transparent
-              "
-              aria-label={`${storeName} - Beranda`}
-            >
-              <BonlesLogo
-                size={isScrolled ? 'sm' : 'md'}
-                variant="horizontal"
-                priority
-                className="
-                  transition-transform
-                  duration-500
-                  group-hover:scale-[1.03]
-                "
-              />
-            </button>
+        BFF
+      </text>
+    </svg>
+  );
 
-            {/* =====================================================
-                DESKTOP NAVIGATION
-            ====================================================== */}
-            <nav
-              className="
-                hidden
-                items-center
-                gap-1
-                lg:flex
-              "
-              aria-label="Navigasi utama"
-            >
-              {NAV_ITEMS.map((item) => (
-                <button
-                  key={item.href}
-                  type="button"
-                  onClick={() => handleNavClick(item.href)}
-                  className="
-                    group
-                    relative
-                    px-4
-                    py-3
-                    text-[13px]
-                    font-medium
-                    tracking-[0.02em]
-                    text-[#F5EFE6]/85
-                    transition-colors
-                    duration-300
-                    hover:text-white
-                  "
-                >
-                  {item.label}
-
-                  <span
-                    className="
-                      absolute
-                      bottom-1
-                      left-4
-                      right-4
-                      h-px
-                      origin-left
-                      scale-x-0
-                      bg-gradient-to-r
-                      from-[#F5A623]
-                      to-[#D82824]
-                      transition-transform
-                      duration-300
-                      group-hover:scale-x-100
-                    "
-                  />
-                </button>
-              ))}
-            </nav>
-
-            {/* =====================================================
-                DESKTOP CTA
-            ====================================================== */}
-            <div className="hidden items-center gap-3 lg:flex">
-              {onOpenAdminLogin && (
-                <button
-                  type="button"
-                  onClick={onOpenAdminLogin}
-                  className="
-                    group
-                    flex
-                    h-10
-                    items-center
-                    gap-2
-                    rounded-full
-                    border
-                    border-white/10
-                    px-3
-                    text-[#F5EFE6]/55
-                    transition-all
-                    duration-300
-                    hover:border-[#F5A623]/30
-                    hover:bg-white/5
-                    hover:text-[#F5EFE6]
-                  "
-                  aria-label={
-                    isAuthenticated
-                      ? 'Buka panel admin'
-                      : 'Login admin'
-                  }
-                  title={
-                    isAuthenticated
-                      ? 'Buka panel admin'
-                      : 'Login admin'
-                  }
-                >
-                  <ShieldCheck
-                    size={14}
-                    strokeWidth={1.7}
-                  />
-
-                  <span className="text-[11px] font-medium tracking-wide">
-                    {isAuthenticated ? 'Admin' : 'Staff'}
-                  </span>
-                </button>
-              )}
-
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="
-                  group
-                  flex
-                  items-center
-                  gap-2
-                  rounded-full
-                  bg-[#D82824]
-                  px-5
-                  py-2.5
-                  text-[12px]
-                  font-semibold
-                  tracking-wide
-                  text-white
-                  shadow-[0_8px_24px_rgba(216,40,36,0.24)]
-                  transition-all
-                  duration-300
-                  hover:-translate-y-0.5
-                  hover:bg-[#B91F1C]
-                  hover:shadow-[0_12px_30px_rgba(216,40,36,0.34)]
-                "
-              >
-                <MessageCircle
-                  size={15}
-                  strokeWidth={2}
-                />
-
-                <span>Pesan Sekarang</span>
-
-                <ArrowUpRight
-                  size={13}
-                  className="
-                    transition-transform
-                    duration-300
-                    group-hover:translate-x-0.5
-                    group-hover:-translate-y-0.5
-                  "
-                />
-              </a>
-            </div>
-
-            {/* =====================================================
-                MOBILE BUTTON
-            ====================================================== */}
-            <div className="flex items-center gap-2 lg:hidden">
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="
-                  flex
-                  h-10
-                  w-10
-                  items-center
-                  justify-center
-                  rounded-full
-                  bg-[#D82824]
-                  text-white
-                  shadow-[0_8px_24px_rgba(216,40,36,0.24)]
-                  transition-transform
-                  active:scale-95
-                "
-                aria-label="Hubungi BONLES melalui WhatsApp"
-              >
-                <MessageCircle
-                  size={18}
-                  strokeWidth={2}
-                />
-              </a>
-
-              <button
-                type="button"
-                onClick={() => setIsMobileOpen((value) => !value)}
-                className="
-                  flex
-                  h-10
-                  w-10
-                  items-center
-                  justify-center
-                  rounded-full
-                  border
-                  border-white/15
-                  bg-black/20
-                  text-[#F5EFE6]
-                  backdrop-blur-md
-                  transition-all
-                  duration-300
-                  hover:border-[#F5A623]/40
-                  hover:bg-white/10
-                "
-                aria-label={
-                  isMobileOpen
-                    ? 'Tutup menu'
-                    : 'Buka menu'
-                }
-                aria-expanded={isMobileOpen}
-              >
-                {isMobileOpen ? (
-                  <X size={20} />
-                ) : (
-                  <Menu size={20} />
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* =========================================================
-          MOBILE MENU
-      ========================================================== */}
+  if (variant === 'mark') {
+    return (
       <div
-        className={`
-          fixed
-          inset-0
-          z-[90]
-          lg:hidden
-          transition-all
-          duration-500
-          ${
-            isMobileOpen
-              ? 'pointer-events-auto visible opacity-100'
-              : 'pointer-events-none invisible opacity-0'
-          }
-        `}
+        className={`group inline-flex items-center justify-center ${className}`}
       >
-        {/* Backdrop */}
-        <button
-          type="button"
-          aria-label="Tutup menu"
-          onClick={() => setIsMobileOpen(false)}
-          className="
-            absolute
-            inset-0
-            bg-black/65
-            backdrop-blur-sm
-          "
-        />
+        {LogoMark}
+      </div>
+    );
+  }
 
-        {/* Menu Panel */}
-        <div
-          className={`
-            absolute
-            inset-x-0
-            top-0
-            overflow-hidden
-            rounded-b-[28px]
-            border-b
-            border-[#D9A441]/15
-            bg-[#100406]
-            shadow-[0_30px_80px_rgba(0,0,0,0.45)]
-            transition-transform
-            duration-500
-            ${
-              isMobileOpen
-                ? 'translate-y-0'
-                : '-translate-y-full'
-            }
-          `}
-        >
-          <div className="px-5 pb-7 pt-24">
-            {/* Mobile logo */}
-            <div className="mb-7 border-b border-white/10 pb-6">
-              <BonlesLogo
-                size="md"
-                variant="horizontal"
-              />
-            </div>
+  if (variant === 'badge') {
+    return (
+      <div
+        className={`group inline-flex flex-col items-center justify-center ${className}`}
+      >
+        <div className="relative">
+          {LogoMark}
 
-            {/* Mobile navigation */}
-            <nav
-              className="space-y-1"
-              aria-label="Navigasi mobile"
-            >
-              {NAV_ITEMS.map((item, index) => (
-                <button
-                  key={item.href}
-                  type="button"
-                  onClick={() => handleNavClick(item.href)}
-                  className="
-                    flex
-                    w-full
-                    items-center
-                    justify-between
-                    rounded-xl
-                    px-4
-                    py-4
-                    text-left
-                    text-[15px]
-                    font-medium
-                    text-[#F5EFE6]/80
-                    transition-all
-                    duration-300
-                    hover:bg-white/5
-                    hover:text-white
-                  "
-                >
-                  <span>
-                    <span className="mr-3 text-[10px] tracking-widest text-[#F5A623]/60">
-                      0{index + 1}
-                    </span>
-
-                    {item.label}
-                  </span>
-
-                  <ArrowUpRight
-                    size={15}
-                    className="text-[#F5A623]/60"
-                  />
-                </button>
-              ))}
-            </nav>
-
-            {/* Mobile WhatsApp CTA */}
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setIsMobileOpen(false)}
-              className="
-                mt-6
-                flex
-                w-full
-                items-center
-                justify-center
-                gap-2
-                rounded-xl
-                bg-[#D82824]
-                px-5
-                py-4
-                text-sm
-                font-semibold
-                text-white
-                shadow-[0_12px_30px_rgba(216,40,36,0.24)]
-                transition-all
-                duration-300
-                hover:bg-[#B91F1C]
-              "
-            >
-              <MessageCircle size={18} />
-
-              <span>Pesan Sekarang</span>
-
-              <ArrowUpRight size={15} />
-            </a>
-
-            {/* Admin */}
-            {onOpenAdminLogin && (
-              <button
-                type="button"
-                onClick={() => {
-                  setIsMobileOpen(false);
-                  onOpenAdminLogin();
-                }}
-                className="
-                  mt-3
-                  flex
-                  w-full
-                  items-center
-                  justify-center
-                  gap-2
-                  rounded-xl
-                  border
-                  border-white/10
-                  px-5
-                  py-3
-                  text-xs
-                  font-medium
-                  text-[#F5EFE6]/55
-                  transition-all
-                  duration-300
-                  hover:border-[#F5A623]/30
-                  hover:bg-white/5
-                  hover:text-[#F5EFE6]
-                "
-              >
-                <ShieldCheck size={15} />
-
-                <span>
-                  {isAuthenticated
-                    ? 'Buka Panel Admin'
-                    : 'Akses Staff'}
-                </span>
-              </button>
-            )}
-
-            <p className="mt-6 text-center text-[10px] tracking-[0.18em] text-[#A89886]/50">
-              {storeName}
-            </p>
+          <div
+            className="
+              absolute
+              -bottom-1
+              left-1/2
+              -translate-x-1/2
+              whitespace-nowrap
+              rounded-full
+              border
+              border-[#C9A45C]/40
+              bg-[#FCFAF5]
+              px-2.5
+              py-0.5
+              text-[7px]
+              font-bold
+              uppercase
+              tracking-[0.18em]
+              text-[#123C32]
+            "
+          >
+            Borneo Crafted
           </div>
         </div>
       </div>
-    </>
+    );
+  }
+
+  if (variant === 'full') {
+    return (
+      <div
+        className={`group flex flex-col items-center text-center ${className} select-none`}
+      >
+        {LogoMark}
+
+        <div className="mt-1.5 flex flex-col items-center">
+          <span
+            className={`
+              ${currentSize.text}
+              font-display
+              italic
+              font-semibold
+              leading-none
+              tracking-[-0.035em]
+              ${
+                lightBg
+                  ? 'text-[#09271F]'
+                  : 'text-[#FCFAF5]'
+              }
+            `}
+          >
+            Bonlés
+          </span>
+
+          <div className="relative mt-1">
+            <span
+              className={`
+                ${currentSize.sub}
+                font-sans
+                font-bold
+                uppercase
+                tracking-[0.28em]
+                ${
+                  lightBg
+                    ? 'text-[#B18B4B]'
+                    : 'text-[#D8B878]'
+                }
+              `}
+            >
+              FOOD
+            </span>
+
+            <div className="mx-auto mt-1 h-px w-5 bg-[#C9A45C]" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  /*
+   * HORIZONTAL LOCKUP
+   */
+  return (
+    <div
+      className={`
+        group
+        inline-flex
+        items-center
+        ${currentSize.gap}
+        ${className}
+        select-none
+      `}
+    >
+      {LogoMark}
+
+      <div className="flex flex-col">
+        <div className="flex items-baseline gap-2">
+          <span
+            className={`
+              ${currentSize.text}
+              font-display
+              italic
+              font-semibold
+              leading-none
+              tracking-[-0.035em]
+              ${
+                lightBg
+                  ? 'text-[#09271F]'
+                  : 'text-[#FCFAF5]'
+              }
+            `}
+          >
+            Bonlés
+          </span>
+
+          <span
+            className="
+              font-sans
+              text-[8px]
+              font-bold
+              uppercase
+              tracking-[0.22em]
+              text-[#B18B4B]
+            "
+          >
+            FOOD
+          </span>
+        </div>
+
+        <div className="mt-1 flex items-center gap-2">
+          <span
+            className={`
+              ${currentSize.sub}
+              font-sans
+              font-semibold
+              uppercase
+              tracking-[0.18em]
+              ${
+                lightBg
+                  ? 'text-[#65706A]'
+                  : 'text-[#CFCFC7]'
+              }
+            `}
+          >
+            PT. Bonles Food Nusantara
+          </span>
+
+          <span
+            className="
+              h-1
+              w-1
+              rounded-full
+              bg-[#C9A45C]
+            "
+          />
+        </div>
+      </div>
+    </div>
   );
 };
