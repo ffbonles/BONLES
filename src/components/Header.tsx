@@ -115,9 +115,9 @@ export const Header: React.FC<HeaderProps> = ({
     <header
       className="
         sticky top-0 z-40
-        bg-[#FCFAF5]/95
+        bg-white/95
         backdrop-blur-xl
-        border-b border-[#D8C9B3]/70
+        border-b border-[#F1D5C8]/80
       "
     >
       {/* =====================================================
@@ -125,13 +125,13 @@ export const Header: React.FC<HeaderProps> = ({
           ===================================================== */}
       <div
         className="
-          bg-[#09271F]
-          border-b border-[#B18B4B]/25
+          bg-gradient-to-r from-[#7A0F18] via-[#E64A19] to-[#FFC107]
+          border-b border-white/20
           px-3 sm:px-6
           py-2
           text-[10px] sm:text-[11px]
           tracking-wide
-          text-[#F8F4EA]
+          text-white
         "
       >
         <div
@@ -147,7 +147,7 @@ export const Header: React.FC<HeaderProps> = ({
             <Sparkles
               className="
                 w-3.5 h-3.5
-                text-[#C9A45C]
+                text-[#FFD54F]
                 shrink-0
               "
             />
@@ -156,7 +156,7 @@ export const Header: React.FC<HeaderProps> = ({
               className="
                 font-medium
                 truncate
-                text-[#F8F4EA]
+                text-white
               "
             >
               {tagline}
@@ -165,7 +165,7 @@ export const Header: React.FC<HeaderProps> = ({
             <span
               className="
                 hidden md:inline
-                text-[#B18B4B]/50
+                text-white/40
               "
             >
               •
@@ -175,7 +175,7 @@ export const Header: React.FC<HeaderProps> = ({
               className="
                 hidden md:inline
                 truncate
-                text-[#D8C9B3]
+                text-white/75
               "
             >
               {promoText}
@@ -190,9 +190,9 @@ export const Header: React.FC<HeaderProps> = ({
                   inline-flex items-center gap-1.5
                   px-2.5 py-1
                   rounded-full
-                  border border-[#D8C9B3]/25
-                  bg-white/5
-                  text-[#E9DFCF]
+                  border border-white/25
+                  bg-white/10
+                  text-white/85
                   font-mono
                   text-[9px]
                 "
@@ -201,7 +201,7 @@ export const Header: React.FC<HeaderProps> = ({
                   className="
                     w-2.5 h-2.5
                     animate-spin
-                    text-[#C9A45C]
+                    text-[#FFD54F]
                   "
                 />
 
@@ -215,9 +215,9 @@ export const Header: React.FC<HeaderProps> = ({
                   inline-flex items-center gap-1.5
                   px-2.5 py-1
                   rounded-full
-                  border border-[#B18B4B]/35
-                  bg-[#123C32]/60
-                  text-[#E9DFCF]
+                  border border-white/30
+                  bg-black/15
+                  text-white/85
                   font-mono
                   text-[9px]
                 "
@@ -245,10 +245,10 @@ export const Header: React.FC<HeaderProps> = ({
                   inline-flex items-center gap-1.5
                   px-2.5 py-1
                   rounded-full
-                  border border-[#D8C9B3]/25
-                  bg-white/5
-                  hover:bg-white/10
-                  text-[#E9DFCF]
+                  border border-white/25
+                  bg-white/10
+                  hover:bg-white/15
+                  text-white/85
                   transition-colors
                   cursor-pointer
                   font-mono
@@ -259,7 +259,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <Database
                   className="
                     w-2.5 h-2.5
-                    text-[#C9A45C]
+                    text-[#FFD54F]
                   "
                 />
 
@@ -304,18 +304,18 @@ export const Header: React.FC<HeaderProps> = ({
               ${
                 isMenuOpen
                   ? `
-                    bg-[#09271F]
-                    text-[#F8F4EA]
-                    border-[#09271F]
+                    bg-[#7A0F18]
+                    text-white
+                    border-[#7A0F18]
                     shadow-lg
-                    shadow-[#09271F]/15
+                    shadow-[#E64A19]/15
                   `
                   : `
-                    bg-[#F3EDE0]
-                    text-[#185043]
-                    border-[#D8C9B3]
-                    hover:bg-[#E9DFCF]
-                    hover:border-[#B18B4B]
+                    bg-[#FFF4E8]
+                    text-[#8A1C25]
+                    border-[#F0CFC2]
+                    hover:bg-[#FFE4D1]
+                    hover:border-[#F59E0B]
                   `
               }
             `}
@@ -385,8 +385,8 @@ export const Header: React.FC<HeaderProps> = ({
               uppercase
               tracking-[0.14em]
               font-semibold
-              text-[#303934]
-              hover:text-[#185043]
+              text-[#303030]
+              hover:text-[#C2410C]
               transition-colors
               cursor-pointer
             "
@@ -394,8 +394,8 @@ export const Header: React.FC<HeaderProps> = ({
             <LayoutGrid
               className="
                 w-3.5 h-3.5
-                text-[#9E793A]
-                group-hover:text-[#185043]
+                text-[#E05A2A]
+                group-hover:text-[#C2410C]
                 transition-colors
               "
             />
@@ -417,8 +417,8 @@ export const Header: React.FC<HeaderProps> = ({
               uppercase
               tracking-[0.14em]
               font-semibold
-              text-[#303934]
-              hover:text-[#185043]
+              text-[#303030]
+              hover:text-[#C2410C]
               transition-colors
               cursor-pointer
             "
@@ -426,8 +426,8 @@ export const Header: React.FC<HeaderProps> = ({
             <BookOpen
               className="
                 w-3.5 h-3.5
-                text-[#9E793A]
-                group-hover:text-[#185043]
+                text-[#E05A2A]
+                group-hover:text-[#C2410C]
                 transition-colors
               "
             />
@@ -449,8 +449,8 @@ export const Header: React.FC<HeaderProps> = ({
               uppercase
               tracking-[0.14em]
               font-semibold
-              text-[#303934]
-              hover:text-[#185043]
+              text-[#303030]
+              hover:text-[#C2410C]
               transition-colors
               cursor-pointer
             "
@@ -458,8 +458,8 @@ export const Header: React.FC<HeaderProps> = ({
             <ShieldCheck
               className="
                 w-3.5 h-3.5
-                text-[#9E793A]
-                group-hover:text-[#185043]
+                text-[#E05A2A]
+                group-hover:text-[#C2410C]
                 transition-colors
               "
             />
@@ -486,7 +486,7 @@ export const Header: React.FC<HeaderProps> = ({
           <Search
             className="
               w-4 h-4
-              text-[#7C8580]
+              text-[#7A7773]
               absolute
               left-3.5
               pointer-events-none
@@ -502,19 +502,19 @@ export const Header: React.FC<HeaderProps> = ({
             }
             className="
               w-full
-              bg-[#F8F4EA]
-              border border-[#D8C9B3]
+              bg-[#FFF9F4]
+              border border-[#F0CFC2]
               rounded-full
               pl-10
               pr-8
               py-2.5
               text-xs
-              text-[#18201D]
+              text-[#2B2522]
               placeholder-[#7C8580]
               focus:outline-none
-              focus:border-[#9E793A]
+              focus:border-[#E64A19]
               focus:ring-2
-              focus:ring-[#B18B4B]/15
+              focus:ring-[#F59E0B]/20
               transition-all
               font-medium
             "
@@ -527,8 +527,8 @@ export const Header: React.FC<HeaderProps> = ({
               }
               className="
                 absolute right-3
-                text-[#7C8580]
-                hover:text-[#09271F]
+                text-[#7A7773]
+                hover:text-[#7A0F18]
                 cursor-pointer
               "
               aria-label="Hapus Pencarian"
@@ -565,15 +565,15 @@ export const Header: React.FC<HeaderProps> = ({
               ${
                 isMobileSearchActive
                   ? `
-                    bg-[#09271F]
-                    text-[#F8F4EA]
+                    bg-[#7A0F18]
+                    text-white
                     border-[#09271F]
                   `
                   : `
-                    bg-[#F3EDE0]
-                    text-[#185043]
-                    border-[#D8C9B3]
-                    hover:border-[#B18B4B]
+                    bg-[#FFF4E8]
+                    text-[#8A1C25]
+                    border-[#F0CFC2]
+                    hover:border-[#F59E0B]
                   `
               }
             `}
@@ -591,10 +591,10 @@ export const Header: React.FC<HeaderProps> = ({
               hidden md:flex
               items-center
               gap-1.5
-              bg-[#EEF5F0]
-              hover:bg-[#E3EFE6]
-              border border-[#BFD4C5]
-              text-[#185043]
+              bg-[#F0FDF4]
+              hover:bg-[#DCFCE7]
+              border border-[#BBE7C5]
+              text-[#8A1C25]
               px-3
               py-2
               rounded-full
@@ -608,7 +608,7 @@ export const Header: React.FC<HeaderProps> = ({
             <MessageCircle
               className="
                 w-4 h-4
-                text-[#2C765B]
+                text-[#16A34A]
               "
             />
 
@@ -637,14 +637,14 @@ export const Header: React.FC<HeaderProps> = ({
                 ${
                   isAdmin
                     ? `
-                      bg-[#09271F]
-                      text-[#F8F4EA]
+                      bg-[#7A0F18]
+                      text-white
                       border-[#09271F]
                     `
                     : `
-                      bg-[#F3EDE0]
-                      text-[#185043]
-                      border-[#D8C9B3]
+                      bg-[#FFF4E8]
+                      text-[#8A1C25]
+                      border-[#F0CFC2]
                       hover:border-[#9E793A]
                     `
                 }
@@ -673,9 +673,9 @@ export const Header: React.FC<HeaderProps> = ({
               relative
               flex items-center
               gap-2
-              bg-[#09271F]
-              hover:bg-[#123C32]
-              text-[#F8F4EA]
+              bg-gradient-to-r from-[#7A0F18] via-[#E64A19] to-[#F59E0B]
+              hover:from-[#641018] hover:via-[#C2410C] hover:to-[#D97706]
+              text-white
               px-3
               sm:px-4
               py-2.5
@@ -687,9 +687,9 @@ export const Header: React.FC<HeaderProps> = ({
               font-bold
               transition-all
               shadow-md
-              shadow-[#09271F]/10
+              shadow-[#E64A19]/10
               hover:shadow-lg
-              hover:shadow-[#09271F]/15
+              hover:shadow-[#E64A19]/15
               cursor-pointer
               active:scale-95
             "
@@ -704,8 +704,8 @@ export const Header: React.FC<HeaderProps> = ({
             {cartCount > 0 && (
               <span
                 className="
-                  bg-[#C9A45C]
-                  text-[#09271F]
+                  bg-[#FFC107]
+                  text-[#7A0F18]
                   text-[10px]
                   font-black
                   px-1.5
@@ -730,8 +730,8 @@ export const Header: React.FC<HeaderProps> = ({
         <div
           className="
             lg:hidden
-            bg-[#F3EDE0]
-            border-b border-[#D8C9B3]
+            bg-[#FFF4E8]
+            border-b border-[#F0CFC2]
             px-3 sm:px-6
             py-3
             flex items-center
@@ -742,7 +742,7 @@ export const Header: React.FC<HeaderProps> = ({
             <Search
               className="
                 w-4 h-4
-                text-[#7C8580]
+                text-[#7A7773]
                 absolute
                 left-3
                 top-1/2
@@ -761,19 +761,19 @@ export const Header: React.FC<HeaderProps> = ({
               autoFocus
               className="
                 w-full
-                bg-[#FCFAF5]
-                border border-[#D8C9B3]
+                bg-[#FFFDFC]
+                border border-[#F0CFC2]
                 rounded-full
                 pl-9
                 pr-8
                 py-2.5
                 text-xs
-                text-[#18201D]
+                text-[#2B2522]
                 placeholder-[#7C8580]
                 focus:outline-none
-                focus:border-[#9E793A]
+                focus:border-[#E64A19]
                 focus:ring-2
-                focus:ring-[#B18B4B]/15
+                focus:ring-[#F59E0B]/20
               "
             />
 
@@ -786,8 +786,8 @@ export const Header: React.FC<HeaderProps> = ({
                   absolute right-2.5
                   top-1/2
                   -translate-y-1/2
-                  text-[#7C8580]
-                  hover:text-[#09271F]
+                  text-[#7A7773]
+                  hover:text-[#7A0F18]
                   p-1
                   cursor-pointer
                 "
@@ -804,9 +804,9 @@ export const Header: React.FC<HeaderProps> = ({
               scrollToSection('catalog');
             }}
             className="
-              bg-[#09271F]
-              hover:bg-[#123C32]
-              text-[#F8F4EA]
+              bg-[#7A0F18]
+              hover:bg-[#14532D]
+              text-white
               text-xs
               px-4
               py-2.5
@@ -829,11 +829,11 @@ export const Header: React.FC<HeaderProps> = ({
           id="push-dropdown-menu"
           className="
             border-b
-            border-[#D8C9B3]
-            bg-[#FCFAF5]/98
+            border-[#F0CFC2]
+            bg-[#FFFDFC]/98
             backdrop-blur-2xl
             shadow-2xl
-            shadow-[#09271F]/8
+            shadow-[#7A0F18]/10
             overflow-hidden
             animate-slide-down
           "
@@ -852,7 +852,7 @@ export const Header: React.FC<HeaderProps> = ({
                 flex items-center
                 justify-between
                 pb-4
-                border-b border-[#E9DFCF]
+                border-b border-[#F3DDD3]
               "
             >
               <div className="flex items-center gap-3">
@@ -860,8 +860,8 @@ export const Header: React.FC<HeaderProps> = ({
                   className="
                     w-9 h-9
                     rounded-full
-                    bg-[#F3EDE0]
-                    border border-[#D8C9B3]
+                    bg-[#FFF4E8]
+                    border border-[#F0CFC2]
                     flex items-center
                     justify-center
                   "
@@ -869,7 +869,7 @@ export const Header: React.FC<HeaderProps> = ({
                   <LayoutGrid
                     className="
                       w-4 h-4
-                      text-[#9E793A]
+                      text-[#E05A2A]
                     "
                   />
                 </div>
@@ -880,7 +880,7 @@ export const Header: React.FC<HeaderProps> = ({
                       font-display
                       text-sm
                       font-semibold
-                      text-[#09271F]
+                      text-[#7A0F18]
                     "
                   >
                     Menu Cepat BONLES
@@ -889,7 +889,7 @@ export const Header: React.FC<HeaderProps> = ({
                   <p
                     className="
                       text-[10px]
-                      text-[#65706A]
+                      text-[#6B625D]
                       mt-0.5
                     "
                   >
@@ -902,12 +902,12 @@ export const Header: React.FC<HeaderProps> = ({
                 onClick={onToggleMenu}
                 className="
                   text-[10px]
-                  text-[#65706A]
-                  hover:text-[#09271F]
+                  text-[#6B625D]
+                  hover:text-[#7A0F18]
                   flex items-center
                   gap-1.5
-                  bg-[#F3EDE0]
-                  border border-[#D8C9B3]
+                  bg-[#FFF4E8]
+                  border border-[#F0CFC2]
                   px-3
                   py-1.5
                   rounded-full
@@ -953,10 +953,10 @@ export const Header: React.FC<HeaderProps> = ({
                     gap-3
                     p-3.5
                     rounded-2xl
-                    bg-[#F8F4EA]
-                    hover:bg-[#F3EDE0]
-                    border border-[#E9DFCF]
-                    hover:border-[#C9A45C]
+                    bg-[#FFF9F4]
+                    hover:bg-[#FFF4E8]
+                    border border-[#F3DDD3]
+                    hover:border-[#F59E0B]
                     transition-all
                     text-left
                     cursor-pointer
@@ -966,10 +966,10 @@ export const Header: React.FC<HeaderProps> = ({
                     className="
                       w-9 h-9
                       rounded-full
-                      bg-[#E9DFCF]
-                      group-hover:bg-[#09271F]
-                      text-[#185043]
-                      group-hover:text-[#F8F4EA]
+                      bg-[#FFE8D8]
+                      group-hover:bg-[#7A0F18]
+                      text-[#8A1C25]
+                      group-hover:text-white
                       flex items-center
                       justify-center
                       shrink-0
@@ -984,7 +984,7 @@ export const Header: React.FC<HeaderProps> = ({
                       className="
                         text-xs
                         font-bold
-                        text-[#18201D]
+                        text-[#2B2522]
                         block
                       "
                     >
@@ -994,7 +994,7 @@ export const Header: React.FC<HeaderProps> = ({
                     <span
                       className="
                         text-[10px]
-                        text-[#7C8580]
+                        text-[#7A7773]
                       "
                     >
                       Halaman Utama
@@ -1013,10 +1013,10 @@ export const Header: React.FC<HeaderProps> = ({
                     gap-3
                     p-3.5
                     rounded-2xl
-                    bg-[#F8F4EA]
-                    hover:bg-[#F3EDE0]
-                    border border-[#E9DFCF]
-                    hover:border-[#C9A45C]
+                    bg-[#FFF9F4]
+                    hover:bg-[#FFF4E8]
+                    border border-[#F3DDD3]
+                    hover:border-[#F59E0B]
                     transition-all
                     text-left
                     cursor-pointer
@@ -1026,10 +1026,10 @@ export const Header: React.FC<HeaderProps> = ({
                     className="
                       w-9 h-9
                       rounded-full
-                      bg-[#E9DFCF]
-                      group-hover:bg-[#09271F]
-                      text-[#185043]
-                      group-hover:text-[#F8F4EA]
+                      bg-[#FFE8D8]
+                      group-hover:bg-[#7A0F18]
+                      text-[#8A1C25]
+                      group-hover:text-white
                       flex items-center
                       justify-center
                       shrink-0
@@ -1044,7 +1044,7 @@ export const Header: React.FC<HeaderProps> = ({
                       className="
                         text-xs
                         font-bold
-                        text-[#18201D]
+                        text-[#2B2522]
                         block
                       "
                     >
@@ -1054,7 +1054,7 @@ export const Header: React.FC<HeaderProps> = ({
                     <span
                       className="
                         text-[10px]
-                        text-[#7C8580]
+                        text-[#7A7773]
                       "
                     >
                       Semua Produk
@@ -1073,10 +1073,10 @@ export const Header: React.FC<HeaderProps> = ({
                     gap-3
                     p-3.5
                     rounded-2xl
-                    bg-[#F8F4EA]
-                    hover:bg-[#F3EDE0]
-                    border border-[#E9DFCF]
-                    hover:border-[#C9A45C]
+                    bg-[#FFF9F4]
+                    hover:bg-[#FFF4E8]
+                    border border-[#F3DDD3]
+                    hover:border-[#F59E0B]
                     transition-all
                     text-left
                     cursor-pointer
@@ -1086,10 +1086,10 @@ export const Header: React.FC<HeaderProps> = ({
                     className="
                       w-9 h-9
                       rounded-full
-                      bg-[#E9DFCF]
-                      group-hover:bg-[#09271F]
-                      text-[#185043]
-                      group-hover:text-[#F8F4EA]
+                      bg-[#FFE8D8]
+                      group-hover:bg-[#7A0F18]
+                      text-[#8A1C25]
+                      group-hover:text-white
                       flex items-center
                       justify-center
                       shrink-0
@@ -1104,7 +1104,7 @@ export const Header: React.FC<HeaderProps> = ({
                       className="
                         text-xs
                         font-bold
-                        text-[#18201D]
+                        text-[#2B2522]
                         block
                       "
                     >
@@ -1114,7 +1114,7 @@ export const Header: React.FC<HeaderProps> = ({
                     <span
                       className="
                         text-[10px]
-                        text-[#7C8580]
+                        text-[#7A7773]
                       "
                     >
                       Kisah Dari Borneo
@@ -1133,10 +1133,10 @@ export const Header: React.FC<HeaderProps> = ({
                     gap-3
                     p-3.5
                     rounded-2xl
-                    bg-[#F8F4EA]
-                    hover:bg-[#F3EDE0]
-                    border border-[#E9DFCF]
-                    hover:border-[#C9A45C]
+                    bg-[#FFF9F4]
+                    hover:bg-[#FFF4E8]
+                    border border-[#F3DDD3]
+                    hover:border-[#F59E0B]
                     transition-all
                     text-left
                     cursor-pointer
@@ -1146,10 +1146,10 @@ export const Header: React.FC<HeaderProps> = ({
                     className="
                       w-9 h-9
                       rounded-full
-                      bg-[#E9DFCF]
-                      group-hover:bg-[#09271F]
-                      text-[#185043]
-                      group-hover:text-[#F8F4EA]
+                      bg-[#FFE8D8]
+                      group-hover:bg-[#7A0F18]
+                      text-[#8A1C25]
+                      group-hover:text-white
                       flex items-center
                       justify-center
                       shrink-0
@@ -1164,7 +1164,7 @@ export const Header: React.FC<HeaderProps> = ({
                       className="
                         text-xs
                         font-bold
-                        text-[#18201D]
+                        text-[#2B2522]
                         block
                       "
                     >
@@ -1174,7 +1174,7 @@ export const Header: React.FC<HeaderProps> = ({
                     <span
                       className="
                         text-[10px]
-                        text-[#7C8580]
+                        text-[#7A7773]
                       "
                     >
                       Standar Mutu Pangan
@@ -1215,15 +1215,15 @@ export const Header: React.FC<HeaderProps> = ({
                       rounded-full
                       text-[10px]
                       font-bold
-                      bg-[#09271F]
-                      text-[#F8F4EA]
+                      bg-[#7A0F18]
+                      text-white
                       border border-[#09271F]
-                      hover:bg-[#123C32]
+                      hover:bg-[#14532D]
                       transition-all
                       cursor-pointer
                     "
                   >
-                    <Sparkles className="w-3 h-3 text-[#C9A45C]" />
+                    <Sparkles className="w-3 h-3 text-[#FFD54F]" />
                     <span>Semua Kategori</span>
                   </button>
 
@@ -1245,12 +1245,12 @@ export const Header: React.FC<HeaderProps> = ({
                         rounded-full
                         text-[10px]
                         font-semibold
-                        bg-[#F8F4EA]
-                        hover:bg-[#F3EDE0]
-                        border border-[#D8C9B3]
-                        text-[#303934]
-                        hover:text-[#185043]
-                        hover:border-[#B18B4B]
+                        bg-[#FFF9F4]
+                        hover:bg-[#FFF4E8]
+                        border border-[#F0CFC2]
+                        text-[#303030]
+                        hover:text-[#C2410C]
+                        hover:border-[#F59E0B]
                         transition-all
                         cursor-pointer
                       "
@@ -1258,7 +1258,7 @@ export const Header: React.FC<HeaderProps> = ({
                       <Flame
                         className="
                           w-3 h-3
-                          text-[#9E793A]
+                          text-[#E05A2A]
                         "
                       />
 
@@ -1276,8 +1276,8 @@ export const Header: React.FC<HeaderProps> = ({
               className="
                 p-4
                 rounded-2xl
-                bg-[#F3EDE0]
-                border border-[#D8C9B3]
+                bg-[#FFF4E8]
+                border border-[#F0CFC2]
                 flex flex-col
                 sm:flex-row
                 sm:items-center
@@ -1290,7 +1290,7 @@ export const Header: React.FC<HeaderProps> = ({
                   className="
                     flex items-center
                     gap-2
-                    text-[#185043]
+                    text-[#8A1C25]
                     font-bold
                     text-xs
                   "
@@ -1298,7 +1298,7 @@ export const Header: React.FC<HeaderProps> = ({
                   <MessageCircle
                     className="
                       w-4 h-4
-                      text-[#2C765B]
+                      text-[#16A34A]
                     "
                   />
 
@@ -1310,7 +1310,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <p
                   className="
                     text-[10px]
-                    text-[#4B554F]
+                    text-[#4B403B]
                     font-medium
                   "
                 >
@@ -1320,7 +1320,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <p
                   className="
                     text-[10px]
-                    text-[#65706A]
+                    text-[#6B625D]
                     flex items-center
                     gap-1.5
                   "
@@ -1328,7 +1328,7 @@ export const Header: React.FC<HeaderProps> = ({
                   <MapPin
                     className="
                       w-3 h-3
-                      text-[#9E793A]
+                      text-[#E05A2A]
                       shrink-0
                     "
                   />
@@ -1349,9 +1349,9 @@ export const Header: React.FC<HeaderProps> = ({
                   items-center
                   justify-center
                   gap-2
-                  bg-[#185043]
-                  hover:bg-[#09271F]
-                  text-[#F8F4EA]
+                  bg-[#C2410C]
+                  hover:bg-[#7A0F18]
+                  text-white
                   font-bold
                   px-5
                   py-2.5
