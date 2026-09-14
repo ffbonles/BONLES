@@ -255,7 +255,7 @@ class StoreService {
   }
 
   // Products
-  getProducts(activeOnly = false): Product[] {
+  getProducts(activeOnly = false, includeSample = true): Product[] {
     let list = [...this.products];
     // Sanitize any legacy [SAMPLE] tag in product names
     list = list.map(p => {
@@ -268,10 +268,17 @@ class StoreService {
       return p;
     });
 
+    // Data SAMPLE hanya boleh terlihat di area admin.
+    // Data lama yang belum memiliki DATA_TYPE dianggap PRODUCTION agar migrasi
+    // tidak tiba-tiba menyembunyikan produk yang sudah ada.
+    const filtered = includeSample
+      ? list
+      : list.filter(p => String(p.DATA_TYPE || 'PRODUCTION').toUpperCase() === 'PRODUCTION');
+
     if (activeOnly) {
-      return list.filter(p => p.ACTIVE);
+      return filtered.filter(p => p.ACTIVE);
     }
-    return list;
+    return filtered;
   }
 
   getProductById(id: string): Product | undefined {
@@ -285,11 +292,12 @@ class StoreService {
     
     let saved: Product;
     if (idx >= 0) {
-      saved = { ...prod, UPDATED_AT: now };
+      saved = { ...prod, DATA_TYPE: prod.DATA_TYPE || 'PRODUCTION', UPDATED_AT: now };
       list[idx] = saved;
     } else {
       saved = {
         ...prod,
+        DATA_TYPE: prod.DATA_TYPE || 'PRODUCTION',
         ID: prod.ID || `PRD-${String(list.length + 1).padStart(4, '0')}`,
         CREATED_AT: now,
         UPDATED_AT: now
@@ -878,6 +886,7 @@ class StoreService {
           GALLERY_3_URL: parseSafeStr(p.GALLERY_3_URL || p.gallery_3_url || ''),
           FEATURED: parseSafeBool(p.FEATURED !== undefined ? p.FEATURED : p.featured, false),
           ACTIVE: parseSafeBool(p.ACTIVE !== undefined ? p.ACTIVE : p.active, true),
+          DATA_TYPE: String(p.DATA_TYPE || p.data_type || 'PRODUCTION').toUpperCase() === 'SAMPLE' ? 'SAMPLE' : 'PRODUCTION',
           CREATED_AT: parseSafeStr(p.CREATED_AT || p.created_at || new Date().toISOString()),
           UPDATED_AT: parseSafeStr(p.UPDATED_AT || p.updated_at || new Date().toISOString()),
         })).filter(p => p.NAME);
@@ -1141,20 +1150,29 @@ class StoreService {
     }
   }
 
-  // Reset to sample pouch snack data
+  // Sample data is deliberately isolated from production data.
+  // This only replaces the in-memory SAMPLE records; it never writes over
+  // production records in the Spreadsheet. Use gasSync.clearSampleProducts()
+  // from the admin action to permanently remove SAMPLE rows from Sheets.
   resetToSampleData(): void {
-    this.products = [...INITIAL_PRODUCTS];
-    this.categories = [...INITIAL_CATEGORIES];
-    this.orders = [...INITIAL_ORDERS];
-    this.customers = [...INITIAL_CUSTOMERS];
-    this.settings = [...INITIAL_SETTINGS];
-    this.banners = [...INITIAL_BANNERS];
-    this.testimonials = [...INITIAL_TESTIMONIALS];
-    this.logs = [...INITIAL_LOGS];
-    this.cart = [];
-    this.recentlyViewedIds = [];
+    const production = this.products.filter(
+      p => String(p.DATA_TYPE || 'PRODUCTION').toUpperCase() === 'PRODUCTION'
+    );
+    this.products = [...production, ...INITIAL_PRODUCTS.map(p => ({ ...p, DATA_TYPE: 'SAMPLE' as const }))];
     this.notifySubscribers();
-    this.addLog('INFO', 'RESET_SAMPLE_DATA', 'ADMIN', 'SYSTEM', 'Data sistem di-reset ke sample default pouch snack.');
+    this.addLog('INFO', 'RESET_SAMPLE_DATA', 'ADMIN', 'SYSTEM', 'Data SAMPLE dikembalikan ke contoh produk default. Data PRODUCTION tidak diubah.');
+  }
+
+  public async clearSampleProductsFromCloud(): Promise<{ success: boolean; message: string; deletedCount?: number }> {
+    const result = await gasSync.clearSampleProducts();
+    if (!result.success) return { success: false, message: result.message || 'Gagal menghapus data sample.' };
+    // Reload is intentionally delegated to the caller so the UI can show the
+    // server result first and then pull a fresh Spreadsheet snapshot.
+    return {
+      success: true,
+      message: result.message || 'Data sample berhasil dihapus dari Spreadsheet.',
+      deletedCount: Number(result.data?.deletedCount || 0),
+    };
   }
 
   // Recently Viewed Tracking (In-memory)
