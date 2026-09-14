@@ -664,6 +664,14 @@ class GasSyncService {
     );
   }
 
+  /** Hapus seluruh produk SAMPLE dari Spreadsheet. Produk PRODUCTION tidak disentuh. */
+  async clearSampleProducts(): Promise<GasApiResponse<{ deletedCount: number }>> {
+    return this.postToGas<any>(
+      { action: 'deleteSampleProducts' },
+      true
+    );
+  }
+
   /**
    * ============================================================
    * CATEGORIES
