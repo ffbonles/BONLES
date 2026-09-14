@@ -328,6 +328,22 @@ class StoreService {
     return saved;
   }
 
+  /** Hapus produk secara permanen dari Google Spreadsheet. */
+  async permanentlyDeleteProduct(id: string): Promise<{ success: boolean; message: string }> {
+    const target = this.products.find(p => p.ID === id || p.SKU === id);
+    if (!target) return { success: false, message: 'Produk tidak ditemukan.' };
+
+    const result = await gasSync.deleteProduct(target.ID || target.SKU);
+    if (!result.success || result.data?.deleted !== true) {
+      return { success: false, message: result.message || 'Produk gagal dihapus dari Spreadsheet.' };
+    }
+
+    this.products = this.products.filter(p => p.ID !== target.ID && p.SKU !== target.SKU);
+    this.notifySubscribers();
+    this.addLog('AUDIT', 'DELETE_PRODUCT_PERMANENT', 'ADMIN', target.SKU, `Produk ${target.NAME} dihapus permanen dari Google Spreadsheet`);
+    return { success: true, message: 'Produk berhasil dihapus permanen dari Google Spreadsheet.' };
+  }
+
   deleteProduct(id: string): boolean {
     const list = [...this.products];
     const idx = list.findIndex(p => p.ID === id);
