@@ -92,13 +92,10 @@ export const BonlesLogo: React.FC<BonlesLogoProps> = ({
 };
 
 export default BonlesLogo;
-```
+Navbar.tsx
 
-### `Navbar.tsx`
+Navbar berikut dibuat agar logo asli dari Drive menjadi pusat identitas header, dengan tampilan premium, sticky, responsive, smooth-scroll, dan CTA WhatsApp.
 
-Navbar berikut dibuat agar **logo asli dari Drive menjadi pusat identitas header**, dengan tampilan premium, sticky, responsive, smooth-scroll, dan CTA WhatsApp.
-
-```tsx
 import React, { useEffect, useState } from 'react';
 import {
   Menu,
@@ -693,5 +690,3 @@ export const Navbar: React.FC<NavbarProps> = ({
     </>
   );
 };
-
-export default Navbar;
