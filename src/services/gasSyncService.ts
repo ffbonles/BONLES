@@ -56,7 +56,7 @@ class GasSyncService {
    * Jangan menggunakan /dev.
    */
   private readonly GAS_URL =
-    'https://script.google.com/macros/s/AKfycbytpAZ7CM7t-2uuLdr08gYiTZbbqZXAGtxj36iYeSID1BRqHSIcZ4elsp5oYodatD0u/exec';
+    'https://script.google.com/macros/s/AKfycbztEozHlBnyBaJ6Nt1oYu1HkQHzX0Iu7jJnODjYtCNHIsNoOU1NTt4HgSyntwOdrN4M/exec';
 
   /**
    * Token session admin.
