@@ -30,12 +30,44 @@ export const OurStory: React.FC<OurStoryProps> = ({ onExploreCatalog }) => {
     return unsubscribe;
   }, []);
 
+  const ourStoryEyebrow =
+    settings['OUR_STORY_EYEBROW'] || 'Our Story & Dedication';
+
   const ourStoryTitle =
-    settings['OUR_STORY_TITLE'] || 'Dari Borneo, Lahir Sebuah Rasa.';
+    settings['OUR_STORY_TITLE'] || 'Perjalanan Rasa Autentik Nusantara';
+
+  const ourStoryIntro =
+    settings['OUR_STORY_INTRO'] ||
+    'Dari kekayaan hasil perairan Kalimantan Timur, kami membawa pangan lokal Borneo ke dalam bentuk camilan modern yang memiliki nilai, karakter, dan cerita.';
+
+  const ourStoryDedication =
+    settings['OUR_STORY_DEDICATION'] ||
+    'Menghubungkan kekayaan alam Borneo dengan kreativitas pengolahan modern untuk menghadirkan pengalaman rasa yang autentik.';
 
   const ourStoryQuote =
     settings['OUR_STORY_QUOTE'] ||
     'Kekayaan daerah bukan hanya untuk dikenang—tetapi bisa dikembangkan, dinikmati, dan dibawa lebih jauh melalui sebuah rasa.';
+
+  const ourStoryPart1Title =
+    settings['OUR_STORY_PART1_TITLE'] || 'Berawal dari|Kekayaan Lokal';
+
+  const ourStoryPart1Text =
+    settings['OUR_STORY_PART1_TEXT'] ||
+    'Berawal dari kekayaan hasil perairan Kalimantan Timur, kami ingin membuktikan bahwa pangan lokal Borneo dapat diolah menjadi camilan modern yang memiliki nilai dan cerita.';
+
+  const ourStoryPart2Title =
+    settings['OUR_STORY_PART2_TITLE'] || 'Ikan Bawis|dalam Bentuk Modern';
+
+  const ourStoryPart2Text =
+    settings['OUR_STORY_PART2_TEXT'] ||
+    'Ikan Bawis kami pilih dan olah menjadi keripik ikan tanpa tulang tengah, menghasilkan camilan yang renyah, praktis, dan kaya protein.';
+
+  const ourStoryPart2Quote =
+    settings['OUR_STORY_PART2_QUOTE'] ||
+    'Sebuah bahan pangan lokal diberi sentuhan pengolahan modern tanpa kehilangan karakter dan cerita asalnya.';
+
+  const ourStoryCtaText =
+    settings['OUR_STORY_CTA_TEXT'] || 'Telusuri Cerita Kami';
 
   const handleScrollToCatalog = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -111,25 +143,21 @@ export const OurStory: React.FC<OurStoryProps> = ({ onExploreCatalog }) => {
             </h2>
 
             <p className="mt-6 max-w-2xl text-base font-light leading-8 text-[#D8DED9] sm:text-lg">
-              Dari kekayaan hasil perairan Kalimantan Timur, kami membawa
-              pangan lokal Borneo ke dalam bentuk camilan modern yang memiliki
-              nilai, karakter, dan cerita.
+              {ourStoryIntro}
             </p>
           </div>
 
           <div className="lg:col-span-4">
             <div className="border-l border-[#C9A45C]/50 pl-5">
               <p className="text-sm font-light leading-7 text-[#AEBDB5]">
-                Menghubungkan kekayaan alam Borneo dengan kreativitas
-                pengolahan modern untuk menghadirkan pengalaman rasa yang
-                autentik.
+                {ourStoryDedication}
               </p>
 
               <a
                 href="#story-part-01"
                 className="group mt-5 inline-flex items-center gap-2 font-brand text-[9px] font-semibold uppercase tracking-[0.2em] text-[#FCFAF5] transition-colors hover:text-[#D8B878]"
               >
-                <span>Telusuri Cerita Kami</span>
+                <span>{ourStoryCtaText}</span>
 
                 <ArrowRight className="h-3.5 w-3.5 text-[#C9A45C] transition-transform duration-300 group-hover:translate-x-1" />
               </a>
@@ -201,16 +229,20 @@ export const OurStory: React.FC<OurStoryProps> = ({ onExploreCatalog }) => {
             </div>
 
             <h3 className="font-display text-3xl font-medium leading-tight text-[#FCFAF5] sm:text-4xl">
-              Berawal dari
-              <span className="block italic text-[#D8B878]">
-                Kekayaan Lokal
-              </span>
+              {ourStoryPart1Title.includes('|') ? (
+                <>
+                  {ourStoryPart1Title.split('|')[0]}
+                  <span className="block italic text-[#D8B878]">
+                    {ourStoryPart1Title.split('|').slice(1).join('|')}
+                  </span>
+                </>
+              ) : (
+                <span className="italic text-[#D8B878]">{ourStoryPart1Title}</span>
+              )}
             </h3>
 
             <p className="text-sm font-light leading-7 text-[#D8DED9] sm:text-base">
-              Berawal dari kekayaan hasil perairan Kalimantan Timur, kami ingin
-              membuktikan bahwa pangan lokal Borneo dapat diolah menjadi
-              camilan modern yang memiliki nilai dan cerita.
+              {ourStoryPart1Text}
             </p>
 
             <div className="flex flex-col gap-2 pt-2 text-xs text-[#9FAFA7] sm:flex-row sm:items-center sm:gap-5">
@@ -299,22 +331,25 @@ export const OurStory: React.FC<OurStoryProps> = ({ onExploreCatalog }) => {
             </div>
 
             <h3 className="font-display text-3xl font-medium leading-tight text-[#FCFAF5] sm:text-4xl">
-              Ikan Bawis
-              <span className="block italic text-[#D8B878]">
-                dalam Bentuk Modern
-              </span>
+              {ourStoryPart2Title.includes('|') ? (
+                <>
+                  {ourStoryPart2Title.split('|')[0]}
+                  <span className="block italic text-[#D8B878]">
+                    {ourStoryPart2Title.split('|').slice(1).join('|')}
+                  </span>
+                </>
+              ) : (
+                <span className="italic text-[#D8B878]">{ourStoryPart2Title}</span>
+              )}
             </h3>
 
             <p className="text-sm font-light leading-7 text-[#D8DED9] sm:text-base">
-              Ikan Bawis kami pilih dan olah menjadi keripik ikan tanpa tulang
-              tengah, menghasilkan camilan yang renyah, praktis, dan kaya
-              protein.
+              {ourStoryPart2Text}
             </p>
 
             <div className="border-l-2 border-[#C9A45C] pl-4">
               <p className="text-sm leading-7 text-[#F0E9DC]">
-                Sebuah bahan pangan lokal diberi sentuhan pengolahan modern
-                tanpa kehilangan karakter dan cerita asalnya.
+                {ourStoryPart2Quote}
               </p>
             </div>
 
