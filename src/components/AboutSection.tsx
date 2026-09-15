@@ -27,15 +27,26 @@ export const AboutSection: React.FC = () => {
     settings['ABOUT_TITLE'] ||
     'Dari Borneo, diolah menjadi cerita yang bernilai.';
 
+  const aboutEyebrow = settings['ABOUT_EYEBROW'] || 'Our Story';
+
   const aboutDescription =
     settings['ABOUT_DESCRIPTION'] ||
     'Berawal dari kekayaan hasil perairan Kalimantan Timur, kami ingin membuktikan bahwa pangan lokal Borneo dapat diolah menjadi camilan modern yang memiliki nilai dan cerita.';
 
+  const aboutDescription2 =
+    settings['ABOUT_DESCRIPTION_2'] ||
+    'Ikan Bawis kami pilih dan olah menjadi keripik ikan tanpa tulang tengah, sehingga menghasilkan camilan yang renyah, praktis, dan kaya protein.';
+
+  const aboutDescription3 =
+    settings['ABOUT_DESCRIPTION_3'] ||
+    'Melalui BONLES, kami ingin membawa cita rasa dan kekayaan pangan lokal Borneo lebih dekat dengan masyarakat Indonesia, sekaligus membuka cerita tentang potensi pangan lokal kepada dunia.';
+
   const values = [
     {
       number: '01',
-      title: 'Khas Borneo',
+      title: settings['ABOUT_VALUE_1_TITLE'] || 'Khas Borneo',
       description:
+        settings['ABOUT_VALUE_1_TEXT'] ||
         'Berangkat dari kekayaan hasil perairan dan pangan lokal Kalimantan Timur.',
       icon: MapPin,
       iconStyle:
@@ -43,8 +54,9 @@ export const AboutSection: React.FC = () => {
     },
     {
       number: '02',
-      title: 'Ikan Bawis',
+      title: settings['ABOUT_VALUE_2_TITLE'] || 'Ikan Bawis',
       description:
+        settings['ABOUT_VALUE_2_TEXT'] ||
         'Diolah menjadi keripik ikan tanpa tulang tengah yang renyah, praktis, dan kaya protein.',
       icon: Fish,
       iconStyle:
@@ -52,8 +64,9 @@ export const AboutSection: React.FC = () => {
     },
     {
       number: '03',
-      title: 'Modern Craft',
+      title: settings['ABOUT_VALUE_3_TITLE'] || 'Modern Craft',
       description:
+        settings['ABOUT_VALUE_3_TEXT'] ||
         'Pangan lokal diolah menjadi camilan modern dengan nilai dan pengalaman yang lebih tinggi.',
       icon: Sparkles,
       iconStyle:
@@ -61,8 +74,9 @@ export const AboutSection: React.FC = () => {
     },
     {
       number: '04',
-      title: 'From Borneo to the World',
+      title: settings['ABOUT_VALUE_4_TITLE'] || 'From Borneo to the World',
       description:
+        settings['ABOUT_VALUE_4_TEXT'] ||
         'Membawa cerita, cita rasa, dan potensi pangan lokal Borneo lebih jauh.',
       icon: HeartHandshake,
       iconStyle:
@@ -190,7 +204,7 @@ export const AboutSection: React.FC = () => {
                 <span className="h-1 w-9 rounded-full bg-gradient-to-r from-[#F04438] to-[#FFB703]" />
 
                 <span className="font-brand text-[10px] font-bold uppercase tracking-[0.25em] text-[#D9382E]">
-                  Our Story
+                  {aboutEyebrow}
                 </span>
               </div>
 
@@ -213,16 +227,11 @@ export const AboutSection: React.FC = () => {
                 </p>
 
                 <p className="text-base leading-8 text-[#5F514B]">
-                  Ikan Bawis kami pilih dan olah menjadi keripik ikan tanpa
-                  tulang tengah, sehingga menghasilkan camilan yang renyah,
-                  praktis, dan kaya protein.
+                  {aboutDescription2}
                 </p>
 
                 <p className="text-base leading-8 text-[#5F514B]">
-                  Melalui BONLES, kami ingin membawa cita rasa dan kekayaan
-                  pangan lokal Borneo lebih dekat dengan masyarakat Indonesia,
-                  sekaligus membuka cerita tentang potensi pangan lokal kepada
-                  dunia.
+                  {aboutDescription3}
                 </p>
               </div>
 
