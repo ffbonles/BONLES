@@ -30,44 +30,12 @@ export const OurStory: React.FC<OurStoryProps> = ({ onExploreCatalog }) => {
     return unsubscribe;
   }, []);
 
-  const ourStoryEyebrow =
-    settings['OUR_STORY_EYEBROW'] || 'Our Story & Dedication';
-
   const ourStoryTitle =
-    settings['OUR_STORY_TITLE'] || 'Perjalanan Rasa Autentik Nusantara';
-
-  const ourStoryIntro =
-    settings['OUR_STORY_INTRO'] ||
-    'Dari kekayaan hasil perairan Kalimantan Timur, kami membawa pangan lokal Borneo ke dalam bentuk camilan modern yang memiliki nilai, karakter, dan cerita.';
-
-  const ourStoryDedication =
-    settings['OUR_STORY_DEDICATION'] ||
-    'Menghubungkan kekayaan alam Borneo dengan kreativitas pengolahan modern untuk menghadirkan pengalaman rasa yang autentik.';
+    settings['OUR_STORY_TITLE'] || 'Dari Borneo, Lahir Sebuah Rasa.';
 
   const ourStoryQuote =
     settings['OUR_STORY_QUOTE'] ||
     'Kekayaan daerah bukan hanya untuk dikenang—tetapi bisa dikembangkan, dinikmati, dan dibawa lebih jauh melalui sebuah rasa.';
-
-  const ourStoryPart1Title =
-    settings['OUR_STORY_PART1_TITLE'] || 'Berawal dari|Kekayaan Lokal';
-
-  const ourStoryPart1Text =
-    settings['OUR_STORY_PART1_TEXT'] ||
-    'Berawal dari kekayaan hasil perairan Kalimantan Timur, kami ingin membuktikan bahwa pangan lokal Borneo dapat diolah menjadi camilan modern yang memiliki nilai dan cerita.';
-
-  const ourStoryPart2Title =
-    settings['OUR_STORY_PART2_TITLE'] || 'Ikan Bawis|dalam Bentuk Modern';
-
-  const ourStoryPart2Text =
-    settings['OUR_STORY_PART2_TEXT'] ||
-    'Ikan Bawis kami pilih dan olah menjadi keripik ikan tanpa tulang tengah, menghasilkan camilan yang renyah, praktis, dan kaya protein.';
-
-  const ourStoryPart2Quote =
-    settings['OUR_STORY_PART2_QUOTE'] ||
-    'Sebuah bahan pangan lokal diberi sentuhan pengolahan modern tanpa kehilangan karakter dan cerita asalnya.';
-
-  const ourStoryCtaText =
-    settings['OUR_STORY_CTA_TEXT'] || 'Telusuri Cerita Kami';
 
   const handleScrollToCatalog = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -143,21 +111,25 @@ export const OurStory: React.FC<OurStoryProps> = ({ onExploreCatalog }) => {
             </h2>
 
             <p className="mt-6 max-w-2xl text-base font-light leading-8 text-[#D8DED9] sm:text-lg">
-              {ourStoryIntro}
+              Dari kekayaan hasil perairan Kalimantan Timur, kami membawa
+              pangan lokal Borneo ke dalam bentuk camilan modern yang memiliki
+              nilai, karakter, dan cerita.
             </p>
           </div>
 
           <div className="lg:col-span-4">
             <div className="border-l border-[#C9A45C]/50 pl-5">
               <p className="text-sm font-light leading-7 text-[#AEBDB5]">
-                {ourStoryDedication}
+                Menghubungkan kekayaan alam Borneo dengan kreativitas
+                pengolahan modern untuk menghadirkan pengalaman rasa yang
+                autentik.
               </p>
 
               <a
                 href="#story-part-01"
                 className="group mt-5 inline-flex items-center gap-2 font-brand text-[9px] font-semibold uppercase tracking-[0.2em] text-[#FCFAF5] transition-colors hover:text-[#D8B878]"
               >
-                <span>{ourStoryCtaText}</span>
+                <span>Telusuri Cerita Kami</span>
 
                 <ArrowRight className="h-3.5 w-3.5 text-[#C9A45C] transition-transform duration-300 group-hover:translate-x-1" />
               </a>
@@ -171,7 +143,7 @@ export const OurStory: React.FC<OurStoryProps> = ({ onExploreCatalog }) => {
         <div className="relative mt-14 overflow-hidden rounded-[1.5rem] border border-[#C9A45C]/20 bg-[#0D3027] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
           <div className="relative aspect-[21/9] min-h-[280px] w-full overflow-hidden sm:min-h-[420px]">
             <img
-              src={BONLES_IMAGES.borneoRiver}
+              src={ourStoryMainImage}
               alt="Bentang alam perairan Kalimantan Timur Borneo - PT Bonles Food Nusantara"
               referrerPolicy="no-referrer"
               loading="lazy"
@@ -229,20 +201,16 @@ export const OurStory: React.FC<OurStoryProps> = ({ onExploreCatalog }) => {
             </div>
 
             <h3 className="font-display text-3xl font-medium leading-tight text-[#FCFAF5] sm:text-4xl">
-              {ourStoryPart1Title.includes('|') ? (
-                <>
-                  {ourStoryPart1Title.split('|')[0]}
-                  <span className="block italic text-[#D8B878]">
-                    {ourStoryPart1Title.split('|').slice(1).join('|')}
-                  </span>
-                </>
-              ) : (
-                <span className="italic text-[#D8B878]">{ourStoryPart1Title}</span>
-              )}
+              Berawal dari
+              <span className="block italic text-[#D8B878]">
+                Kekayaan Lokal
+              </span>
             </h3>
 
             <p className="text-sm font-light leading-7 text-[#D8DED9] sm:text-base">
-              {ourStoryPart1Text}
+              Berawal dari kekayaan hasil perairan Kalimantan Timur, kami ingin
+              membuktikan bahwa pangan lokal Borneo dapat diolah menjadi
+              camilan modern yang memiliki nilai dan cerita.
             </p>
 
             <div className="flex flex-col gap-2 pt-2 text-xs text-[#9FAFA7] sm:flex-row sm:items-center sm:gap-5">
@@ -262,7 +230,7 @@ export const OurStory: React.FC<OurStoryProps> = ({ onExploreCatalog }) => {
             <div className="group relative overflow-hidden rounded-[1.25rem] border border-[#C9A45C]/20 bg-[#0D3027] p-2 shadow-2xl">
               <div className="relative overflow-hidden rounded-[0.9rem]">
                 <img
-                  src={BONLES_IMAGES.borneoRiver}
+                  src={ourStoryPart1Image}
                   alt="Perairan dan alam Borneo Kalimantan Timur"
                   referrerPolicy="no-referrer"
                   loading="lazy"
@@ -292,7 +260,7 @@ export const OurStory: React.FC<OurStoryProps> = ({ onExploreCatalog }) => {
             <div className="group relative overflow-hidden rounded-[1.25rem] border border-[#C9A45C]/20 bg-[#0D3027] p-2 shadow-2xl">
               <div className="relative overflow-hidden rounded-[0.9rem]">
                 <img
-                  src={BONLES_IMAGES.pouchRef5}
+                  src={ourStoryPart2Image}
                   alt="Produk snack kemasan standing pouch BONLES"
                   referrerPolicy="no-referrer"
                   loading="lazy"
@@ -331,25 +299,22 @@ export const OurStory: React.FC<OurStoryProps> = ({ onExploreCatalog }) => {
             </div>
 
             <h3 className="font-display text-3xl font-medium leading-tight text-[#FCFAF5] sm:text-4xl">
-              {ourStoryPart2Title.includes('|') ? (
-                <>
-                  {ourStoryPart2Title.split('|')[0]}
-                  <span className="block italic text-[#D8B878]">
-                    {ourStoryPart2Title.split('|').slice(1).join('|')}
-                  </span>
-                </>
-              ) : (
-                <span className="italic text-[#D8B878]">{ourStoryPart2Title}</span>
-              )}
+              Ikan Bawis
+              <span className="block italic text-[#D8B878]">
+                dalam Bentuk Modern
+              </span>
             </h3>
 
             <p className="text-sm font-light leading-7 text-[#D8DED9] sm:text-base">
-              {ourStoryPart2Text}
+              Ikan Bawis kami pilih dan olah menjadi keripik ikan tanpa tulang
+              tengah, menghasilkan camilan yang renyah, praktis, dan kaya
+              protein.
             </p>
 
             <div className="border-l-2 border-[#C9A45C] pl-4">
               <p className="text-sm leading-7 text-[#F0E9DC]">
-                {ourStoryPart2Quote}
+                Sebuah bahan pangan lokal diberi sentuhan pengolahan modern
+                tanpa kehilangan karakter dan cerita asalnya.
               </p>
             </div>
 
@@ -427,7 +392,7 @@ export const OurStory: React.FC<OurStoryProps> = ({ onExploreCatalog }) => {
             <div className="group relative overflow-hidden rounded-[1.25rem] border border-[#C9A45C]/20 bg-[#0D3027] p-2 shadow-2xl">
               <div className="relative overflow-hidden rounded-[0.9rem]">
                 <img
-                  src={BONLES_IMAGES.sambalDayakDip}
+                  src={ourStoryPart3Image}
                   alt="Keripik dengan Sambal Bawang Dayak"
                   referrerPolicy="no-referrer"
                   loading="lazy"
