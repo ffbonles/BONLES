@@ -71,6 +71,7 @@ export const Header: React.FC<HeaderProps> = ({
   }, []);
 
   const tagline =
+    settings['ANNOUNCEMENT_BAR_TEXT'] ||
     settings['TAGLINE'] ||
     'Snack Tinggi Protein & Oleh-Oleh Khas Nusantara';
 
@@ -126,6 +127,7 @@ export const Header: React.FC<HeaderProps> = ({
           TOP MICRO BAR
       ====================================================== */}
 
+      {settings['ANNOUNCEMENT_BAR_ACTIVE'] !== 'FALSE' && (
       <div
         className="
           border-b border-white/15
@@ -294,6 +296,7 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
       </div>
+      )}
 
       {/* =====================================================
           MAIN NAVBAR
