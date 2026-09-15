@@ -30,6 +30,20 @@ export const OurStory: React.FC<OurStoryProps> = ({ onExploreCatalog }) => {
     return unsubscribe;
   }, []);
 
+  // Gambar dapat diubah dari Admin Dashboard melalui Settings.
+  // Jika URL belum diisi, gunakan gambar bawaan agar halaman tetap tampil.
+  const ourStoryMainImage =
+    settings['OUR_STORY_IMAGE_URL'] || BONLES_IMAGES.borneoRiver;
+
+  const ourStoryPart1Image =
+    settings['OUR_STORY_PART1_IMAGE_URL'] || BONLES_IMAGES.borneoRiver;
+
+  const ourStoryPart2Image =
+    settings['OUR_STORY_PART2_IMAGE_URL'] || BONLES_IMAGES.ikanBawisChips;
+
+  const ourStoryPart3Image =
+    settings['OUR_STORY_PART3_IMAGE_URL'] || BONLES_IMAGES.sambalDayakDip;
+
   const ourStoryTitle =
     settings['OUR_STORY_TITLE'] || 'Dari Borneo, Lahir Sebuah Rasa.';
 
