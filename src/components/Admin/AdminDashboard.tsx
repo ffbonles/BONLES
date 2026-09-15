@@ -13,6 +13,7 @@ import { APPS_SCRIPT_FILES, getCombinedAppsScriptCode } from '../../data/appsScr
 import { gasSync } from '../../services/gasSyncService';
 import { BonlesLogo } from '../BonlesLogo';
 import { ImageUploadOrUrl } from './ImageUploadOrUrl';
+import { HomepageContentEditor } from './HomepageContentEditor';
 
 interface AdminDashboardProps {
   onCloseAdmin: () => void;
@@ -1478,6 +1479,24 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
           {/* TAB 7: SETTINGS */}
           {activeTab === 'settings' && (
             <div className="space-y-6">
+              <HomepageContentEditor
+                settings={localSettings}
+                onChange={setLocalSettings}
+                onSave={() => {
+                  store.saveAllSettings(localSettings);
+                  reloadData();
+                  setSaveSuccessModal({
+                    isOpen: true,
+                    timestamp: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' WIB',
+                    productCount: products.length,
+                    activeProductCount: activeProducts,
+                    categoryCount: categories.length,
+                    message: 'Konten halaman depan berhasil disimpan dan disinkronkan ke Google Spreadsheet.',
+                  });
+                }}
+              />
+
+              <div className="border-t border-[#245442]/50 pt-6">
               <div className="flex items-center justify-between">
                 <div>
                   <span className="text-xs tracking-[0.2em] text-[#C9A45C] font-bold uppercase block">
@@ -1559,6 +1578,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onCloseAdmin, on
                   </button>
                 </div>
               </form>
+              </div>
             </div>
           )}
 
